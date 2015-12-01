@@ -53,9 +53,9 @@
 
     <p>Public ID: {{ node.publicId }}</p>
 
-    <p>Body Text: {{ node.bodyText }}</p>
+    <p>Body Text: {{ node.bodyText | nl2br }}</p>
 
-    <p>Body HTML: {{ node.bodyHTML }}</p>
+    <p>Body HTML: {{ node.bodyHTML | nl2br }}</p>
 
     {% if node.fromOldVersion %}
       <p>
