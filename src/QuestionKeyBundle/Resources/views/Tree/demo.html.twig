@@ -25,7 +25,7 @@
     var treeId = '{{ tree.publicId }}';
     var tree;
     $( document ).ready(function() {
-      tree = new NormalTree(document.location.host, treeId, "DemoHere", {});
+      tree = new NormalTree(document.location.host, treeId, "DemoHere", {'logUserActions':false});
     });
   </script>
 {% endblock %}

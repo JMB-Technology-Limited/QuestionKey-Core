@@ -8,7 +8,8 @@ function NormalTree(treeServer, treeId, divId, options) {
       'hasSSL':true,
       'forceSSL':false,
       'serverURLSSL':'https://' + treeServer,
-      'serverURLNotSSL':'http://' + treeServer
+      'serverURLNotSSL':'http://' + treeServer,
+      'logUserActions':true
   }, options || {});
   if (this.options.hasSSL && this.options.forceSSL) {
       this.serverURL = this.options.serverURLSSL;
@@ -71,26 +72,28 @@ function NormalTree(treeServer, treeId, divId, options) {
     }
     $('#'+this.divId+' .optionWrapper').html(optionsHTML);
     // Stats
-    var data = {
-      'session_id': this.sessionId,
-      'ran_tree_version_id': this.sessionRanTreeVersionId,
-      'tree_id': this.treeId,
-      'tree_version_id': this.treeData.version.public_id,
-      'node_id': this.currentNodeId,
-    };
-    $.ajax({
-      context: this,
-      dataType: "jsonp",
-      url: this.serverURL + '/api/v1/visitorsession/action.jsonp?callback=?',
-      data: data,
-      method: 'GET',
-      success: function(data) {
-        this.sessionId = data.session.id;
-        if (data.session_ran_tree_version) {
-          this.sessionRanTreeVersionId = data.session_ran_tree_version.id;
-        }
-      },
-    });
+    if (this.options.logUserActions) {
+        var data = {
+            'session_id': this.sessionId,
+            'ran_tree_version_id': this.sessionRanTreeVersionId,
+            'tree_id': this.treeId,
+            'tree_version_id': this.treeData.version.public_id,
+            'node_id': this.currentNodeId,
+        };
+        $.ajax({
+            context: this,
+            dataType: "jsonp",
+            url: this.serverURL + '/api/v1/visitorsession/action.jsonp?callback=?',
+            data: data,
+            method: 'GET',
+            success: function(data) {
+                this.sessionId = data.session.id;
+                if (data.session_ran_tree_version) {
+                    this.sessionRanTreeVersionId = data.session_ran_tree_version.id;
+                }
+            },
+        });
+    }
   };
   this.selectOption = function(optionId) {
     var node = this.treeData.nodes[this.currentNodeId];
