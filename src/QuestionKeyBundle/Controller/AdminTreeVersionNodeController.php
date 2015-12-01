@@ -45,8 +45,8 @@ class AdminTreeVersionNodeController extends Controller
             return  new Response( '404' );
         }
         // load
-        $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
-        $this->node = $treeRepo->findOneBy(array(
+        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+        $this->node = $nodeRepo->findOneBy(array(
             'treeVersion'=>$this->treeVersion,
             'id'=>$nodeId,
         ));
