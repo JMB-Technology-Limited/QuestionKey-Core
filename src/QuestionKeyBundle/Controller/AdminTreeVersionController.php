@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use QuestionKeyBundle\Entity\TreeVersion;
 use QuestionKeyBundle\Entity\TreeVersionPublished;
 use QuestionKeyBundle\Entity\Node;
@@ -272,6 +273,55 @@ class AdminTreeVersionController extends Controller
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'form' => $form->createView(),
+        ));
+
+    }
+
+    public function runAction($treeId, $versionId, Request $request)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId);
+        if ($return) {
+            return $return;
+        }
+
+        // setup
+        $doctrine = $this->getDoctrine()->getManager();
+        $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
+
+        // data - load current node
+        $currentNode = null;
+        if ($request->query->get('node_id')) {
+            $currentNode = $nodeRepo->findOneBy(array(
+                'treeVersion'=>$this->treeVersion,
+                'id'=>$request->query->get('node_id'),
+            ));
+        }
+
+        if (!$currentNode) {
+            $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
+
+            if (!$treeStartingNode) {
+                return $this->render('QuestionKeyBundle:AdminTreeVersion:run.noStartNode.html.twig', array(
+                    'tree'=>$this->tree,
+                    'treeVersion'=>$this->treeVersion,
+                ));
+            }
+
+            $currentNode = $treeStartingNode->getNode();
+        }
+
+        // Get data and return!
+        $nodeOptions = $nodeOptionRepo->findActiveNodeOptionsForNode($currentNode);
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:run.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'node'=>$currentNode,
+            'nodeOptions'=>$nodeOptions,
         ));
 
     }

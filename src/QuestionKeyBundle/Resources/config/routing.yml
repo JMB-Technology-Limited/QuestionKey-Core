@@ -68,6 +68,11 @@ questionkey_admin_tree_version_show:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:index}
     methods:  [GET]
 
+questionkey_admin_tree_version_run:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/run
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:run}
+    methods:  [GET]
+
 questionkey_admin_tree_version_edit:
     pattern:  /admin/tree/{treeId}/version/{versionId}/edit
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:edit}
