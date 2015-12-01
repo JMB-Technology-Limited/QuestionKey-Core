@@ -1,0 +1,37 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+<ol class="breadcrumb">
+  <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+  <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+  <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+  <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Node: {{ node.title }}</a></li>
+  <li><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id,'optionId': nodeOption.id}) }}">Node Option: {{ nodeOption.title }}</a></li>
+  <li class="active">Edit</li>
+</ol>
+
+  <p>Tree {{ tree.titleAdmin }} Version {{ node.treeVersion.titleAdmin }}</p>
+
+  <p>Node {{ node.id}}: {{ node.title }}</p>
+
+  <p>Node option title: {{ nodeOption.title }}</p>
+
+
+      <section class="">
+      		<form class="styled" action="" method="post" {{ form_enctype(form) }}>
+      			{{ form_errors(form) }}
+
+      			{{ form_rest(form) }}
+
+      			<input type="submit" value="Save" />
+      		</form>
+
+      	</section>
+
+
+{% endblock %}

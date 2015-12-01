@@ -1,0 +1,30 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li class="active">New Tree</li>
+  </ol>
+
+  <section class="">
+  		<form class="styled" action="" method="post" {{ form_enctype(form) }}>
+  			{{ form_errors(form) }}
+
+        {{ form_row(form.titleAdmin) }}
+
+  			{{ form_row(form.publicId) }}
+
+  			{{ form_rest(form) }}
+
+  			<input type="submit" value="Create New Tree" />
+  		</form>
+
+  	</section>
+
+{% endblock %}

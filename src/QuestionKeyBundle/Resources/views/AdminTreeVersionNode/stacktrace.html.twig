@@ -1,0 +1,65 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Node: {{ node.title }}</a></li>
+    <li class="active">Stacktrace</li>
+  </ol>
+
+  {% for stackTrace in stackTraces %}
+    <h2>Stack Trace</h2>
+
+    {% for data in stackTrace.data %}
+
+      <div class="well">
+
+       <p>Public ID: {{ data.node.publicId }}</p>
+
+       <p>Title: {{ data.node.title }}</p>
+
+       {% if data.node.bodyText %}
+        <p>Body Text: {{ data.node.bodyText }}</p>
+       {% endif %}
+
+       {% if data.node.bodyHTML %}
+        <p>Body HTML: {{ data.node.bodyHTML }}</p>
+       {% endif %}
+     </div>
+
+      {% if data.nodeOption %}
+        <div class="panel panel-default">
+          <div class="panel-body">
+
+            <p>Public ID: {{ data.nodeOption.publicId }}</p>
+
+            <p>Title: {{ data.nodeOption.title }}</p>
+
+            {% if  data.nodeOption.bodyText %}
+              <p>Body Text: {{ data.nodeOption.bodyText }}</p>
+            {% endif %}
+
+            {% if data.nodeOption.bodyHTML  %}
+              <p>Body HTML: {{ data.nodeOption.bodyHTML }}</p>
+            {% endif %}
+
+          </div>
+        </div>
+      {% endif %}
+
+    {% endfor %}
+
+  {% else %}
+    <p>No Stack Traces found</p>
+  {% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,164 @@
+questionkey_home:
+    pattern:  /
+    defaults: { _controller: QuestionKeyBundle:Index:index }
+    methods:  [GET]
+
+questionkey_api_1_tree_data_json:
+    pattern:  /api/v1/tree/{treeId}/data.json
+    defaults: { _controller: QuestionKeyBundle:API1Tree:dataJSON }
+    methods:  [GET]
+
+questionkey_api_1_tree_data_jsonp:
+    pattern:  /api/v1/tree/{treeId}/data.jsonp
+    defaults: { _controller: QuestionKeyBundle:API1Tree:dataJSONP }
+    methods:  [GET]
+
+questionkey_api_1_visitorsession_action_json:
+    pattern:  /api/v1/visitorsession/action.json
+    defaults: { _controller: QuestionKeyBundle:API1VisitorSession:actionJSON }
+    methods:  [GET]
+
+questionkey_api_1_visitorsession_action_jsonp:
+    pattern:  /api/v1/visitorsession/action.jsonp
+    defaults: { _controller: QuestionKeyBundle:API1VisitorSession:actionJSONP }
+    methods:  [GET]
+
+questionkey_tree_demo:
+    pattern:  /tree/{treeId}/demo
+    defaults: { _controller: QuestionKeyBundle:Tree:demo }
+    methods:  [GET]
+
+questionkey_admin:
+    pattern:  /admin
+    defaults: { _controller: QuestionKeyBundle:Admin:index }
+    methods:  [GET]
+
+questionkey_admin_tree_list:
+    pattern:  /admin/tree
+    defaults: { _controller: QuestionKeyBundle:AdminTreeList:index }
+    methods:  [GET]
+
+questionkey_admin_tree_new:
+    pattern:  /admin/tree/new
+    defaults: { _controller: QuestionKeyBundle:AdminTreeNew:index }
+    methods:  [GET,POST]
+
+questionkey_admin_tree_show:
+    pattern:  /admin/tree/{treeId}
+    defaults: { _controller: QuestionKeyBundle:AdminTree:index }
+    methods:  [GET]
+
+questionkey_admin_tree_edit:
+    pattern:  /admin/tree/{treeId}/edit
+    defaults: { _controller: QuestionKeyBundle:AdminTree:edit }
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_published_list:
+    pattern:  /admin/tree/{treeId}/versionpublished
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionPublishedList:index }
+    methods:  [GET]
+
+questionkey_admin_tree_version_list:
+    pattern:  /admin/tree/{treeId}/version
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionList:index }
+    methods:  [GET]
+
+questionkey_admin_tree_version_show:
+    pattern:  /admin/tree/{treeId}/version/{versionId}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:index}
+    methods:  [GET]
+
+questionkey_admin_tree_version_edit:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/edit
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:edit}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_publish:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/publish
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:publish}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_new_version:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/newVersion
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newVersion}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_list:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeList }
+    methods:  [GET]
+
+questionkey_admin_tree_version_node_list_end_nodes:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/nodeEndNodes
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListEndNodes }
+    methods:  [GET]
+
+questionkey_admin_tree_version_node_new:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/new
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newNode}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_show:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:index}
+    methods:  [GET]
+
+questionkey_admin_tree_version_node_edit:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/edit
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:edit}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_delete:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/delete
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:delete}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_make_start_node:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/makeStart
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:makeStart}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_stacktrace:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/stacktrace
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:stacktrace}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_option_new:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/new
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:newOption}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_option_show:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/{optionId}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOption:index}
+    methods:  [GET]
+
+questionkey_admin_tree_version_node_option_edit:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/{optionId}/edit
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOption:edit}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_option_delete:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/{optionId}/delete
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOption:delete}
+    methods:  [GET,POST]
+
+questionkey_admin_visitor_session_list:
+    pattern:  /admin/visitorsession
+    defaults: { _controller: QuestionKeyBundle:AdminVisitorSessionList:index }
+    methods:  [GET]
+
+questionkey_admin_visitor_session_show:
+    pattern:  /admin/visitorsession/{sessionId}
+    defaults: { _controller: QuestionKeyBundle:AdminVisitorSession:index }
+    methods:  [GET]
+
+questionkey_admin_visitor_session_ran_tree_show:
+    pattern:  /admin/visitorsession/{sessionId}/ranTreeVersion/{ranTreeVersionId}
+    defaults: { _controller: QuestionKeyBundle:AdminVisitorSessionRanTreeVersion:index }
+    methods:  [GET]
+
+questionkey_you:
+    pattern:  /you
+    defaults: { _controller: QuestionKeyBundle:Index:you }
+    methods:  [GET]

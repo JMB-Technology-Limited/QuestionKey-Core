@@ -1,0 +1,36 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li class="active">Trees</li>
+  </ol>
+
+  {% if trees %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Tree</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for tree in trees %}
+					<tr>
+						<td>{{ tree.titleAdmin }}</td>
+						<td class="action-link"><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}" class="btn btn-default">View</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No trees</p>
+	{% endif %}
+
+{% endblock %}

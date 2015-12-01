@@ -1,0 +1,49 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li class="active">Version: {{ treeVersion.titleAdmin }}</li>
+  </ol>
+
+
+
+
+  {% if treeVersion.fromOldVersion %}
+    <p>
+      Created from old version: <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersion.fromOldVersion.id }) }}">{{ treeVersion.fromOldVersion.titleAdmin }}</a>
+    </p>
+  {% endif %}
+
+  {% if isPublishedVersion %}
+    <p>
+      Published Version!
+    </p>
+  {% endif %}
+
+
+
+  <ul class="list-group">
+    {% if startNode %}
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':startNode.id }) }}" class="btn btn-default">View Start Node</a></li>
+    {% endif %}
+    {% if treeVersion.fromOldVersion %}
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersion.fromOldVersion.id }) }}" class="btn btn-default">View old version this was created from</a></li>
+    {% endif %}
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list_end_nodes', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes (End Nodes)</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Node</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_new_version', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Version from this version</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_publish', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">Publish this Version</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_edit', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">Edit</a></li>
+  </ul>
+
+
+{% endblock %}

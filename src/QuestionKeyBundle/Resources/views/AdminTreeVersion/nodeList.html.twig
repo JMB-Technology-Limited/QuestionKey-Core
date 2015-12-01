@@ -1,0 +1,42 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+    <li class="active">Nodes</li>
+  </ol>
+
+  {% if nodes %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Title</th>
+          <th>Body HTML</th>
+          <th>Body Text</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for node in nodes %}
+					<tr>
+						<td>{{ node.title }}</td>
+  					<td>{{ node.bodyHTML }}</td>
+  					<td>{{ node.bodyText }}</td>
+						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-default">View</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No nodes</p>
+	{% endif %}
+
+{% endblock %}

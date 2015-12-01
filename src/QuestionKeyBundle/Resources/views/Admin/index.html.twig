@@ -1,0 +1,21 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li class="active">Admin</li>
+  </ol>
+
+
+  <ul class="list-group">
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_list', { }) }}" class="btn btn-default">Trees</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_visitor_session_list', { }) }}" class="btn btn-default">Sessions</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_new', { }) }}" class="btn btn-warning">Tree - New</a></li>
+  </ul>
+
+{% endblock %}

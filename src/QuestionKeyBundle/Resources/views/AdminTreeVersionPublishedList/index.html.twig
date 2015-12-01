@@ -1,0 +1,45 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li class="active">Versions Published</li>
+  </ol>
+
+
+
+    {% if treeVersionsPublished %}
+  		<table class="table table-striped">
+  			<thead>
+  				<tr>
+  					<th>Version</th>
+            <th>At</th>
+            <th>By</th>
+            <th>Comment (Admin)</th>
+  					<th></th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  				{% for treeVersionPublished in treeVersionsPublished %}
+  					<tr>
+  						<td>{{ treeVersionPublished.treeVersion.titleAdmin }}</td>
+              <td>{{ treeVersionPublished.publishedAt |date("F jS \\a\\t g:ia") }}</td>
+              <td>{% if treeVersionPublished.publishedBy  %}{{ treeVersionPublished.publishedBy.email }}{% endif %}</td>
+              <td>{{ treeVersionPublished.commentPublishedAdmin }}</td>
+  						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersionPublished.treeVersion.id }) }}" class="btn btn-default">View Version</a></td>
+  					</tr>
+  				{% endfor %}
+  			</tbody>
+  		</table>
+  	{% else %}
+  		<p>No versions published</p>
+  	{% endif %}
+
+{% endblock %}

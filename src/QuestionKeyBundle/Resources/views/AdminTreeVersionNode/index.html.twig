@@ -1,0 +1,118 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+    <li class="active">Node: {{ node.title }}</li>
+  </ol>
+
+
+  {% if incomingNodeOptions %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Incoming Title</th>
+          <th>Body Text</th>
+          <th>Body HTML</th>
+          <th>Source</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for nodeOption in incomingNodeOptions %}
+          <tr>
+            <td>{{ nodeOption.title }}</td>
+            <td>{{ nodeOption.bodyText }}</td>
+            <td>{{ nodeOption.bodyHTML }}</td>
+            <td>{{ nodeOption.node.title }}
+            <td class="action-link">
+              <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
+              <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}" class="btn btn-default">View Source Node</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No incoming node options</p>
+  {% endif %}
+
+  {% if isStartNode %}
+    <p>Is Start Node!</p>
+  {% endif %}
+
+   <div class="well">
+
+    <p>Public ID: {{ node.publicId }}</p>
+
+    <p>Body Text: {{ node.bodyText }}</p>
+
+    <p>Body HTML: {{ node.bodyHTML }}</p>
+
+    {% if node.fromOldVersion %}
+      <p>
+        Created from old version:
+        <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':node.fromOldVersion.treeVersion.id,'nodeId':node.fromOldVersion.id }) }}">{{ node.fromOldVersion.title }}</a>
+      </p>
+    {% endif %}
+
+  </div>
+
+
+
+  {% if nodeOptions %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Outgoing Title</th>
+          <th>Body Text</th>
+          <th>Body HTML</th>
+          <th>Sort</th>
+          <th>Destination</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for nodeOption in nodeOptions %}
+          <tr>
+            <td>{{ nodeOption.title }}</td>
+            <td>{{ nodeOption.bodyText }}</td>
+            <td>{{ nodeOption.bodyHTML }}</td>
+            <td>{{ nodeOption.sort }}</td>
+            <td>{{ nodeOption.destinationNode.title }}
+            <td class="action-link">
+              <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
+              <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.destinationNode.id }) }}" class="btn btn-default">View Destination Node</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No outgoing node options</p>
+  {% endif %}
+
+
+
+  <ul class="list-group">
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_stacktrace', {'treeId':tree.id , 'versionId':treeVersion.id,'nodeId':node.id  }) }}" class="btn btn-default">Stacktrace</a></li>
+    {% if node.fromOldVersion %}
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':node.fromOldVersion.treeVersion.id,'nodeId':node.fromOldVersion.id }) }}" class="btn btn-default">View old version this was created from</a></li>
+    {% endif %}
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_edit', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">EDIT</a></li>
+    {% if not isStartNode %}
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_make_start_node', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Make Starting Node</a></li>
+    {% endif %}
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_new', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">New Node Option</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_delete', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-danger">DELETE</a></li>
+  </ul>
+
+{% endblock %}

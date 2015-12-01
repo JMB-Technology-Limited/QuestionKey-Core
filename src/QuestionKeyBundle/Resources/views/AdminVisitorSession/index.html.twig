@@ -1,0 +1,39 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li class="active">Session: {{ session.id }}</li>
+  </ol>
+
+
+    {% if treeVersionsRan %}
+  		<table class="table table-striped">
+  			<thead>
+  				<tr>
+  					<th>ID</th>
+  					<th>Tree</th>
+  					<th>Version</th>
+  					<th></th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  				{% for treeVersionRan in treeVersionsRan %}
+  					<tr>
+  						<td>{{ treeVersionRan.id }}</td>
+  						<td>{{ treeVersionRan.treeVersion.tree.titleAdmin }}</td>
+  						<td>{{ treeVersionRan.treeVersion.titleAdmin }}</td>
+  						<td class="action-link"><a href="{{ path('questionkey_admin_visitor_session_ran_tree_show', {'sessionId':session.id ,'ranTreeVersionId':treeVersionRan.id}) }}" class="btn btn-default">View</a></td>
+  					</tr>
+  				{% endfor %}
+  			</tbody>
+  		</table>
+  	{% else %}
+  		<p>No Trees Ran</p>
+  	{% endif %}
+{% endblock %}

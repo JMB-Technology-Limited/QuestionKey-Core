@@ -1,0 +1,32 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+      <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+      <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+      <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+      <li class="active">New Version from this version</li>
+    </ol>
+
+
+    <section class="">
+    		<form class="styled" action="" method="post" {{ form_enctype(form) }}>
+
+    			{{ form_errors(form) }}
+
+          {{ form_row(form.title) }}
+
+    			{{ form_rest(form) }}
+
+    			<input type="submit" value="Create New Version from this version" />
+    		</form>
+
+    	</section>
+
+{% endblock %}

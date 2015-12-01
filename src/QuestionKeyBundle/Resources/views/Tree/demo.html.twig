@@ -1,0 +1,31 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <p>Your tree is:</p>
+
+  <a href="" onclick="if (tree) { tree.start(); $(this).hide(); }; return false; ">Start Tree!</a>
+
+  <div id="DemoHere">
+  </div>
+
+{% endblock %}
+
+{% block javascript %}
+  {% javascripts
+      '@QuestionKeyBundle/Resources/public/js/external/normal-jquery-bootstrap-v1.js' %}
+      <script src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+  <script>
+    var treeId = '{{ tree.publicId }}';
+    var tree;
+    $( document ).ready(function() {
+      tree = new NormalTree(document.location.host, treeId, "DemoHere", {});
+    });
+  </script>
+{% endblock %}

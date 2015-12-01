@@ -1,0 +1,35 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li class="active">Visitor Sessions</li>
+  </ol>
+
+  {% if sessions %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for session in sessions %}
+					<tr>
+						<td>{{ session.id }}</td>
+						<td class="action-link"><a href="{{ path('questionkey_admin_visitor_session_show', {'sessionId':session.id }) }}" class="btn btn-default">View</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No Sessions</p>
+	{% endif %}
+
+{% endblock %}
