@@ -17,6 +17,11 @@ class AdminNodeEditType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
 
+        $builder->add('titleAdmin', 'text', array(
+            'required' => true,
+            'label'=>'Title (For Admins)'
+        ));
+        
         $builder->add('title', 'text', array(
             'required' => true,
             'label'=>'Title'

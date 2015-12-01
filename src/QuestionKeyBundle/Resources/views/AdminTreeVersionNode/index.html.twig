@@ -11,7 +11,7 @@
     <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
     <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
     <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
-    <li class="active">Node: {{ node.title }}</li>
+    <li class="active">Node: {{ node.titleAdmin }}</li>
   </ol>
 
 
@@ -32,7 +32,7 @@
             <td>{{ nodeOption.title }}</td>
             <td>{{ nodeOption.bodyText }}</td>
             <td>{{ nodeOption.bodyHTML }}</td>
-            <td>{{ nodeOption.node.title }}
+            <td>{{ nodeOption.node.titleAdmin }}
             <td class="action-link">
               <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
               <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}" class="btn btn-default">View Source Node</a>
@@ -89,7 +89,7 @@
             <td>{{ nodeOption.bodyText }}</td>
             <td>{{ nodeOption.bodyHTML }}</td>
             <td>{{ nodeOption.sort }}</td>
-            <td>{{ nodeOption.destinationNode.title }}
+            <td>{{ nodeOption.destinationNode.titleAdmin }}
             <td class="action-link">
               <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
               <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.destinationNode.id }) }}" class="btn btn-default">View Destination Node</a>

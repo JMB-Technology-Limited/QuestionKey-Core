@@ -36,6 +36,12 @@ class Node
     */
     private $treeVersion;
 
+    /**
+    * @var string
+    *
+    * @ORM\Column(name="title_admin", type="string", length=250, nullable=false)
+    */
+    private $titleAdmin = '';
 
     /**
     * @var string
@@ -112,6 +118,16 @@ class Node
         $this->treeVersion = $treeVersion;
     }
 
+    public function getTitleAdmin()
+    {
+        return $this->titleAdmin ? $this->titleAdmin : $this->title;
+    }
+
+    public function setTitleAdmin($title)
+    {
+        $this->titleAdmin = $title;
+    }
+
     public function getTitle()
     {
         return $this->title;
@@ -181,7 +197,7 @@ class Node
     }
 
     public function __toString () {
-        return $this->title. " (ID: ".$this->publicId.")";
+        return ( $this->titleAdmin ? $this->titleAdmin : $this->title ) . " (ID: ".$this->publicId.")";
     }
 
 

@@ -217,6 +217,7 @@ class AdminTreeVersionController extends Controller
                 $doctrine = $this->getDoctrine()->getManager();
                 $node = new Node();
                 $node->setTreeVersion($this->treeVersion);
+                $node->setTitleAdmin($form->get('titleAdmin')->getData());
                 $node->setTitle($form->get('title')->getData());
                 $node->setBodyText($form->get('body_text')->getData());
                 $node->setBodyHTML($form->get('body_html')->getData());
