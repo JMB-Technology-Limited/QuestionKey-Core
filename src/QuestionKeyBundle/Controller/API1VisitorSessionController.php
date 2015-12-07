@@ -120,7 +120,7 @@ class API1VisitorSessionController extends Controller
         }
 
         $response = new Response($func . "(" . json_encode($data) . ")");
-        $response->headers->set('Content-Type', 'application/jsonp');
+        $response->headers->set('Content-Type', 'text/javascript');
 
         return $response;
 
