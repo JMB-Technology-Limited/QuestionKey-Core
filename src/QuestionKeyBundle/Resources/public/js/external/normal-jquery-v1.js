@@ -3,7 +3,7 @@
  *  @link https://github.com/QuestionKey/QuestionKey-Core
  */
 
-function NormalTree(treeServer, treeId, divId, options) {
+function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options) {
   this.options = $.extend({
       'hasSSL':true,
       'forceSSL':false,
@@ -19,7 +19,7 @@ function NormalTree(treeServer, treeId, divId, options) {
       this.serverURL = this.options.serverURLNotSSL;
   }
   this.treeId = treeId;
-  this.divId = divId;
+  this.targetSelector = targetSelector;
   this.treeData = null;
   this.currentNodeId = null;
   this.globalVariableName = null;
@@ -31,11 +31,11 @@ function NormalTree(treeServer, treeId, divId, options) {
     if (this.treeData) {
       this._start();
     } else {
-      $('#'+this.divId).html('<div class="loading">Loading, Please Wait</div>');
+      $(this.targetSelector).html('<div class="loading">Loading, Please Wait</div>');
     }
   };
   this._start = function() {
-    $('#'+this.divId).html('<div class="title"></div>'+
+    $(this.targetSelector).html('<div class="title"></div>'+
     '<div class="body"></div>'+
     '<div class="optionWrapper"></div>'+
     '<div class="restart"><a href="#" onclick="window.'+this.globalVariableName+'.restart(); return false;">Restart</a></div>');
@@ -55,11 +55,11 @@ function NormalTree(treeServer, treeId, divId, options) {
   }
   this._showNode = function() {
     var node = this.treeData.nodes[this.currentNodeId];
-    $('#'+this.divId+' .title').html(node.title);
+    $(this.targetSelector).find('.title').html(node.title);
     if (node.body_text) {
-      $('#'+this.divId+' .body').html(node.body_text); // TODO escape!
+      $(this.targetSelector).find('.body').html(node.body_text); // TODO escape!
     } else if (node.body_html) {
-        $('#'+this.divId+' .body').html(node.body_html);
+        $(this.targetSelector).find('.body').html(node.body_html);
     }
     var optionsHTML = '';
     for(i in node.options) {
@@ -70,7 +70,7 @@ function NormalTree(treeServer, treeId, divId, options) {
       optionsHTML += '</form>';
       optionsHTML += '</div>';
     }
-    $('#'+this.divId+' .optionWrapper').html(optionsHTML);
+    $(this.targetSelector).find('.optionWrapper').html(optionsHTML);
     // Stats
     if (this.options.logUserActions) {
         var data = {
