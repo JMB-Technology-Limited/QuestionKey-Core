@@ -167,12 +167,12 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
           this._showNode();
       }
   };
-  var globalRefNum = Math.floor(Math.random() * 10000000) + 1;
-  while("NormalTree"+globalRefNum in window) {
-    globalRefNum = Math.floor(Math.random() * 10000000) + 1;
+  var globalRefNum = Math.floor(Math.random() * 999999999) + 1;
+  while("QuestionKeyNormalTree"+globalRefNum in window) {
+    globalRefNum = Math.floor(Math.random() * 999999999) + 1;
   }
-  window["NormalTree"+globalRefNum] = this;
-  this.globalVariableName = "NormalTree"+globalRefNum;
+  window["QuestionKeyNormalTree"+globalRefNum] = this;
+  this.globalVariableName = "QuestionKeyNormalTree"+globalRefNum;
   $.ajax({
     context: this,
     dataType: "jsonp",
