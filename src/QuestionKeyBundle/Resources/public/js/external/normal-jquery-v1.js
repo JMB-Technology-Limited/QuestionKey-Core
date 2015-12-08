@@ -28,9 +28,11 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     this.theme = $.extend({
         'loadingHTML':function(data) { return '<div class="loading">Loading, Please Wait</div>'; },
         'bodyHTML':function(data) {
-            return '<div class="title"></div>'+
+            return '<div class="node">'+
+                '<div class="title"></div>'+
                 '<div class="body"></div>'+
-                '<form class="optionsWrapper" onsubmit="var id=$(this).find(\'input.option:checked\').val(); if (id) {'+data.this+'.selectOption(id);} return false;"><div class="optionsList"></div><input type="submit"></form>'+
+                '<form class="optionsWrapper" onsubmit="var id=$(this).find(\'input.option:checked\').val(); if (id) {'+data.this+'.selectOption(id);} return false;"><div class="optionsList"></div><input type="submit" value="Next"></form>'+
+                '</div>'+
                 '<div class="restart"><a href="#" onclick="'+ data.resetJavaScript +'; return false;">Restart</a></div>'+
                 '<div class="previousAnswersWrapper" style="display: none;"><table class="previousAnswersTable"><tr><th>Previous Answers</th><th>&nbsp;</th></table></div>';
         },
@@ -47,7 +49,8 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         'optionHTML':function(data) {
             return '<div class="option">'+
                 '<label>'+
-                '<input name="option" class="option" type="radio" value="'+data.option.id+'">'+data.option.title+  // TODO escape!
+                '<input name="option" class="option" type="radio" value="'+data.option.id+'">'+
+                '<span class="title">'+data.option.title+'</span>'+  // TODO escape!
                 '</label>'+
                 '</div>';
         }
