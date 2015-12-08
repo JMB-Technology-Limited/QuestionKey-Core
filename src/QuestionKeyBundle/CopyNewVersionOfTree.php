@@ -58,6 +58,7 @@ class CopyNewVersionOfTree
             $newNodeOption->setTitle($nodeOption->getTitle());
             $newNodeOption->setBodyHTML($nodeOption->getBodyHTML());
             $newNodeOption->setBodyText($nodeOption->getBodyText());
+            $newNodeOption->setSort($nodeOption->getSort());
             $newNodeOption->setFromOldVersion($nodeOption);
             $this->doctrine->persist($newNodeOption);
         }
