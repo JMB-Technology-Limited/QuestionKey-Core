@@ -42,7 +42,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         'bodyselectorPreviousAnswersList':'.previousAnswersTable',
         'bodyselectorPreviousAnswerItem':'.previousAnswersTable tr.answer',
         'previousAnswerHTML':function(data) {
-            return '<tr class="answer"><td>'+data.node.title_previous_answers+'</td><td>'+data.nodeOption.title+'</td></tr>'; // TODO escape!
+            return '<tr class="answer"><td>'+data.node.title_previous_answers+'</td><td>'+data.nodeOption.title+'</td><td><a href="#" onclick="'+ data.this +'.goBackTo('+data.stackPos+'); return false;">Change This</a></td></tr>'; // TODO escape!
         },
         'optionHTML':function(data) {
             return '<div class="option">'+
@@ -61,11 +61,11 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
   }
   this.targetSelector = targetSelector;
   this.treeData = null;
-  this.currentNodeId = null;
   this.globalVariableName = null;
   this.sessionId = null;
   this.sessionRanTreeVersionId = null;
   this.started = false;
+  this.stack = [];
   this.start = function() {
     this.started = true;
     if (this.treeData) {
@@ -87,15 +87,15 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     this._showStartNode();
   }
   this._showStartNode = function() {
-    this.currentNodeId = this.treeData.start_node.id;
     if (this.options.showPreviousAnswers) {
         $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersWrapper).hide();
         $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswerItem).remove();
     }
+    this.stack = [ { 'nodeId': this.treeData.start_node.id, 'nodeOptionId':null, 'goneBackTo': false  } ];
     this._showNode();
   }
   this._showNode = function() {
-    var node = this.treeData.nodes[this.currentNodeId];
+    var node = this.treeData.nodes[this.stack[this.stack.length - 1].nodeId];
     $(this.targetSelector).find(this.theme.bodySelectorTitle).html(node.title);
     if (node.body_text) {
       $(this.targetSelector).find(this.theme.bodySelectorBody).text(node.body_text);
@@ -123,7 +123,9 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
             'ran_tree_version_id': this.sessionRanTreeVersionId,
             'tree_id': this.options.treeId,
             'tree_version_id': this.treeData.version.public_id,
-            'node_id': this.currentNodeId,
+            'node_id': this.stack[this.stack.length - 1].nodeId,
+            'node_option_id': this.stack[this.stack.length - 1].nodeOptionId,
+            'gone_back_to': this.stack[this.stack.length - 1].goneBackTo,
         };
         $.ajax({
             context: this,
@@ -141,18 +143,30 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     }
   };
   this.selectOption = function(optionId) {
-    var node = this.treeData.nodes[this.currentNodeId];
+    var node = this.treeData.nodes[this.stack[this.stack.length - 1].nodeId];
     if (!node.title_previous_answers) {
         node.title_previous_answers = node.title;
     }
     var option = node.options[optionId];
-    this.currentNodeId = option.destination_node.id;
     if (this.options.showPreviousAnswers) {
         $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersWrapper).show();
-        $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersList).append(this.theme.previousAnswerHTML({'node':node, 'nodeOption':option}));
+        $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersList).append(this.theme.previousAnswerHTML({'node':node, 'nodeOption':option,'stackPos':this.stack.length, 'this':'window.'+this.globalVariableName}));
     }
+    this.stack.push({ 'nodeId':option.destination_node.id, 'nodeOptionId':option.id, 'goneBackTo': false });
     this._showNode();
-  }
+  };
+  this.goBackTo = function(stackPos) {
+      if (stackPos < 2) {
+          this.restart();
+      } else {
+          while(this.stack.length > stackPos) {
+              this.stack.pop();
+              $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswerItem).last().remove();
+          }
+          this.stack[this.stack.length - 1].goneBackTo = true;
+          this._showNode();
+      }
+  };
   var globalRefNum = Math.floor(Math.random() * 10000000) + 1;
   while("NormalTree"+globalRefNum in window) {
     globalRefNum = Math.floor(Math.random() * 10000000) + 1;
