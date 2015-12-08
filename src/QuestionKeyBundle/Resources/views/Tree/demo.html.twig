@@ -22,10 +22,9 @@
       <script src="{{ asset_url }}"></script>
   {% endjavascripts %}
   <script>
-    var treeId = '{{ tree.publicId }}';
     var tree;
     $( document ).ready(function() {
-      tree = new QuestionKeyNormalTree(document.location.host, treeId, "#DemoHere", {'logUserActions':false});
+      tree = new QuestionKeyNormalTree("#DemoHere", {'treeId':'{{ tree.publicId|e('js') }}', 'logUserActions':false});
     });
   </script>
 {% endblock %}

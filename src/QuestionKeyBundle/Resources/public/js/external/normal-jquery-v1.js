@@ -3,14 +3,27 @@
  *  @link https://github.com/QuestionKey/QuestionKey-Core
  */
 
-function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options, theme) {
+function QuestionKeyNormalTree(targetSelector, options, theme) {
   this.options = $.extend({
+      // required
+      'treeServer':null,
+      'treeId':null,
+      // optional
       'hasSSL':true,
       'forceSSL':false,
-      'serverURLSSL':'https://' + treeServer,
-      'serverURLNotSSL':'http://' + treeServer,
-      'logUserActions':true
+      'serverURLSSL':null,
+      'serverURLNotSSL':null,
+      'logUserActions':true,
   }, options || {});
+  if (!this.options.treeServer) {
+      this.options.treeServer = document.location.host;
+  }
+  if (!this.options.serverURLSSL) {
+      this.options.serverURLSSL = 'https://' + this.options.treeServer;
+  }
+  if (!this.options.serverURLNotSSL) {
+      this.options.serverURLNotSSL = 'http://' + this.options.treeServer;
+  }
     this.theme = $.extend({
         'loadingHTML':function(data) { return '<div class="loading">Loading, Please Wait</div>'; },
         'bodyHTML':function(data) {
@@ -37,7 +50,6 @@ function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options, them
   } else {
       this.serverURL = this.options.serverURLNotSSL;
   }
-  this.treeId = treeId;
   this.targetSelector = targetSelector;
   this.treeData = null;
   this.currentNodeId = null;
@@ -91,7 +103,7 @@ function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options, them
         var data = {
             'session_id': this.sessionId,
             'ran_tree_version_id': this.sessionRanTreeVersionId,
-            'tree_id': this.treeId,
+            'tree_id': this.options.treeId,
             'tree_version_id': this.treeData.version.public_id,
             'node_id': this.currentNodeId,
         };
@@ -125,7 +137,7 @@ function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options, them
   $.ajax({
     context: this,
     dataType: "jsonp",
-    url: this.serverURL + '/api/v1/tree/' + this.treeId + '/data.jsonp?callback=?',
+    url: this.serverURL + '/api/v1/tree/' + this.options.treeId + '/data.jsonp?callback=?',
     success: function(data) {
       this.treeData = data;
       if (this.started) {
