@@ -14,7 +14,8 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
       'serverURLSSL':null,
       'serverURLNotSSL':null,
       'logUserActions':true,
-      'showPreviousAnswers':true
+      'showPreviousAnswers':true,
+      'callBackAfterDrawNode':null,
   }, options || {});
   if (!this.options.treeServer) {
       this.options.treeServer = document.location.host;
@@ -122,6 +123,9 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         $(this.targetSelector).find(this.theme.bodySelectorOptionsList).html(optionsHTML);
     } else {
         $(this.targetSelector).find(this.theme.bodySelectorOptionsWrapper).hide();
+    }
+    if (this.options.callBackAfterDrawNode) {
+        this.options.callBackAfterDrawNode({ 'node':node });
     }
     // Stats
     if (this.options.logUserActions) {
