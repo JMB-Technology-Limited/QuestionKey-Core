@@ -14,6 +14,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
       'serverURLSSL':null,
       'serverURLNotSSL':null,
       'logUserActions':true,
+      'showPreviousAnswers':true
   }, options || {});
   if (!this.options.treeServer) {
       this.options.treeServer = document.location.host;
@@ -30,11 +31,18 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
             return '<div class="title"></div>'+
                 '<div class="body"></div>'+
                 '<div class="optionWrapper"></div>'+
-                '<div class="restart"><a href="#" onclick="'+ data.resetJavaScript +'; return false;">Restart</a></div>';
+                '<div class="restart"><a href="#" onclick="'+ data.resetJavaScript +'; return false;">Restart</a></div>'+
+                '<div class="previousAnswersWrapper" style="display: none;"><table class="previousAnswersTable"><tr><th>Previous Answers</th><th>&nbsp;</th></table></div>';
         },
         'bodySelectorTitle':'.title',
         'bodySelectorBody':'.body',
         'bodySelectorOptions':'.optionWrapper',
+        'bodyselectorPreviousAnswersWrapper':'.previousAnswersWrapper',
+        'bodyselectorPreviousAnswersList':'.previousAnswersTable',
+        'bodyselectorPreviousAnswerItem':'.previousAnswersTable tr.answer',
+        'previousAnswerHTML':function(data) {
+            return '<tr class="answer"><td>'+data.node.title+'</td><td>'+data.nodeOption.title+'</td></tr>'; // TODO escape!
+        },
         'optionHTML':function(data) {
             return '<div class="option">'+
                 '<form onsubmit="'+data.selectJavaScript+'; return false;">'+
@@ -79,6 +87,10 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
   }
   this._showStartNode = function() {
     this.currentNodeId = this.treeData.start_node.id;
+    if (this.options.showPreviousAnswers) {
+        $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersWrapper).hide();
+        $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswerItem).remove();
+    }
     this._showNode();
   }
   this._showNode = function() {
@@ -126,6 +138,10 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     var node = this.treeData.nodes[this.currentNodeId];
     var option = node.options[optionId];
     this.currentNodeId = option.destination_node.id;
+    if (this.options.showPreviousAnswers) {
+        $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersWrapper).show();
+        $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersList).append(this.theme.previousAnswerHTML({'node':node, 'nodeOption':option}));
+    }
     this._showNode();
   }
   var globalRefNum = Math.floor(Math.random() * 10000000) + 1;
