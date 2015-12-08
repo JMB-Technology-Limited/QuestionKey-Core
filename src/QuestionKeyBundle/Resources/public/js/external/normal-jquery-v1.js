@@ -30,13 +30,14 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         'bodyHTML':function(data) {
             return '<div class="title"></div>'+
                 '<div class="body"></div>'+
-                '<div class="optionWrapper"></div>'+
+                '<form class="optionsWrapper" onsubmit="var id=$(this).find(\'input.option:checked\').val(); if (id) {'+data.this+'.selectOption(id);} return false;"><div class="optionsList"></div><input type="submit"></form>'+
                 '<div class="restart"><a href="#" onclick="'+ data.resetJavaScript +'; return false;">Restart</a></div>'+
                 '<div class="previousAnswersWrapper" style="display: none;"><table class="previousAnswersTable"><tr><th>Previous Answers</th><th>&nbsp;</th></table></div>';
         },
         'bodySelectorTitle':'.title',
         'bodySelectorBody':'.body',
-        'bodySelectorOptions':'.optionWrapper',
+        'bodySelectorOptionsWrapper':'.optionsWrapper',
+        'bodySelectorOptionsList':'.optionsList',
         'bodyselectorPreviousAnswersWrapper':'.previousAnswersWrapper',
         'bodyselectorPreviousAnswersList':'.previousAnswersTable',
         'bodyselectorPreviousAnswerItem':'.previousAnswersTable tr.answer',
@@ -45,9 +46,9 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         },
         'optionHTML':function(data) {
             return '<div class="option">'+
-                '<form onsubmit="'+data.selectJavaScript+'; return false;">'+
-                '<input type="submit" value="'+data.option.title+'">'+  // TODO escape!
-                '</form>'+
+                '<label>'+
+                '<input name="option" class="option" type="radio" value="'+data.option.id+'">'+data.option.title+  // TODO escape!
+                '</label>'+
                 '</div>';
         }
     }, theme || {});
@@ -74,7 +75,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     }
   };
   this._start = function() {
-    $(this.targetSelector).html(this.theme.bodyHTML( {'resetJavaScript':'window.'+this.globalVariableName+'.restart()' } ));
+    $(this.targetSelector).html(this.theme.bodyHTML( {'resetJavaScript':'window.'+this.globalVariableName+'.restart()', 'this':'window.'+this.globalVariableName } ));
     this._showStartNode();
   }
   this.restart = function() {
@@ -105,11 +106,16 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     for(i in node.options) {
       var option = node.options[i];
       optionsHTML += this.theme.optionHTML({
-          'selectJavaScript':  'window.'+this.globalVariableName+'.selectOption(\''+option.id+'\')' ,
+          'selectOptionJavaScript':  'window.'+this.globalVariableName+'.selectOption(\''+option.id+'\')' ,
           'option': option
       });
     }
-    $(this.targetSelector).find(this.theme.bodySelectorOptions).html(optionsHTML);
+    if (optionsHTML) {
+        $(this.targetSelector).find(this.theme.bodySelectorOptionsWrapper).show();
+        $(this.targetSelector).find(this.theme.bodySelectorOptionsList).html(optionsHTML);
+    } else {
+        $(this.targetSelector).find(this.theme.bodySelectorOptionsWrapper).hide();
+    }
     // Stats
     if (this.options.logUserActions) {
         var data = {
