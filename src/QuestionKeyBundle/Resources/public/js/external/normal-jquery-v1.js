@@ -44,13 +44,17 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         'bodyselectorPreviousAnswersList':'.previousAnswersTable',
         'bodyselectorPreviousAnswerItem':'.previousAnswersTable tr.answer',
         'previousAnswerHTML':function(data) {
-            return '<tr class="answer"><td>'+data.node.title_previous_answers+'</td><td>'+data.nodeOption.title+'</td><td><a href="#" onclick="'+ data.this +'.goBackTo('+data.stackPos+'); return false;">Change This</a></td></tr>'; // TODO escape!
+            return '<tr class="answer">'+
+                '<td>'+$("<div>").text(data.node.title_previous_answers).html()+'</td>'+
+                '<td>'+$("<div>").text(data.nodeOption.title).html()+'</td>'+
+                '<td><a href="#" onclick="'+ data.this +'.goBackTo('+data.stackPos+'); return false;">Change This</a></td>'+
+                '</tr>'; // TODO escape!
         },
         'optionHTML':function(data) {
             return '<div class="option">'+
                 '<label>'+
                 '<input name="option" class="option" type="radio" value="'+data.option.id+'">'+
-                '<span class="title">'+data.option.title+'</span>'+  // TODO escape!
+                '<span class="title">'+$("<div>").text(data.option.title).html()+'</span>'+
                 '</label>'+
                 '</div>';
         }
