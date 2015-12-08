@@ -53,6 +53,13 @@ class Node
     /**
     * @var string
     *
+    * @ORM\Column(name="title_previous_answers", type="string", length=250, nullable=true)
+    */
+    private $titlePreviousAnswers = '';
+
+    /**
+    * @var string
+    *
     * @ORM\Column(name="body_text", type="text", nullable=true)
     */
     private $body_text;
@@ -138,6 +145,31 @@ class Node
         $this->title = $title;
     }
 
+
+    /**
+     * Get the value of Title Previous Answers
+     *
+     * @return string
+     */
+    public function getTitlePreviousAnswers()
+    {
+        return $this->titlePreviousAnswers;
+    }
+
+    /**
+     * Set the value of Title Previous Answers
+     *
+     * @param string titlePreviousAnswers
+     *
+     * @return self
+     */
+    public function setTitlePreviousAnswers($titlePreviousAnswers)
+    {
+        $this->titlePreviousAnswers = $titlePreviousAnswers;
+
+        return $this;
+    }
+
     public function getBodyText()
     {
         return $this->body_text;
@@ -199,6 +231,9 @@ class Node
     public function __toString () {
         return ( $this->titleAdmin ? $this->titleAdmin : $this->title ) . " (ID: ".$this->publicId.")";
     }
+
+
+
 
 
 

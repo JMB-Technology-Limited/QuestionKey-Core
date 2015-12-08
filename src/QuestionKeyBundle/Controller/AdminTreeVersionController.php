@@ -218,6 +218,7 @@ class AdminTreeVersionController extends Controller
                 $node = new Node();
                 $node->setTreeVersion($this->treeVersion);
                 $node->setTitleAdmin($form->get('titleAdmin')->getData());
+                $node->setTitlePreviousAnswers($form->get('titlePreviousAnswers')->getData());
                 $node->setTitle($form->get('title')->getData());
                 $node->setBodyText($form->get('body_text')->getData());
                 $node->setBodyHTML($form->get('body_html')->getData());

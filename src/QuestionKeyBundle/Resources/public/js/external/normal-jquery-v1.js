@@ -42,7 +42,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         'bodyselectorPreviousAnswersList':'.previousAnswersTable',
         'bodyselectorPreviousAnswerItem':'.previousAnswersTable tr.answer',
         'previousAnswerHTML':function(data) {
-            return '<tr class="answer"><td>'+data.node.title+'</td><td>'+data.nodeOption.title+'</td></tr>'; // TODO escape!
+            return '<tr class="answer"><td>'+data.node.title_previous_answers+'</td><td>'+data.nodeOption.title+'</td></tr>'; // TODO escape!
         },
         'optionHTML':function(data) {
             return '<div class="option">'+
@@ -142,6 +142,9 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
   };
   this.selectOption = function(optionId) {
     var node = this.treeData.nodes[this.currentNodeId];
+    if (!node.title_previous_answers) {
+        node.title_previous_answers = node.title;
+    }
     var option = node.options[optionId];
     this.currentNodeId = option.destination_node.id;
     if (this.options.showPreviousAnswers) {

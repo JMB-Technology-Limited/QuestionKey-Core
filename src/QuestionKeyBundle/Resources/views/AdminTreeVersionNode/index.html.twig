@@ -55,6 +55,10 @@
 
     <p>Title: {{ node.title }}</p>
 
+    {% if node.titlePreviousAnswers %}
+        <p>Title (Previous Answers): {{ node.titlePreviousAnswers }}</p>
+    {% endif %}
+
     <p>Body Text: {{ node.bodyText | nl2br }}</p>
 
     <p>Body HTML: {{ node.bodyHTML | nl2br }}</p>

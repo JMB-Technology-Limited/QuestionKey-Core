@@ -21,10 +21,15 @@ class AdminNodeEditType extends AbstractType {
             'required' => true,
             'label'=>'Title (For Admins)'
         ));
-        
+
         $builder->add('title', 'text', array(
             'required' => true,
             'label'=>'Title'
+        ));
+
+        $builder->add('titlePreviousAnswers', 'text', array(
+            'required' => true,
+            'label'=>'Title (For Previous Answers)'
         ));
 
 

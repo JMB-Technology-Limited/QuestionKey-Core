@@ -70,6 +70,7 @@ class API1TreeController extends Controller
                 'body_html'=>$node->getBodyHTML(),
                 'body_text'=>$node->getBodyText(),
                 'title'=>$node->getTitle(),
+                'title_previous_answers'=>$node->getTitlePreviousAnswers(),
                 'options'=>array(),
             );
             foreach($nodeOptionRepo->findActiveNodeOptionsForNode($node) as $nodeOption) {
