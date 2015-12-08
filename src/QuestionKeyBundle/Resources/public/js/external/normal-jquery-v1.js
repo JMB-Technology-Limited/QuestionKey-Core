@@ -98,7 +98,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     var node = this.treeData.nodes[this.currentNodeId];
     $(this.targetSelector).find(this.theme.bodySelectorTitle).html(node.title);
     if (node.body_text) {
-      $(this.targetSelector).find(this.theme.bodySelectorBody).html(node.body_text); // TODO escape!
+      $(this.targetSelector).find(this.theme.bodySelectorBody).text(node.body_text);
     } else if (node.body_html) {
         $(this.targetSelector).find(this.theme.bodySelectorBody).html(node.body_html);
     }
