@@ -3,7 +3,7 @@
  *  @link https://github.com/QuestionKey/QuestionKey-Core
  */
 
-function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options) {
+function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options, theme) {
   this.options = $.extend({
       'hasSSL':true,
       'forceSSL':false,
@@ -11,6 +11,25 @@ function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options) {
       'serverURLNotSSL':'http://' + treeServer,
       'logUserActions':true
   }, options || {});
+    this.theme = $.extend({
+        'loadingHTML':function(data) { return '<div class="loading">Loading, Please Wait</div>'; },
+        'bodyHTML':function(data) {
+            return '<div class="title"></div>'+
+                '<div class="body"></div>'+
+                '<div class="optionWrapper"></div>'+
+                '<div class="restart"><a href="#" onclick="'+ data.resetJavaScript +'; return false;">Restart</a></div>';
+        },
+        'bodySelectorTitle':'.title',
+        'bodySelectorBody':'.body',
+        'bodySelectorOptions':'.optionWrapper',
+        'optionHTML':function(data) {
+            return '<div class="option">'+
+                '<form onsubmit="'+data.selectJavaScript+'; return false;">'+
+                '<input type="submit" value="'+data.option.title+'">'+  // TODO escape!
+                '</form>'+
+                '</div>';
+        }
+    }, theme || {});
   if (this.options.hasSSL && this.options.forceSSL) {
       this.serverURL = this.options.serverURLSSL;
   } else if (this.options.hasSSL) {
@@ -31,14 +50,11 @@ function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options) {
     if (this.treeData) {
       this._start();
     } else {
-      $(this.targetSelector).html('<div class="loading">Loading, Please Wait</div>');
+      $(this.targetSelector).html(this.theme.loadingHTML({}));
     }
   };
   this._start = function() {
-    $(this.targetSelector).html('<div class="title"></div>'+
-    '<div class="body"></div>'+
-    '<div class="optionWrapper"></div>'+
-    '<div class="restart"><a href="#" onclick="window.'+this.globalVariableName+'.restart(); return false;">Restart</a></div>');
+    $(this.targetSelector).html(this.theme.bodyHTML( {'resetJavaScript':'window.'+this.globalVariableName+'.restart()' } ));
     this._showStartNode();
   }
   this.restart = function() {
@@ -55,22 +71,21 @@ function QuestionKeyNormalTree(treeServer, treeId, targetSelector, options) {
   }
   this._showNode = function() {
     var node = this.treeData.nodes[this.currentNodeId];
-    $(this.targetSelector).find('.title').html(node.title);
+    $(this.targetSelector).find(this.theme.bodySelectorTitle).html(node.title);
     if (node.body_text) {
-      $(this.targetSelector).find('.body').html(node.body_text); // TODO escape!
+      $(this.targetSelector).find(this.theme.bodySelectorBody).html(node.body_text); // TODO escape!
     } else if (node.body_html) {
-        $(this.targetSelector).find('.body').html(node.body_html);
+        $(this.targetSelector).find(this.theme.bodySelectorBody).html(node.body_html);
     }
     var optionsHTML = '';
     for(i in node.options) {
       var option = node.options[i];
-      optionsHTML += '<div class="option">';
-      optionsHTML += '<form onsubmit="window.'+this.globalVariableName+'.selectOption(\''+option.id+'\'); return false;">';
-      optionsHTML += '<input type="submit" value="'+option.title+'" class="option'+option.id+'">';  // TODO escape!
-      optionsHTML += '</form>';
-      optionsHTML += '</div>';
+      optionsHTML += this.theme.optionHTML({
+          'selectJavaScript':  'window.'+this.globalVariableName+'.selectOption(\''+option.id+'\')' ,
+          'option': option
+      });
     }
-    $(this.targetSelector).find('.optionWrapper').html(optionsHTML);
+    $(this.targetSelector).find(this.theme.bodySelectorOptions).html(optionsHTML);
     // Stats
     if (this.options.logUserActions) {
         var data = {
