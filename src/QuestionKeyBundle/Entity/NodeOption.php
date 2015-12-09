@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
-* @ORM\Table(name="node_option", uniqueConstraints={@ORM\UniqueConstraint(name="public_id", columns={"node_id", "public_id"})})
+* @ORM\Table(name="node_option", uniqueConstraints={@ORM\UniqueConstraint(name="public_id", columns={"tree_version_id", "public_id"})})
 * @ORM\Entity(repositoryClass="QuestionKeyBundle\Entity\NodeOptionRepository")
 * @ORM\HasLifecycleCallbacks
 *  @license 3-clause BSD
@@ -25,12 +25,20 @@ class NodeOption
     private $id;
 
     /**
+    * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\TreeVersion")
+    * @ORM\JoinColumn(name="tree_version_id", referencedColumnName="id", nullable=false)
+    */
+    private $treeVersion;
+
+    /**
     * @ORM\Column(name="public_id", type="string", length=250, nullable=false)
     * @Assert\NotBlank()
     */
     private $publicId;
 
     /**
+    * This is the source node
+    *
     * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\Node", inversedBy="nodeOptionsSource")
     * @ORM\JoinColumn(name="node_id", referencedColumnName="id", nullable=false)
     */
@@ -94,6 +102,16 @@ class NodeOption
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function getTreeVersion()
+    {
+        return $this->treeVersion;
+    }
+
+    public function setTreeVersion($treeVersion)
+    {
+        $this->treeVersion = $treeVersion;
     }
 
     public function getPublicId()

@@ -64,18 +64,21 @@ class LoopTest extends BaseTestWithDataBase {
         $this->em->persist($endNode);
 
         $nodeOption1 = new NodeOption();
+        $nodeOption1->setTreeVersion($treeVersion);
         $nodeOption1->setNode($startNode);
         $nodeOption1->setDestinationNode($middleNode);
         $nodeOption1->setPublicId('no1');
         $this->em->persist($nodeOption1);
 
         $nodeOption2 = new NodeOption();
+        $nodeOption2->setTreeVersion($treeVersion);
         $nodeOption2->setNode($middleNode);
         $nodeOption2->setDestinationNode($middleNode);
         $nodeOption2->setPublicId('no2');
         $this->em->persist($nodeOption2);
 
         $nodeOption3 = new NodeOption();
+        $nodeOption3->setTreeVersion($treeVersion);
         $nodeOption3->setNode($middleNode);
         $nodeOption3->setDestinationNode($endNode);
         $nodeOption3->setPublicId('no3');

@@ -42,8 +42,7 @@ class NodeOptionRepository extends EntityRepository
         return $this->getEntityManager()
         ->createQuery(
         'SELECT no FROM QuestionKeyBundle:NodeOption no '.
-        ' JOIN no.node n '.
-        ' WHERE n.treeVersion = :treeVersion '
+        ' WHERE no.treeVersion = :treeVersion '
         )
         ->setParameter('treeVersion', $treeVersion)
         ->getResult();

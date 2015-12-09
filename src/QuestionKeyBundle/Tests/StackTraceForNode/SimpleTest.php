@@ -53,12 +53,14 @@ class SimpleTest extends BaseTestWithDataBase {
         $this->em->persist($otherEndNode);
 
         $nodeOption = new NodeOption();
+        $nodeOption->setTreeVersion($treeVersion);
         $nodeOption->setNode($startNode);
         $nodeOption->setDestinationNode($endNode);
         $nodeOption->setPublicId('option');
         $this->em->persist($nodeOption);
 
         $otherNodeOption = new NodeOption();
+        $otherNodeOption->setTreeVersion($treeVersion);
         $otherNodeOption->setNode($startNode);
         $otherNodeOption->setDestinationNode($otherEndNode);
         $otherNodeOption->setPublicId('optionOther');
@@ -139,12 +141,14 @@ class SimpleTest extends BaseTestWithDataBase {
         $this->em->persist($endNode);
 
         $nodeOption1 = new NodeOption();
+        $nodeOption1->setTreeVersion($treeVersion);
         $nodeOption1->setNode($startNode);
         $nodeOption1->setDestinationNode($middleNode);
         $nodeOption1->setPublicId('no1');
         $this->em->persist($nodeOption1);
 
         $nodeOption2 = new NodeOption();
+        $nodeOption2->setTreeVersion($treeVersion);
         $nodeOption2->setNode($middleNode);
         $nodeOption2->setDestinationNode($endNode);
         $nodeOption2->setPublicId('no2');

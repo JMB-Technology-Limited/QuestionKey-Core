@@ -53,6 +53,7 @@ class CopyNewVersionOfTree
         $nodeOptions = $nodeOptionRepo->findAllNodeOptionsForTreeVersion($this->oldVersion);
         foreach($nodeOptions as $nodeOption) {
             $newNodeOption = new NodeOption();
+            $newNodeOption->setTreeVersion($this->newVersion);
             $newNodeOption->setNode($newNodes[$nodeOption->getNode()->getId()]);
             $newNodeOption->setDestinationNode($newNodes[$nodeOption->getDestinationNode()->getId()]);
             $newNodeOption->setTitle($nodeOption->getTitle());

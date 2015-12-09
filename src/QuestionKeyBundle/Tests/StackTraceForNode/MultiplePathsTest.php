@@ -69,24 +69,28 @@ class MultiplePathsTest extends BaseTestWithDataBase {
         $this->em->persist($endNode);
 
         $nodeOption1 = new NodeOption();
+        $nodeOption1->setTreeVersion($treeVersion);
         $nodeOption1->setNode($startNode);
         $nodeOption1->setDestinationNode($leftNode);
         $nodeOption1->setPublicId('no1');
         $this->em->persist($nodeOption1);
 
         $nodeOption2 = new NodeOption();
+        $nodeOption2->setTreeVersion($treeVersion);
         $nodeOption2->setNode($startNode);
         $nodeOption2->setDestinationNode($rightNode);
         $nodeOption2->setPublicId('no2');
         $this->em->persist($nodeOption2);
 
         $nodeOption3 = new NodeOption();
+        $nodeOption3->setTreeVersion($treeVersion);
         $nodeOption3->setNode($leftNode);
         $nodeOption3->setDestinationNode($endNode);
         $nodeOption3->setPublicId('no3');
         $this->em->persist($nodeOption3);
 
         $nodeOption4 = new NodeOption();
+        $nodeOption4->setTreeVersion($treeVersion);
         $nodeOption4->setNode($rightNode);
         $nodeOption4->setDestinationNode($endNode);
         $nodeOption4->setPublicId('no4');
