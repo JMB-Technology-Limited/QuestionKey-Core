@@ -13,6 +13,7 @@ use QuestionKeyBundle\Form\Type\AdminConfirmDeleteType;
 use QuestionKeyBundle\Entity\NodeOption;
 use QuestionKeyBundle\Entity\TreeVersionStartingNode;
 use QuestionKeyBundle\GetStackTracesForNode;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 /**
@@ -25,6 +26,7 @@ class AdminTreeVersionNodeController extends Controller
 
     protected $tree;
     protected $treeVersion;
+    protected $treeVersionEditable;
     protected $node;
 
     protected function build($treeId, $versionId, $nodeId) {
@@ -44,6 +46,7 @@ class AdminTreeVersionNodeController extends Controller
         if (!$this->treeVersion) {
             return  new Response( '404' );
         }
+        $this->treeVersionEditable = !$treeVersionRepo->hasEverBeenPublished($this->treeVersion);
         // load
         $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
         $this->node = $nodeRepo->findOneBy(array(
@@ -84,6 +87,7 @@ class AdminTreeVersionNodeController extends Controller
             'nodeOptions'=>$nodeOptions,
             'incomingNodeOptions'=>$incomingNodeOptions,
             'isStartNode'=>($treeStartingNode ? ($treeStartingNode->getNode() == $this->node) : false),
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
         ));
 
 
@@ -98,6 +102,9 @@ class AdminTreeVersionNodeController extends Controller
         $return = $this->build($treeId, $versionId, $nodeId);
         if ($return) {
             return $return;
+        }
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
         }
 
         //data
@@ -131,6 +138,9 @@ class AdminTreeVersionNodeController extends Controller
         $return = $this->build($treeId, $versionId, $nodeId);
         if ($return) {
             return $return;
+        }
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
         }
 
         //data
@@ -184,6 +194,9 @@ class AdminTreeVersionNodeController extends Controller
         if ($return) {
             return $return;
         }
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();
@@ -225,6 +238,9 @@ class AdminTreeVersionNodeController extends Controller
         $return = $this->build($treeId, $versionId, $nodeId);
         if ($return) {
             return $return;
+        }
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
         }
 
         //data

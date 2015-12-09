@@ -3,6 +3,7 @@
 namespace QuestionKeyBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use QuestionKeyBundle\Entity\TreeVersion;
 
 /**
  *  @license 3-clause BSD
@@ -50,6 +51,19 @@ class TreeVersionRepository extends EntityRepository
         } else {
             return false;
         }
+    }
+
+    public function hasEverBeenPublished(TreeVersion $treeVersion) {
+        $tvs =  $this->getEntityManager()
+            ->createQuery(
+                ' SELECT tvp FROM QuestionKeyBundle:TreeVersionPublished tvp'.
+                ' WHERE tvp.treeVersion = :treeVersion'
+                )
+            ->setParameter('treeVersion', $treeVersion)
+            ->getResult();
+
+        return (boolean)$tvs;
+
     }
 
 }

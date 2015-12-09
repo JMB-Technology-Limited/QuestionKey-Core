@@ -113,12 +113,16 @@
     {% if node.fromOldVersion %}
       <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':node.fromOldVersion.treeVersion.id,'nodeId':node.fromOldVersion.id }) }}" class="btn btn-default">View old version this was created from</a></li>
     {% endif %}
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_edit', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">EDIT</a></li>
-    {% if not isStartNode %}
-      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_make_start_node', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Make Starting Node</a></li>
+    {% if isTreeVersionEditable %}
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_edit', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">EDIT</a></li>
+        {% if not isStartNode %}
+          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_make_start_node', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Make Starting Node</a></li>
+        {% endif %}
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_new', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">New Node Option</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_delete', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-danger">DELETE</a></li>
+    {% else %}
+        <li class="list-group-item"><em>This tree version can not be edited as it has been published.</em></li>
     {% endif %}
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_new', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">New Node Option</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_delete', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-danger">DELETE</a></li>
   </ul>
 
 {% endblock %}

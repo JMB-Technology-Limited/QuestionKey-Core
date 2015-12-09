@@ -40,10 +40,16 @@
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes</a></li>
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list_end_nodes', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes (End Nodes)</a></li>
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_run', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Run Tree</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Node</a></li>
+    {% if isTreeVersionEditable %}
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Node</a></li>
+    {% endif %}
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_new_version', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Version from this version</a></li>
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_publish', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">Publish this Version</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_edit', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">Edit</a></li>
+    {% if isTreeVersionEditable %}
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_edit', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">Edit</a></li>
+    {% else %}
+        <li class="list-group-item"><em>This tree version can not be edited as it has been published.</em></li>
+    {% endif %}
   </ul>
 
 

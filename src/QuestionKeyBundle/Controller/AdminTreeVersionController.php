@@ -15,6 +15,7 @@ use QuestionKeyBundle\CopyNewVersionOfTree;
 use QuestionKeyBundle\Form\Type\AdminTreeVersionEditType;
 use QuestionKeyBundle\Form\Type\AdminNodeNewType;
 use QuestionKeyBundle\Form\Type\AdminTreeVersionPublishType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  *  @license 3-clause BSD
@@ -27,6 +28,8 @@ class AdminTreeVersionController extends Controller
     protected $tree;
 
     protected $treeVersion;
+
+    protected $treeVersionEditable;
 
     protected function build($treeId, $versionId) {
         $doctrine = $this->getDoctrine()->getManager();
@@ -45,6 +48,7 @@ class AdminTreeVersionController extends Controller
         if (!$this->treeVersion) {
             return  new Response( '404' );
         }
+        $this->treeVersionEditable = !$treeVersionRepo->hasEverBeenPublished($this->treeVersion);
         return null;
     }
 
@@ -73,6 +77,7 @@ class AdminTreeVersionController extends Controller
             'treeVersion'=>$this->treeVersion,
             'startNode'=>($treeStartingNode && $treeStartingNode->getNode() ? $treeStartingNode->getNode() : null),
             'isPublishedVersion'=>($treeVersionPublished ? $treeVersionPublished == $this->treeVersion : null),
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
         ));
 
 
@@ -174,6 +179,9 @@ class AdminTreeVersionController extends Controller
         if ($return) {
             return $return;
         }
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
 
         //data
         $form = $this->createForm(new AdminTreeVersionEditType(), $this->treeVersion);
@@ -206,6 +214,9 @@ class AdminTreeVersionController extends Controller
         $return = $this->build($treeId, $versionId);
         if ($return) {
             return $return;
+        }
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
         }
 
         //data
