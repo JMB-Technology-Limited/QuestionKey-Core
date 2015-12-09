@@ -222,9 +222,6 @@ class Node
     * @ORM\PrePersist()
     */
     public function beforeFirstSave() {
-        if (!$this->publicId) {
-            $this->publicId = \QuestionKeyBundle\QuestionKeyBundle::createKey(1,250);
-        }
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
     }
 

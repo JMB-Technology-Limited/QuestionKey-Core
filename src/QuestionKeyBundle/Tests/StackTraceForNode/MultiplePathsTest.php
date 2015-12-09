@@ -42,10 +42,12 @@ class MultiplePathsTest extends BaseTestWithDataBase {
         $tree = new Tree();
         $tree->setTitleAdmin('Tree');
         $tree->setOwner($user);
+        $tree->setPublicId('tree');
         $this->em->persist($tree);
 
         $treeVersion = new TreeVersion();
         $treeVersion->setTree($tree);
+        $treeVersion->setPublicId('version');
         $this->em->persist($treeVersion);
 
         $startNode = new Node();

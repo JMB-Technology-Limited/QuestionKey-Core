@@ -105,7 +105,6 @@ class VisitorSessionRanTreeVersion
     */
     public function beforeFirstSave() {
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
-        $this->publicId = \QuestionKeyBundle\QuestionKeyBundle::createKey(1,250);
     }
 
 

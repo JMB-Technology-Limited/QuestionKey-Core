@@ -44,6 +44,7 @@ class CopyNewVersionOfTree
             $newNodes[$node->getId()]->setTitle($node->getTitle());
             $newNodes[$node->getId()]->setBodyText($node->getBodyText());
             $newNodes[$node->getId()]->setBodyHTML($node->getBodyHTML());
+            $newNodes[$node->getId()]->setPublicId($node->getPublicId());
             $newNodes[$node->getId()]->setFromOldVersion($node);
             $this->doctrine->persist($newNodes[$node->getId()]);
         }
@@ -60,6 +61,7 @@ class CopyNewVersionOfTree
             $newNodeOption->setBodyHTML($nodeOption->getBodyHTML());
             $newNodeOption->setBodyText($nodeOption->getBodyText());
             $newNodeOption->setSort($nodeOption->getSort());
+            $newNodeOption->setPublicId($nodeOption->getPublicId());
             $newNodeOption->setFromOldVersion($nodeOption);
             $this->doctrine->persist($newNodeOption);
         }

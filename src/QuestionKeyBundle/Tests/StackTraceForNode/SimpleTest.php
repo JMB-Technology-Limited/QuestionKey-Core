@@ -30,11 +30,13 @@ class SimpleTest extends BaseTestWithDataBase {
 
         $tree = new Tree();
         $tree->setTitleAdmin('Tree');
+        $tree->setPublicId('tree');
         $tree->setOwner($user);
         $this->em->persist($tree);
 
         $treeVersion = new TreeVersion();
         $treeVersion->setTree($tree);
+        $treeVersion->setPublicId('version');
         $this->em->persist($treeVersion);
 
         $startNode = new Node();
@@ -118,11 +120,13 @@ class SimpleTest extends BaseTestWithDataBase {
 
         $tree = new Tree();
         $tree->setTitleAdmin('Tree');
+        $tree->setPublicId('tree');
         $tree->setOwner($user);
         $this->em->persist($tree);
 
         $treeVersion = new TreeVersion();
         $treeVersion->setTree($tree);
+        $treeVersion->setPublicId('version');
         $this->em->persist($treeVersion);
 
         $startNode = new Node();

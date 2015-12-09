@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
 * @ORM\Table(name="visitor_session")
-* @ORM\Entity()
+* @ORM\Entity(repositoryClass="QuestionKeyBundle\Entity\VisitorSessionRepository")
 * @ORM\HasLifecycleCallbacks
 *  @license 3-clause BSD
 *  @link https://github.com/QuestionKey/QuestionKey-Core
@@ -74,7 +74,6 @@ class VisitorSession
     */
     public function beforeFirstSave() {
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
-        $this->publicId = \QuestionKeyBundle\QuestionKeyBundle::createKey(1,250);
     }
 
 

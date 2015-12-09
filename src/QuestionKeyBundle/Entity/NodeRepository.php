@@ -27,4 +27,23 @@ class NodeRepository extends EntityRepository
             ->getResult();
     }
 
+    public function doesPublicIdExist($id, TreeVersion $treeVersion)
+    {
+        if ($treeVersion->getId()) {
+            $s =  $this->getEntityManager()
+                ->createQuery(
+                    ' SELECT n FROM QuestionKeyBundle:Node n'.
+                    ' WHERE n.treeVersion = :treeVersion AND n.publicId = :public_id'
+                    )
+                ->setParameter('treeVersion', $treeVersion)
+                ->setParameter('public_id', $id)
+                ->getResult();
+
+            return (boolean)$s;
+        } else {
+            return false;
+        }
+    }
+
+
 }

@@ -1,0 +1,5 @@
+services:
+    my.listener:
+        class: QuestionKeyBundle\EventListener\PrePersistEventListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

@@ -34,4 +34,22 @@ class TreeVersionRepository extends EntityRepository
 
     }
 
+    public function doesPublicIdExist($id, Tree $tree)
+    {
+        if ($tree->getId()) {
+            $tvs =  $this->getEntityManager()
+                ->createQuery(
+                    ' SELECT tv FROM QuestionKeyBundle:TreeVersion tv'.
+                    ' WHERE tv.tree = :tree AND tv.publicId = :public_id'
+                    )
+                ->setParameter('tree', $tree)
+                ->setParameter('public_id', $id)
+                ->getResult();
+
+            return (boolean)$tvs;
+        } else {
+            return false;
+        }
+    }
+
 }

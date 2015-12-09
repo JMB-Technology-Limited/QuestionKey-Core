@@ -124,7 +124,6 @@ class TreeVersion
     * @ORM\PrePersist()
     */
     public function beforeFirstSave() {
-        $this->publicId = \QuestionKeyBundle\QuestionKeyBundle::createKey(1,250);
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
         if (!$this->titleAdmin) {
             $this->titleAdmin = '1';

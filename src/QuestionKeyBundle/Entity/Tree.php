@@ -123,9 +123,6 @@ class Tree
     */
     public function beforeFirstSave() {
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
-        if (!$this->publicId) {
-            $this->publicId = \QuestionKeyBundle\QuestionKeyBundle::createKey(10,100);
-        }
     }
 
 
