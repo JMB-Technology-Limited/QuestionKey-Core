@@ -235,6 +235,7 @@ class AdminTreeVersionNodeController extends Controller
             if ($form->isValid()) {
                 $doctrine = $this->getDoctrine()->getManager();
                 $nodeOption = new NodeOption();
+                $nodeOption->setTreeVersion($this->treeVersion);
                 $nodeOption->setNode($this->node);
                 $nodeOption->setTitle($form->get('title')->getData());
                 $nodeOption->setBodyText($form->get('body_text')->getData());
