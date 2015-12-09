@@ -34,12 +34,12 @@ class VisitorSessionOnNode
     * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\NodeOption")
     * @ORM\JoinColumn(name="node_option_id", referencedColumnName="id", nullable=true)
     */
-    private $nodeOption;
+    private $nodeOption = null;
 
     /**
     * @ORM\Column(name="gone_back_to", type="boolean", nullable=false)
     */
-    private $goneBackTo;
+    private $goneBackTo = false;
 
     /**
     * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\VisitorSessionRanTreeVersion")
