@@ -23,6 +23,8 @@ class API1VisitorSessionController extends Controller
     protected $treeVersion;
     protected $sessionRanTreeVersion;
     protected $node;
+    protected $nodeOption;
+    protected $goneBackTo;
 
     protected function getObjectsForAction(Request $request)
     {
@@ -33,6 +35,7 @@ class API1VisitorSessionController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
         $treeVersionRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
         $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
 
         // Session!
         if ($request->query->get("session_id")) {
@@ -77,15 +80,22 @@ class API1VisitorSessionController extends Controller
 
         // Node!
         if ($this->treeVersion && $this->sessionRanTreeVersion && $request->query->get("node_id")) {
-            $this->node = $nodeRepo->findOneBy(array(
+            $this->node = $request->query->get("node_id") ? $nodeRepo->findOneBy(array(
                 'treeVersion'=>$this->treeVersion,
                 'publicId'=>$request->query->get("node_id"),
-            ));
+            )) : null;
 
             if ($this->node) {
+                $this->nodeOption = $request->query->get("node_option_id") ? $nodeOptionRepo->findOneBy(array(
+                    'treeVersion'=>$this->treeVersion,
+                    'publicId'=>$request->query->get("node_option_id"),
+                )) : null;
+
                 $sessionOnNode = new VisitorSessionOnNode();
                 $sessionOnNode->setNode($this->node);
+                $sessionOnNode->setNodeOption($this->nodeOption);
                 $sessionOnNode->setSessionRanTreeVersion($this->sessionRanTreeVersion);
+                $sessionOnNode->setGoneBackTo(filter_var( $request->query->get("gone_back_to") , FILTER_VALIDATE_BOOLEAN));
                 $doctrine->persist($sessionOnNode);
                 $doctrine->flush();
             }

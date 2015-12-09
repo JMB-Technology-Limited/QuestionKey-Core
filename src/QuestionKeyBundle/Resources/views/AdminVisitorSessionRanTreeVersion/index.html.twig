@@ -6,42 +6,48 @@
 
 {% block main %}
 
-  <ol class="breadcrumb">
-    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-    <li><a href="{{ path('questionkey_admin_visitor_session_show', {'sessionId':session.id }) }}">Session: {{ session.id }}</a></li>
-    <li class="active">Ran Tree: {{ ranTreeVersion.id }}</li>
-  </ol>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_visitor_session_show', {'sessionId':session.id }) }}">Session: {{ session.id }}</a></li>
+        <li class="active">Ran Tree: {{ ranTreeVersion.id }}</li>
+    </ol>
 
-  <p>Ran Tree {{ ranTreeVersion.treeVersion.tree.titleAdmin }} Version {{ ranTreeVersion.treeVersion.titleAdmin }}</p>
+    <p>Ran Tree {{ ranTreeVersion.treeVersion.tree.titleAdmin }} Version {{ ranTreeVersion.treeVersion.titleAdmin }}</p>
 
-  {% if onNodes %}
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>ID</th>
-          <th>Title</th>
-          <th>Body</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for onNode in onNodes %}
-					<tr>
-						<td>{{ onNode.node.id }}</td>
-            <td>{{ onNode.node.title }}</td>
-            <td>
-              {% if onNode.node.bodyHTML %}
-                {{ onNode.node.bodyHTML }}
-              {% else %}
-                {{ onNode.node.bodyText }}
-              {% endif %}
-            </td>
-						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':ranTreeVersion.treeVersion.tree.id ,'versionId':ranTreeVersion.treeVersion.id,'nodeId':onNode.node.id }) }}" class="btn btn-default">View Node</a></td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	{% else %}
-		<p>No Sessions</p>
-	{% endif %}
+    {% if onNodes %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Node Title</th>
+                    <th>Node Body</th>
+                    <th>Node Option Title</th>
+                    <th>Went Back To</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for onNode in onNodes %}
+                <tr>
+                    <td>{{ onNode.node.id }}</td>
+                    <td>{{ onNode.node.titleAdmin }}</td>
+                    <td>
+                        {% if onNode.node.bodyHTML %}
+                            {{ onNode.node.bodyHTML }}
+                        {% else %}
+                            {{ onNode.node.bodyText|nl2br }}
+                        {% endif %}
+                    </td>
+                    <td>{%  if onNode.nodeOption %}{{ onNode.nodeOption.title }}{% endif %}</td>
+                    <td>{% if onNode.goneBackTo %}Yes{% else %}-{% endif %}</td>
+                    <td class="action-link">
+                        <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':ranTreeVersion.treeVersion.tree.id ,'versionId':ranTreeVersion.treeVersion.id,'nodeId':onNode.node.id }) }}" class="btn btn-default">View Node</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No Nodes</p>
+    {% endif %}
 {% endblock %}

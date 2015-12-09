@@ -30,6 +30,16 @@ class VisitorSessionOnNode
     */
     private $node;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\NodeOption")
+    * @ORM\JoinColumn(name="node_option_id", referencedColumnName="id", nullable=true)
+    */
+    private $nodeOption;
+
+    /**
+    * @ORM\Column(name="gone_back_to", type="boolean", nullable=false)
+    */
+    private $goneBackTo;
 
     /**
     * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\VisitorSessionRanTreeVersion")
@@ -66,6 +76,56 @@ class VisitorSessionOnNode
         $this->node = $node;
     }
 
+
+        /**
+         * Get the value of Node Option
+         *
+         * @return mixed
+         */
+        public function getNodeOption()
+        {
+            return $this->nodeOption;
+        }
+
+        /**
+         * Set the value of Node Option
+         *
+         * @param mixed nodeOption
+         *
+         * @return self
+         */
+        public function setNodeOption($nodeOption)
+        {
+            $this->nodeOption = $nodeOption;
+
+            return $this;
+        }
+
+        /**
+         * Get the value of Gone Back To
+         *
+         * @return mixed
+         */
+        public function getGoneBackTo()
+        {
+            return $this->goneBackTo;
+        }
+
+        /**
+         * Set the value of Gone Back To
+         *
+         * @param mixed goneBackTo
+         *
+         * @return self
+         */
+        public function setGoneBackTo($goneBackTo)
+        {
+            $this->goneBackTo = $goneBackTo;
+
+            return $this;
+        }
+
+
     public function getSessionRanTreeVersion()
     {
         return $this->sessionRanTreeVersion;
@@ -92,6 +152,7 @@ class VisitorSessionOnNode
     public function beforeFirstSave() {
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
     }
+
 
 
 }
