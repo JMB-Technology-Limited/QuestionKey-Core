@@ -45,7 +45,7 @@ class AdminTreeVersionListController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         $tvRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
 
-        $tvs = $tvRepo->findByTree($this->tree);
+        $tvs = $tvRepo->findByTree($this->tree, array('createdAt'=>'ASC'));
 
         return $this->render('QuestionKeyBundle:AdminTreeVersionList:index.html.twig', array(
             'tree'=>$this->tree,
