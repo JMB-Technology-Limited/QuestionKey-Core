@@ -50,6 +50,7 @@ class API1TreeController extends Controller
         $out = array(
             'public_id' => $this->tree->getPublicId(),
             'nodes'=>array(),
+            'nodeOptions'=>array(),
             'version' => array(
                 'public_id' => $this->treeVersion->getPublicId(),
             ),
@@ -77,20 +78,29 @@ class API1TreeController extends Controller
                 $destNode = $nodeOption->getDestinationNode();
                 $outNode['options'][$nodeOption->getPublicId()] = array(
                     'id'=>$nodeOption->getPublicId(),
-                    'title'=>$nodeOption->getTitle(),
-                    'body_html'=>$nodeOption->getBodyHTML(),
-                    'body_text'=>$nodeOption->getBodyText(),
-                    'destination_node' => array(
-                        'id' => $destNode->getPublicId(),
-                        )
-                    );
-                }
-                $out['nodes'][$node->getPublicId()] =  $outNode;
+                );
             }
-
-            return $out;
-
+            $out['nodes'][$node->getPublicId()] =  $outNode;
         }
+
+        foreach($nodeOptionRepo->findAllNodeOptionsForTreeVersion($this->treeVersion) as $nodeOption) {
+            $out['nodeOptions'][$nodeOption->getPublicId()] = array(
+                'id'=>$nodeOption->getPublicId(),
+                'title'=>$nodeOption->getTitle(),
+                'body_html'=>$nodeOption->getBodyHTML(),
+                'body_text'=>$nodeOption->getBodyText(),
+                'node' => array(
+                    'id' => $nodeOption->getNode()->getPublicId(),
+                ),
+                'destination_node' => array(
+                    'id' => $nodeOption->getDestinationNode()->getPublicId(),
+                ),
+            );
+        }
+
+        return $out;
+
+    }
 
 
 
