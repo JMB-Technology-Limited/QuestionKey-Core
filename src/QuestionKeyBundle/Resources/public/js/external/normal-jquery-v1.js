@@ -17,6 +17,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
       'showPreviousAnswers':true,
       'callBackAfterDrawNode':null,
       'scrollIntoViewOnChange':false,
+      'browserHistoryRewrite':false,
   }, options || {});
   if (!this.options.treeServer) {
       this.options.treeServer = document.location.host;
@@ -85,7 +86,13 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
   };
   this._start = function() {
     $(this.targetSelector).html(this.theme.bodyHTML( {'resetJavaScript':'window.'+this.globalVariableName+'.restart()', 'this':'window.'+this.globalVariableName } ));
-    this._showStartNode();
+    if (this._doBrowserHistoryRewrite()) {
+        if (!this._processHistoryState(history.state)) {
+            this._showStartNode();
+        }
+    } else {
+        this._showStartNode();
+    }
   }
   this.restart = function() {
     if (!this.started) {
@@ -101,6 +108,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswerItem).remove();
     }
     this.stack = [ { 'nodeId': this.treeData.start_node.id, 'nodeOptionId':null, 'goneBackTo': false  } ];
+    this._windowPushState();
     this._showNode();
   }
   this._showNode = function() {
@@ -178,6 +186,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     }
     var option = this.treeData.nodeOptions[optionId];
     this.stack.push({ 'nodeId':option.destination_node.id, 'nodeOptionId':option.id, 'goneBackTo': false });
+    this._windowPushState();
     this._showNode();
   };
   this.goBackTo = function(stackPos) {
@@ -191,6 +200,38 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
           this._showNode();
       }
   };
+    this._doBrowserHistoryRewrite = function() {
+        return this.options.browserHistoryRewrite && (typeof history != 'undefined') && (typeof history.pushState != 'undefined');
+    }
+    this._windowPushState = function() {
+        if (this._doBrowserHistoryRewrite()) {
+            history.pushState({
+                'questionkey':{
+                    'global_variable_name':this.globalVariableName,
+                    'tree_id':this.options.treeId,
+                    'tree_version_id': this.treeData.version.public_id,
+                    'stack':JSON.parse(JSON.stringify(this.stack)),
+                }
+            },document.title,window.location.href);
+        }
+    };
+    this.onWindownPopState = function(event) {
+        console.log(event.state.questionkey);
+        this._processHistoryState(event.state)
+    }
+    this._processHistoryState = function(state) {
+        if (this.options.browserHistoryRewrite
+            && state
+            && state.questionkey
+            && state.questionkey.global_variable_name == this.globalVariableName
+            && state.questionkey.tree_id == this.options.treeId
+            && state.questionkey.tree_version_id == this.treeData.version.public_id) {
+            this.stack = state.questionkey.stack;
+            this._showNode();
+            return true;
+        }
+        return false;
+    };
   var globalRefNum = Math.floor(Math.random() * 999999999) + 1;
   while("QuestionKeyNormalTree"+globalRefNum in window) {
     globalRefNum = Math.floor(Math.random() * 999999999) + 1;
@@ -208,5 +249,4 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
       }
     },
   });
-
 }
