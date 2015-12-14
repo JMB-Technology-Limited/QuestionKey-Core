@@ -197,6 +197,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
               this.stack.pop();
           }
           this.stack[this.stack.length - 1].goneBackTo = true;
+          this._windowPushState();
           this._showNode();
       }
   };
