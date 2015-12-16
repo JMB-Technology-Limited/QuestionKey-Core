@@ -160,12 +160,8 @@ class SimpleTest extends BaseTestWithDataBase {
 
         $this->em->flush();
 
-        $tvsn = new TreeVersionStartingNode();
-        $tvsn->setNode($startNode);
-        $tvsn->setTreeVersion($treeVersion);
-        $this->em->persist($tvsn);
-
-        $this->em->flush();
+        $tvsnRepo = $this->em->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+        $tvsnRepo->setAsStartingNode($startNode);
 
         $process = new GetStackTracesForNode($this->em, $endNode);
         $process->go();

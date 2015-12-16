@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
 * @ORM\Table(name="tree_version_starting_node")
-* @ORM\Entity()
+* @ORM\Entity(repositoryClass="QuestionKeyBundle\Entity\TreeVersionStartingNodeRepository")
 * @ORM\HasLifecycleCallbacks
 *  @license 3-clause BSD
 *  @link https://github.com/QuestionKey/QuestionKey-Core

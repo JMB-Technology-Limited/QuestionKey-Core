@@ -208,13 +208,8 @@ class AdminTreeVersionNodeController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                if (!$treeStartingNode) {
-                    $treeStartingNode = New TreeVersionStartingNode;
-                    $treeStartingNode->setTreeVersion($this->treeVersion);
-                }
-                $treeStartingNode->setNode($this->node);
-                $doctrine->persist($treeStartingNode);
-                $doctrine->flush();
+
+                $treeStartingNodeRepo->setAsStartingNode($this->node);
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
             }
         }
