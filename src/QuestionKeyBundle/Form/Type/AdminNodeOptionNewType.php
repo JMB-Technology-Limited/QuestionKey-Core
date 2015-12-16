@@ -62,9 +62,8 @@ class AdminNodeOptionNewType extends AbstractType {
             'multiple'=>false,
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
-                ->where('u.treeVersion = :tree_version AND u.id != :node')
+                ->where('u.treeVersion = :tree_version')
                 ->setParameter('tree_version', $this->fromNode->getTreeVersion())
-                ->setParameter('node', $this->fromNode)
                 ->orderBy('u.title', 'ASC');
             },
         ));
