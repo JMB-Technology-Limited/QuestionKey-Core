@@ -60,7 +60,7 @@ class NodeRepositoryTest extends BaseTestWithDataBase {
 
 
         $nodeRepo = $this->em->getRepository('QuestionKeyBundle:Node');
-        $this->assertEquals(34, $nodeRepo->getCountNodesForTreeVersion($treeVersion));
+        $this->assertEquals(3, $nodeRepo->getCountNodesForTreeVersion($treeVersion));
 
 
     }
