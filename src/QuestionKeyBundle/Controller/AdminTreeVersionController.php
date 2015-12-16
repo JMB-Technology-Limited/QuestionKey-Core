@@ -235,6 +235,16 @@ class AdminTreeVersionController extends Controller
                 $node->setBodyHTML($form->get('body_html')->getData());
                 $doctrine->persist($node);
                 $doctrine->flush();
+
+
+                // If this is first node on a tree version, make it the starting node now.
+                $doctrine = $this->getDoctrine()->getManager();
+                $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+                if ($nodeRepo->getCountNodesForTreeVersion($this->treeVersion)  == 1) {
+                    $startingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+                    $startingNodeRepo->setAsStartingNode($node);
+                }
+
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
                     'treeId'=>$this->tree->getId(),
                     'versionId'=>$this->treeVersion->getId(),

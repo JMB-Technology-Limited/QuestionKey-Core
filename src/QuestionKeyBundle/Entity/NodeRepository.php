@@ -45,5 +45,15 @@ class NodeRepository extends EntityRepository
         }
     }
 
+    public function getCountNodesForTreeVersion(TreeVersion $treeVersion) {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT COUNT(n.id) FROM QuestionKeyBundle:Node n '.
+                'WHERE n.treeVersion = :tree_version  '
+            )
+            ->setParameter('tree_version', $treeVersion)
+            ->getSingleScalarResult();
+    }
+
 
 }
