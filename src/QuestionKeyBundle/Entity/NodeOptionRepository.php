@@ -66,4 +66,17 @@ class NodeOptionRepository extends EntityRepository
         }
     }
 
+    public function getNextSortValueForNode(Node $node) {
+        $s =  $this->getEntityManager()
+            ->createQuery(
+                ' SELECT MAX(no.sort) AS sort FROM QuestionKeyBundle:NodeOption no'.
+                ' WHERE no.node = :node '.
+                ' GROUP BY no.node'
+                )
+            ->setParameter('node', $node)
+            ->getResult();
+
+        return $s ? $s[0]['sort'] + 10 : 10;
+    }
+
 }

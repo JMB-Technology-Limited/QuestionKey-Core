@@ -17,13 +17,15 @@ use Doctrine\ORM\EntityRepository;
 class AdminNodeOptionNewType extends AbstractType {
 
 
+    protected $defaultSort;
 
 
     /** @var Node **/
     protected $fromNode;
 
-    public function __construct(Node $fromNode) {
+    public function __construct(Node $fromNode, $defaultSort) {
         $this->fromNode = $fromNode;
+        $this->defaultSort = $defaultSort;
     }
 
 
@@ -50,7 +52,8 @@ class AdminNodeOptionNewType extends AbstractType {
 
         $builder->add('sort', 'text', array(
             'required' => true,
-            'label'=>'Sort'
+            'label'=>'Sort',
+            'data'=>$this->defaultSort,
         ));
 
 

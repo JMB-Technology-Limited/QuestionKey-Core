@@ -239,12 +239,13 @@ class AdminTreeVersionNodeController extends Controller
         }
 
         //data
-        $form = $this->createForm(new AdminNodeOptionNewType($this->node));
+        $doctrine = $this->getDoctrine()->getManager();
+        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
+        $form = $this->createForm(new AdminNodeOptionNewType($this->node, $nodeOptionRepo->getNextSortValueForNode($this->node) ));
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $doctrine = $this->getDoctrine()->getManager();
                 $nodeOption = new NodeOption();
                 $nodeOption->setTreeVersion($this->treeVersion);
                 $nodeOption->setNode($this->node);
