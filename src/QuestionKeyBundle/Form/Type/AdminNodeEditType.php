@@ -28,7 +28,7 @@ class AdminNodeEditType extends AbstractType {
         ));
 
         $builder->add('titlePreviousAnswers', 'text', array(
-            'required' => true,
+            'required' => false,
             'label'=>'Title (For Previous Answers)'
         ));
 
