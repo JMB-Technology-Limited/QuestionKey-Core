@@ -88,6 +88,11 @@ questionkey_admin_tree_version_new_version:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newVersion}
     methods:  [GET,POST]
 
+questionkey_admin_tree_version_data_json:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/data.json
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:dataJSON }
+    methods:  [GET]
+
 questionkey_admin_tree_version_node_list:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeList }

@@ -8,6 +8,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
       // required
       'treeServer':null,
       'treeId':null,
+      'treeData':null,
       // optional
       'hasSSL':true,
       'forceSSL':false,
@@ -239,15 +240,20 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
   }
   window["QuestionKeyNormalTree"+globalRefNum] = this;
   this.globalVariableName = "QuestionKeyNormalTree"+globalRefNum;
-  $.ajax({
-    context: this,
-    dataType: "jsonp",
-    url: this.serverURL + '/api/v1/tree/' + this.options.treeId + '/data.jsonp?callback=?',
-    success: function(data) {
-      this.treeData = data;
-      if (this.started) {
-        this._start();
-      }
-    },
-  });
+  if (this.options.treeData) {
+      this.treeData = this.options.treeData;
+  } else {
+      $.ajax({
+          context: this,
+          dataType: "jsonp",
+          url: this.serverURL + '/api/v1/tree/' + this.options.treeId + '/data.jsonp?callback=?',
+          success: function(data) {
+              console.log(data);
+              this.treeData = data;
+              if (this.started) {
+                  this._start();
+              }
+          },
+      });
+  }
 }

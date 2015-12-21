@@ -312,40 +312,101 @@ class AdminTreeVersionController extends Controller
         // setup
         $doctrine = $this->getDoctrine()->getManager();
         $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
-        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
-        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
 
-        // data - load current node
-        $currentNode = null;
-        if ($request->query->get('node_id')) {
-            $currentNode = $nodeRepo->findOneBy(array(
+        // data
+        $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
+        if (!$treeStartingNode) {
+            return $this->render('QuestionKeyBundle:AdminTreeVersion:run.noStartNode.html.twig', array(
+                'tree'=>$this->tree,
                 'treeVersion'=>$this->treeVersion,
-                'id'=>$request->query->get('node_id'),
             ));
         }
-
-        if (!$currentNode) {
-            $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
-
-            if (!$treeStartingNode) {
-                return $this->render('QuestionKeyBundle:AdminTreeVersion:run.noStartNode.html.twig', array(
-                    'tree'=>$this->tree,
-                    'treeVersion'=>$this->treeVersion,
-                ));
-            }
-
-            $currentNode = $treeStartingNode->getNode();
-        }
-
-        // Get data and return!
-        $nodeOptions = $nodeOptionRepo->findActiveNodeOptionsForNode($currentNode);
 
         return $this->render('QuestionKeyBundle:AdminTreeVersion:run.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
-            'node'=>$currentNode,
-            'nodeOptions'=>$nodeOptions,
         ));
+
+    }
+
+    protected function getObjects()
+    {
+
+        //data
+        $doctrine = $this->getDoctrine()->getManager();
+        $out = array(
+            'public_id' => $this->tree->getPublicId(),
+            'nodes'=>array(),
+            'nodeOptions'=>array(),
+            'version' => array(
+                'public_id' => $this->treeVersion->getPublicId(),
+            ),
+        );
+
+        $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+        $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
+        if ($treeStartingNode) {
+            $out['start_node'] = array('id'=>$treeStartingNode->getNode()->getPublicId());
+        }
+
+        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
+        $nodes = $nodeRepo->findByTreeVersion($this->treeVersion);
+        foreach($nodes as $node) {
+            $outNode = array(
+                'id'=>$node->getPublicId(),
+                'body_html'=>$node->getBodyHTML(),
+                'body_text'=>$node->getBodyText(),
+                'title'=>$node->getTitle(),
+                'title_previous_answers'=>$node->getTitlePreviousAnswers(),
+                'options'=>array(),
+            );
+            foreach($nodeOptionRepo->findActiveNodeOptionsForNode($node) as $nodeOption) {
+                $destNode = $nodeOption->getDestinationNode();
+                $outNode['options'][$nodeOption->getPublicId()] = array(
+                    'id'=>$nodeOption->getPublicId(),
+                );
+            }
+            $out['nodes'][$node->getPublicId()] =  $outNode;
+        }
+
+        foreach($nodeOptionRepo->findAllNodeOptionsForTreeVersion($this->treeVersion) as $nodeOption) {
+            $out['nodeOptions'][$nodeOption->getPublicId()] = array(
+                'id'=>$nodeOption->getPublicId(),
+                'title'=>$nodeOption->getTitle(),
+                'body_html'=>$nodeOption->getBodyHTML(),
+                'body_text'=>$nodeOption->getBodyText(),
+                'node' => array(
+                    'id' => $nodeOption->getNode()->getPublicId(),
+                ),
+                'destination_node' => array(
+                    'id' => $nodeOption->getDestinationNode()->getPublicId(),
+                ),
+            );
+        }
+
+        return $out;
+
+    }
+
+
+
+
+    public function dataJSONAction($treeId, $versionId, Request $request)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId);
+        if ($return) {
+            return $return;
+        }
+
+        $data = $this->getObjects();
+
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
 
     }
 

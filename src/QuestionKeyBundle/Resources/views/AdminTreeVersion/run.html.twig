@@ -14,51 +14,31 @@
         <li class="active">Run Tree</li>
     </ol>
 
-    <div class="well">
+    <div id="DemoHere">Loading ...</div>
 
-        <p>Public ID: {{ node.publicId }}</p>
+{% endblock %}
 
-        <p>Title: {{ node.title }}</p>
+{% block javascript %}
+    {% javascripts '@QuestionKeyBundle/Resources/public/js/external/normal-jquery-v1.js'  %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
-        <p>Body Text: {{ node.bodyText | nl2br }}</p>
+    <script>
+        var tree;
+        $( document ).ready(function() {
 
-        <p>Body HTML: {{ node.bodyHTML | nl2br }}</p>
+            $.ajax({
+                url: "{{ path('questionkey_admin_tree_version_data_json', {'treeId':tree.id,'versionId':treeVersion.id }) }}",
+                context: document.body,
+                success: function(data) {
+                    tree = new QuestionKeyNormalTree("#DemoHere", {'treeData':data, 'logUserActions':false, 'browserHistoryRewrite':true });
+                    tree.start();
+                }
+            });
 
-        <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-default">View this node in Admin</a>
-    </div>
-
-    {% if nodeOptions %}
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Outgoing Title</th>
-            <th>Body Text</th>
-            <th>Body HTML</th>
-            <th>Destination</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for nodeOption in nodeOptions %}
-            <tr>
-              <td>{{ nodeOption.title }}</td>
-              <td>{{ nodeOption.bodyText }}</td>
-              <td>{{ nodeOption.bodyHTML }}</td>
-              <td class="action-link">
-
-                <form method="get" action="">
-                    <input type="hidden" name="node_id" value="{{ nodeOption.destinationNode.id }}">
-                    <input type="submit" class="btn btn-default" value="Follow This option">
-                </form>
-
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No outgoing node options</p>
-    {% endif %}
-
-
+            window.onpopstate = function(event) {
+                tree.onWindownPopState(event);
+            };
+        });
+    </script>
 {% endblock %}
