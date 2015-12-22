@@ -29,6 +29,8 @@
       			{{ form_rest(form) }}
 
       			<input type="submit" value="Save" />
+
+                <div class="cancel"><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id,'optionId': nodeOption.id}) }}">Cancel</a></div>
       		</form>
 
       	</section>

@@ -27,6 +27,8 @@
     			{{ form_rest(form) }}
 
     			<input type="submit" value="Make Starting Node!" />
+
+                <div class="cancel"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Cancel</a></div>
     		</form>
 
     	</section>

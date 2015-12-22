@@ -9,3 +9,7 @@
   font-style: italic;
   text-align: center;
 }
+
+form .cancel {
+    text-align: right;
+}
