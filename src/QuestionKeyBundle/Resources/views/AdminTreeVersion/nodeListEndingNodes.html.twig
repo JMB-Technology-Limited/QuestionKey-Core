@@ -41,4 +41,12 @@
         <p>No nodes</p>
     {% endif %}
 
+    <ul class="list-group">
+        {% if isTreeVersionEditable %}
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Node</a></li>
+        {% else %}
+            <li class="list-group-item"><em>This tree version can not be edited as it has been published.</em></li>
+        {% endif %}
+    </ul>
+
 {% endblock %}

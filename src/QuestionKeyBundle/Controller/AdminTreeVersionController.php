@@ -96,14 +96,17 @@ class AdminTreeVersionController extends Controller
         //data
         $doctrine = $this->getDoctrine()->getManager();
         $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+        $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
 
         $nodes = $nodeRepo->findByTreeVersion($this->treeVersion);
-
+        $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
 
         return $this->render('QuestionKeyBundle:AdminTreeVersion:nodeList.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'nodes'=>$nodes,
+            'startNode'=>($treeStartingNode && $treeStartingNode->getNode() ? $treeStartingNode->getNode() : null),
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
         ));
 
 
@@ -124,11 +127,11 @@ class AdminTreeVersionController extends Controller
 
         $nodes = $nodeRepo->findEndingNodesByTreeVersion($this->treeVersion);
 
-
         return $this->render('QuestionKeyBundle:AdminTreeVersion:nodeListEndingNodes.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'nodes'=>$nodes,
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
         ));
 
 
