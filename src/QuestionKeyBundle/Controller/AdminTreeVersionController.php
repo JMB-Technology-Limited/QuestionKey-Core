@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use QuestionKeyBundle\Entity\TreeVersion;
 use QuestionKeyBundle\Entity\TreeVersionPublished;
+use QuestionKeyBundle\Entity\TreeVersionPreviewCode;
 use QuestionKeyBundle\Entity\Node;
 use QuestionKeyBundle\Form\Type\AdminTreeNewVersionType;
 use QuestionKeyBundle\CopyNewVersionOfTree;
@@ -467,6 +468,36 @@ class AdminTreeVersionController extends Controller
 
 
 
+
+    }
+
+    public function getPreviewLinkAction($treeId, $versionId, Request $request)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId);
+        if ($return) {
+            return $return;
+        }
+
+        // Make Link
+        $treeVersionPreviewCode = new TreeVersionPreviewCode();
+        $treeVersionPreviewCode->setTreeVersion($this->treeVersion);
+        $treeVersionPreviewCode->setCreatedBy($this->getUser());
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $doctrine->persist($treeVersionPreviewCode);
+        $doctrine->flush($treeVersionPreviewCode);
+
+        // TODO this does not include host name and is not complete
+        $link = $this->generateUrl("questionkey_tree_version_preview_demo", array('treeId'=>$this->tree->getPublicId(), 'versionId'=>$this->treeVersion->getPublicId(), 'code'=>$treeVersionPreviewCode->getCode()));
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:getPreviewLink.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
+            'link'=>$link,
+        ));
 
     }
 

@@ -9,6 +9,7 @@ use QuestionKeyBundle\Entity\NodeOption;
 use QuestionKeyBundle\Entity\TreeVersion;
 use QuestionKeyBundle\Entity\VisitorSession;
 use QuestionKeyBundle\Entity\VisitorSessionRanTreeVersion;
+use QuestionKeyBundle\Entity\TreeVersionPreviewcode;
 
 class PrePersistEventListener  {
 
@@ -85,6 +86,19 @@ class PrePersistEventListener  {
                     $id =  \QuestionKeyBundle\QuestionKeyBundle::createKey(1,$idLen);
                 }
                 $entity->setPublicId($id);
+            }
+        } elseif ($entity instanceof TreeVersionPreviewCode) {
+            if (!$entity->getCode()) {
+                $manager = $args->getEntityManager()->getRepository('QuestionKeyBundle\Entity\TreeVersionPreviewCode');
+                $idLen = self::MIN_LENGTH_BIG;
+                $id =  \QuestionKeyBundle\QuestionKeyBundle::createKey(1,$idLen);
+                while($manager->doesCodeExist($id, $entity->getTreeVersion())) {
+                    if ($idLen < self::MAX_LENGTH) {
+                        $idLen = $idLen + self::LENGTH_STEP;
+                    }
+                    $id =  \QuestionKeyBundle\QuestionKeyBundle::createKey(1,$idLen);
+                }
+                $entity->setCode($id);
             }
         }
 

@@ -1,0 +1,44 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+    <p>Your preview tree is:</p>
+
+    <div id="DemoHere" class="externalWidgetNormal">
+        Loading, please wait ...
+    </div>
+
+    <div style="padding-top: 50px;">
+        <p>This is a link to  <a href="http://www.google.com">google</a>. This is so you can jump to a difrent web page half way throught running the tree, then press back and make sure the tree still works!</p>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+  {% javascripts
+      '@QuestionKeyBundle/Resources/public/js/external/normal-jquery-v1.js'  output='/js/external/normal-jquery-v1.js' %}
+      <script src="{{ asset_url }}"></script>
+  {% endjavascripts %}
+  <script>
+    var tree;
+    $( document ).ready(function() {
+
+        $.ajax({
+            url: "{{ path('questionkey_tree_version_preview_data_json', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'code':code }) }}",
+            context: document.body,
+            success: function(data) {
+                tree = new QuestionKeyNormalTree("#DemoHere", {'treeData':data, 'logUserActions':false, 'browserHistoryRewrite':true });
+                window.onpopstate = function(event) {
+                    tree.onWindownPopState(event);
+                };
+                tree.start();
+            }
+        });
+
+    });
+  </script>
+{% endblock %}

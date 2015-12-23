@@ -41,6 +41,7 @@
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list_end_nodes', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes (End Nodes)</a></li>
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_run', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Run Tree</a></li>
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_graph', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">View Visulisation</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_get_preview_link', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Get Preview Link</a></li>
     {% if isTreeVersionEditable %}
         <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Node</a></li>
     {% endif %}
