@@ -43,9 +43,12 @@ class AdminTreeController extends Controller
         }
 
         //data
+        $doctrine = $this->getDoctrine()->getManager();
+        $treeVersionRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
 
         return $this->render('QuestionKeyBundle:AdminTree:index.html.twig', array(
             'tree'=>$this->tree,
+            'publishedTreeVersion'=>$treeVersionRepo->findPublishedVersionForTree($this->tree),
         ));
 
 
