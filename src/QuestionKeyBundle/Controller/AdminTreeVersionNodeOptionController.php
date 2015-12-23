@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use QuestionKeyBundle\Form\Type\AdminNodeOptionEditType;
 use QuestionKeyBundle\Form\Type\AdminConfirmDeleteType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
 /**
@@ -21,6 +22,7 @@ class AdminTreeVersionNodeOptionController extends Controller
 
     protected $tree;
     protected $treeVersion;
+    protected $treeVersionEditable;
     protected $node;
     protected $nodeOption;
 
@@ -41,6 +43,7 @@ class AdminTreeVersionNodeOptionController extends Controller
         if (!$this->treeVersion) {
             throw new  NotFoundHttpException('Not found');
         }
+        $this->treeVersionEditable = !$treeVersionRepo->hasEverBeenPublished($this->treeVersion);
         // load
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
         $this->node = $treeRepo->findOneBy(array(
@@ -73,6 +76,7 @@ class AdminTreeVersionNodeOptionController extends Controller
             'treeVersion'=>$this->treeVersion,
             'node'=>$this->node,
             'nodeOption'=>$this->nodeOption,
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
         ));
 
     }
@@ -82,6 +86,9 @@ class AdminTreeVersionNodeOptionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId, $optionId);
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
 
         //data
         $form = $this->createForm(new AdminNodeOptionEditType(), $this->nodeOption);
@@ -117,6 +124,9 @@ class AdminTreeVersionNodeOptionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId, $optionId);
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
 
         //data
         $form = $this->createForm(new AdminConfirmDeleteType());
