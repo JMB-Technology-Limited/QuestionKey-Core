@@ -8,12 +8,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- *
- * @license Apache Open Source License 2.0 http://www.apache.org/licenses/LICENSE-2.0
- * @link http://www.brokenopenapp.org/ BrokenOpenApp Home Page for docs and support
+*  @license 3-clause BSD
+*  @link https://github.com/QuestionKey/QuestionKey-Core
  *
  */
 class QuestionKeyExtension extends Extension
