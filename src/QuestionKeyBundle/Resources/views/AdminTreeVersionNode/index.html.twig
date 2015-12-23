@@ -15,35 +15,40 @@
   </ol>
 
 
-  {% if incomingNodeOptions %}
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Incoming Title</th>
-          <th>Body Text</th>
-          <th>Body HTML</th>
-          <th>Source</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for nodeOption in incomingNodeOptions %}
-          <tr>
-            <td>{{ nodeOption.title }}</td>
-            <td>{{ nodeOption.bodyText }}</td>
-            <td>{{ nodeOption.bodyHTML }}</td>
-            <td>{{ nodeOption.node.titleAdmin }}
-            <td class="action-link">
-              <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
-              <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}" class="btn btn-default">View Source Node</a>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No incoming node options</p>
-  {% endif %}
+    {% if incomingNodeOptions %}
+        <div style="text-align: right; padding: 10px 0;">
+            <a href="#" onclick="$('#IncomingNodeOptionWrapper').toggle();" class="btn-xs btn-default">Show/hide incoming links</a>
+        </div>
+        <div id="IncomingNodeOptionWrapper" style="display: none;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Incoming Title</th>
+                        <th>Body Text</th>
+                        <th>Body HTML</th>
+                        <th>Source</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nodeOption in incomingNodeOptions %}
+                        <tr>
+                            <td>{{ nodeOption.title }}</td>
+                            <td>{{ nodeOption.bodyText }}</td>
+                            <td>{{ nodeOption.bodyHTML }}</td>
+                            <td>{{ nodeOption.node.titleAdmin }}
+                            <td class="action-link">
+                                <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
+                                <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}" class="btn btn-default">View Source Node</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>No incoming node options</p>
+    {% endif %}
 
   {% if isStartNode %}
     <p>Is Start Node!</p>
