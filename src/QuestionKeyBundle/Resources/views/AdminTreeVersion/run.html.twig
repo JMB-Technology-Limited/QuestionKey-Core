@@ -43,13 +43,13 @@
                 context: document.body,
                 success: function(data) {
                     tree = new QuestionKeyNormalTree("#DemoHere", {'treeData':data, 'logUserActions':false, 'browserHistoryRewrite':true, callBackAfterDrawNode: callBackAfterDrawNode });
+                    window.onpopstate = function(event) {
+                        tree.onWindownPopState(event);
+                    };
                     tree.start();
                 }
             });
 
-            window.onpopstate = function(event) {
-                tree.onWindownPopState(event);
-            };
         });
     </script>
 {% endblock %}
