@@ -453,8 +453,15 @@ class AdminTreeVersionController extends Controller
         $doctrine->persist($treeVersionPreviewCode);
         $doctrine->flush($treeVersionPreviewCode);
 
-        // TODO this does not include host name and is not complete
-        $link = $this->generateUrl("questionkey_tree_version_preview_demo", array('treeId'=>$this->tree->getPublicId(), 'versionId'=>$this->treeVersion->getPublicId(), 'code'=>$treeVersionPreviewCode->getCode()));
+        $hasSSL = $this->container->hasParameter('has_ssl') ? $this->container->getParameter('has_ssl') : false;
+        $serverHost = $this->container->hasParameter('server_host') ? $this->container->getParameter('server_host') : '';
+        $link = '';
+        if ($serverHost && $hasSSL) {
+            $link .= 'https://'. $serverHost;
+        } else if ($serverHost && !$hasSSL) {
+            $link .= 'http://'. $serverHost;
+        }
+        $link .= $this->generateUrl("questionkey_tree_version_preview_demo", array('treeId'=>$this->tree->getPublicId(), 'versionId'=>$this->treeVersion->getPublicId(), 'code'=>$treeVersionPreviewCode->getCode()));
 
         return $this->render('QuestionKeyBundle:AdminTreeVersion:getPreviewLink.html.twig', array(
             'tree'=>$this->tree,
