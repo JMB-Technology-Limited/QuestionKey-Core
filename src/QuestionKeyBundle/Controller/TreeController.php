@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -23,7 +24,7 @@ class TreeController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
         $this->tree = $treeRepo->findOneByPublicId($treeId);
         if (!$this->tree) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         return null;
     }
@@ -36,9 +37,6 @@ class TreeController extends Controller
 
         // build
         $return = $this->build($treeId);
-        if ($return) {
-            return $return;
-        }
 
 
         // out

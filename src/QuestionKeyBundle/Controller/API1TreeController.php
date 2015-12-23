@@ -34,7 +34,6 @@ class API1TreeController extends Controller
         if (!$this->treeVersion) {
             throw new NotFoundHttpException();
         }
-        return null;
     }
 
 

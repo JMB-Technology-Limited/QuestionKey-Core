@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use QuestionKeyBundle\Form\Type\AdminNodeOptionEditType;
 use QuestionKeyBundle\Form\Type\AdminConfirmDeleteType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -29,7 +30,7 @@ class AdminTreeVersionNodeOptionController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
         $this->tree = $treeRepo->findOneById($treeId);
         if (!$this->tree) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // load
         $treeVersionRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
@@ -38,7 +39,7 @@ class AdminTreeVersionNodeOptionController extends Controller
             'id'=>$versionId,
         ));
         if (!$this->treeVersion) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // load
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
@@ -47,7 +48,7 @@ class AdminTreeVersionNodeOptionController extends Controller
             'id'=>$nodeId,
         ));
         if (!$this->node) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // option
         $optionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
@@ -56,9 +57,8 @@ class AdminTreeVersionNodeOptionController extends Controller
             'id'=>$optionId,
         ));
         if (!$this->nodeOption) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
-        return null;
     }
 
     public function indexAction($treeId, $versionId, $nodeId, $optionId)
@@ -66,9 +66,6 @@ class AdminTreeVersionNodeOptionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId, $optionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         return $this->render('QuestionKeyBundle:AdminTreeVersionNodeOption:index.html.twig', array(
@@ -85,9 +82,6 @@ class AdminTreeVersionNodeOptionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId, $optionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $form = $this->createForm(new AdminNodeOptionEditType(), $this->nodeOption);
@@ -123,9 +117,6 @@ class AdminTreeVersionNodeOptionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId, $optionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $form = $this->createForm(new AdminConfirmDeleteType());

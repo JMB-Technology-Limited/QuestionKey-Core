@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use QuestionKeyBundle\Form\Type\AdminTreeEditType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -25,9 +26,8 @@ class AdminTreeController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
         $this->tree = $treeRepo->findOneById($treeId);
         if (!$this->tree) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
-        return null;
     }
 
 
@@ -38,9 +38,6 @@ class AdminTreeController extends Controller
 
         // build
         $return = $this->build($treeId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();
@@ -61,9 +58,6 @@ class AdminTreeController extends Controller
 
         // build
         $return = $this->build($treeId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $form = $this->createForm(new AdminTreeEditType(), $this->tree);

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -23,9 +24,8 @@ class AdminVisitorSessionController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:VisitorSession');
         $this->session = $treeRepo->findOneById($sessionId);
         if (!$this->session) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
-        return null;
     }
 
 
@@ -36,9 +36,6 @@ class AdminVisitorSessionController extends Controller
 
         // build
         $return = $this->build($sessionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();

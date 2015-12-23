@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -25,16 +26,14 @@ class AdminVisitorSessionRanTreeVersionController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:VisitorSession');
         $this->session = $treeRepo->findOneById($sessionId);
         if (!$this->session) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // load
         $treeRanRepo = $doctrine->getRepository('QuestionKeyBundle:VisitorSessionRanTreeVersion');
         $this->ranTreeVersion = $treeRanRepo->findOneById($ranTreeVersionId);
         if (!$this->ranTreeVersion) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
-
-        return null;
     }
 
 
@@ -44,9 +43,6 @@ class AdminVisitorSessionRanTreeVersionController extends Controller
 
         // build
         $return = $this->build($sessionId, $ranTreeVersionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -27,7 +28,7 @@ class TreeVersionCodeController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
         $this->tree = $treeRepo->findOneByPublicId($treeId);
         if (!$this->tree) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // load
         $treeVersionRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
@@ -36,7 +37,7 @@ class TreeVersionCodeController extends Controller
             'publicId'=>$versionId,
         ));
         if (!$this->treeVersion) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // load
         $treeVersionPreviewCodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionPreviewCode');
@@ -45,9 +46,8 @@ class TreeVersionCodeController extends Controller
             'code'=>$code,
         ));
         if (!$this->treeVersionPreviewCode) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
-        return null;
     }
 
 
@@ -57,9 +57,6 @@ class TreeVersionCodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $code);
-        if ($return) {
-            return $return;
-        }
 
         // out
         return $this->render('QuestionKeyBundle:TreeVersionCode:demo.html.twig', array(
@@ -137,9 +134,6 @@ class TreeVersionCodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $code);
-        if ($return) {
-            return $return;
-        }
 
         // data
         $data = $this->getObjects();

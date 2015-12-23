@@ -14,6 +14,7 @@ use QuestionKeyBundle\Entity\NodeOption;
 use QuestionKeyBundle\Entity\TreeVersionStartingNode;
 use QuestionKeyBundle\GetStackTracesForNode;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -35,7 +36,7 @@ class AdminTreeVersionNodeController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
         $this->tree = $treeRepo->findOneById($treeId);
         if (!$this->tree) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // load
         $treeVersionRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
@@ -44,7 +45,7 @@ class AdminTreeVersionNodeController extends Controller
             'id'=>$versionId,
         ));
         if (!$this->treeVersion) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         $this->treeVersionEditable = !$treeVersionRepo->hasEverBeenPublished($this->treeVersion);
         // load
@@ -54,9 +55,8 @@ class AdminTreeVersionNodeController extends Controller
             'id'=>$nodeId,
         ));
         if (!$this->node) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
-        return null;
     }
 
 
@@ -67,9 +67,6 @@ class AdminTreeVersionNodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();
@@ -100,9 +97,6 @@ class AdminTreeVersionNodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId);
-        if ($return) {
-            return $return;
-        }
         if (!$this->treeVersionEditable) {
             throw new AccessDeniedException();
         }
@@ -136,9 +130,6 @@ class AdminTreeVersionNodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId);
-        if ($return) {
-            return $return;
-        }
         if (!$this->treeVersionEditable) {
             throw new AccessDeniedException();
         }
@@ -191,9 +182,6 @@ class AdminTreeVersionNodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId);
-        if ($return) {
-            return $return;
-        }
         if (!$this->treeVersionEditable) {
             throw new AccessDeniedException();
         }
@@ -231,9 +219,6 @@ class AdminTreeVersionNodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId);
-        if ($return) {
-            return $return;
-        }
         if (!$this->treeVersionEditable) {
             throw new AccessDeniedException();
         }
@@ -275,9 +260,6 @@ class AdminTreeVersionNodeController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $process = new GetStackTracesForNode($this->getDoctrine()->getManager(), $this->node);

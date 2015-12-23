@@ -17,6 +17,7 @@ use QuestionKeyBundle\Form\Type\AdminTreeVersionEditType;
 use QuestionKeyBundle\Form\Type\AdminNodeNewType;
 use QuestionKeyBundle\Form\Type\AdminTreeVersionPublishType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  *  @license 3-clause BSD
@@ -38,7 +39,7 @@ class AdminTreeVersionController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
         $this->tree = $treeRepo->findOneById($treeId);
         if (!$this->tree) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         // load
         $treeVersionRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
@@ -47,10 +48,9 @@ class AdminTreeVersionController extends Controller
             'id'=>$versionId,
         ));
         if (!$this->treeVersion) {
-            return  new Response( '404' );
+            throw new  NotFoundHttpException('Not found');
         }
         $this->treeVersionEditable = !$treeVersionRepo->hasEverBeenPublished($this->treeVersion);
-        return null;
     }
 
 
@@ -61,9 +61,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();
@@ -90,9 +87,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();
@@ -118,9 +112,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $doctrine = $this->getDoctrine()->getManager();
@@ -144,9 +135,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         //process
         $doctrine = $this->getDoctrine()->getManager();
@@ -180,9 +168,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
         if (!$this->treeVersionEditable) {
             throw new AccessDeniedException();
         }
@@ -216,9 +201,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
         if (!$this->treeVersionEditable) {
             throw new AccessDeniedException();
         }
@@ -272,9 +254,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $form = $this->createForm(new AdminTreeVersionPublishType());
@@ -309,9 +288,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         // setup
         $doctrine = $this->getDoctrine()->getManager();
@@ -403,9 +379,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         $data = $this->getObjects();
 
@@ -422,9 +395,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $data = $this->get('session')->get('graph-tree'.$this->tree->getId().'-version'.$this->treeVersion->getId() );
@@ -448,9 +418,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         //data
         $data = $request->request->get('data');
@@ -476,9 +443,6 @@ class AdminTreeVersionController extends Controller
 
         // build
         $return = $this->build($treeId, $versionId);
-        if ($return) {
-            return $return;
-        }
 
         // Make Link
         $treeVersionPreviewCode = new TreeVersionPreviewCode();
