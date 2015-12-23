@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "376f35d65761b779ddd939108341a973",
-    "content-hash": "90436c4aa185f1446e9f25a1d5480d5a",
+    "hash": "67c5a8cde57e4abb6d2e3e47df575322",
+    "content-hash": "a7e294d581dfa2ac1a5b38d74c17698e",
     "packages": [
         {
             "name": "components/jquery",
@@ -949,7 +949,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/45d6f40178216a840885b4ca6d7de9e67068568a",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/e39b040e272c72f0a090c67d802e1d3b2d0b0313",
                 "reference": "45d6f40178216a840885b4ca6d7de9e67068568a",
                 "shasum": ""
             },
@@ -1183,6 +1183,43 @@
                 "minification"
             ],
             "time": "2015-11-12 13:51:40"
+        },
+        {
+            "name": "mbostock/d3",
+            "version": "v3.5.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbostock/d3.git",
+                "reference": "78ce531f79e82275fe50f975e784ee2be097226b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbostock/d3/zipball/78ce531f79e82275fe50f975e784ee2be097226b",
+                "reference": "78ce531f79e82275fe50f975e784ee2be097226b",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Bostock",
+                    "homepage": "http://bost.ocks.org/mike"
+                }
+            ],
+            "description": "A JavaScript visualization library for HTML and SVG.",
+            "homepage": "http://d3js.org/",
+            "keywords": [
+                "W3C",
+                "animation",
+                "canvas",
+                "dom",
+                "svg",
+                "visualization"
+            ],
+            "time": "2015-12-17 16:55:17"
         },
         {
             "name": "monolog/monolog",

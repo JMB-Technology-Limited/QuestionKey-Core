@@ -22,10 +22,9 @@
 
     </div> <!-- /container -->
 
-    {% javascripts '@jquery' %}
+    {% javascripts '@jquery' '@d3' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     {% block javascript %}
     {% endblock %}
 

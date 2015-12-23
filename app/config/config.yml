@@ -79,6 +79,10 @@ assetic:
         jquery:
             inputs:
                 - %kernel.root_dir%/../vendor/components/jquery/jquery.js
+        d3:
+            inputs:
+                - %kernel.root_dir%/../vendor/mbostock/d3/d3.min.js
+
         questionkey_css:
             inputs:
                 - '@QuestionKeyBundle/Resources/public/css/main.css'

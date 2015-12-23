@@ -20,6 +20,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "twitter/bootstrap": "3.3.*",
         "components/jquery": "2.1.*",
+        "mbostock/d3":"3.5.*",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.0"
     },
