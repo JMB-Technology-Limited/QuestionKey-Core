@@ -93,6 +93,18 @@ questionkey_admin_tree_version_data_json:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:dataJSON }
     methods:  [GET]
 
+questionkey_admin_tree_version_graph:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/graph
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:graph }
+    methods:  [GET]
+
+
+questionkey_admin_tree_version_graph_savecurrent:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/graph/save/current
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:graphSaveCurrent }
+    methods:  [POST]
+
+
 questionkey_admin_tree_version_node_list:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeList }

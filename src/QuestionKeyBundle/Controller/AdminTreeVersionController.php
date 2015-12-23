@@ -361,8 +361,10 @@ class AdminTreeVersionController extends Controller
                 'body_html'=>$node->getBodyHTML(),
                 'body_text'=>$node->getBodyText(),
                 'title'=>$node->getTitle(),
+                'title_admin'=>$node->getTitleAdmin(),
                 'title_previous_answers'=>$node->getTitlePreviousAnswers(),
                 'options'=>array(),
+                'url' => $this->generateUrl("questionkey_admin_tree_version_node_show", array("treeId" => $this->tree->getId(), 'versionId' => $this->treeVersion->getId(), 'nodeId' => $node->getId())),
             );
             foreach($nodeOptionRepo->findActiveNodeOptionsForNode($node) as $nodeOption) {
                 $destNode = $nodeOption->getDestinationNode();
@@ -410,6 +412,61 @@ class AdminTreeVersionController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+
+    }
+
+    public function graphAction($treeId, $versionId)
+    {
+
+
+        // build
+        $return = $this->build($treeId, $versionId);
+        if ($return) {
+            return $return;
+        }
+
+        //data
+        $data = $this->get('session')->get('graph-tree'.$this->tree->getId().'-version'.$this->treeVersion->getId() );
+        if (!$data) {
+            $data = array('nodes'=>array());
+        }
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:graph.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
+            'data'=>$data,
+        ));
+
+
+    }
+
+    public function graphSaveCurrentAction($treeId, $versionId, Request $request)
+    {
+
+
+        // build
+        $return = $this->build($treeId, $versionId);
+        if ($return) {
+            return $return;
+        }
+
+        //data
+        $data = $request->request->get('data');
+        if ($data) {
+            $this->get('session')->set('graph-tree'.$this->tree->getId().'-version'.$this->treeVersion->getId(), $data);
+
+            $response = new Response(json_encode(array('result'=>'ok')));
+        } else {
+            $response = new Response(json_encode(array('result'=>'no_data')));
+        }
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+
+
+
 
     }
 

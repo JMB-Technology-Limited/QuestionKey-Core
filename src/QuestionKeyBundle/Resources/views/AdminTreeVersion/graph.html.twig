@@ -1,0 +1,35 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::baseGraph.html.twig' %}
+
+{% block main %}
+
+
+    <div id="toolbox">
+        <a id="upload-input" href="#" onclick="graph.info(); return false;">INFO</a>
+        <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">EXIT</a>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    {% javascripts
+    '@QuestionKeyBundle/Resources/public/js/graph.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>
+        $( document ).ready(function() {
+            graph.consts.saveCurrentURL = '{{ path('questionkey_admin_tree_version_graph_savecurrent', {'treeId':tree.id,'versionId':treeVersion.id }) }}';
+            $.ajax({
+                url: "{{ path('questionkey_admin_tree_version_data_json', {'treeId':tree.id,'versionId':treeVersion.id }) }}",
+                context: document.body,
+                success: function(data) {
+                    graph.start(data, {{  data | json_encode()|raw }});
+                }
+            });
+        });
+    </script>
+{% endblock %}
