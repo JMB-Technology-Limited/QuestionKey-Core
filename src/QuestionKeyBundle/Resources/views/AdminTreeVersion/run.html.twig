@@ -16,6 +16,12 @@
 
     <div id="DemoHere">Loading ...</div>
 
+    <div id="Links" style="display:none ">
+        <ul class="list-group">
+            <li class="list-group-item"><a id="LinkNode" href="" class="btn btn-default" target="_blank">View Node</a></li>
+        </ul>
+    </div>
+
 {% endblock %}
 
 {% block javascript %}
@@ -27,11 +33,16 @@
         var tree;
         $( document ).ready(function() {
 
+            var callBackAfterDrawNode = function(data) {
+                $('#LinkNode').attr('href', data.node.url);
+                $('#Links').show();
+            };
+
             $.ajax({
                 url: "{{ path('questionkey_admin_tree_version_data_json', {'treeId':tree.id,'versionId':treeVersion.id }) }}",
                 context: document.body,
                 success: function(data) {
-                    tree = new QuestionKeyNormalTree("#DemoHere", {'treeData':data, 'logUserActions':false, 'browserHistoryRewrite':true });
+                    tree = new QuestionKeyNormalTree("#DemoHere", {'treeData':data, 'logUserActions':false, 'browserHistoryRewrite':true, callBackAfterDrawNode: callBackAfterDrawNode });
                     tree.start();
                 }
             });
