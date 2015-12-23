@@ -143,9 +143,6 @@ var graph = {
         });
         // update existing paths
         graph.paths.style('marker-end', 'url(#end-arrow)')
-            .classed(graph.consts.selectedClass, function(d){
-                return false;
-            })
             .attr("d", function(d){
                 if (d.isStart) {
                     return "M20,20L" + d.target.x + "," + d.target.y;
@@ -230,15 +227,35 @@ var graph = {
         d3.event.stopPropagation();
         graph.state.lastSelected.node = d;
         graph.state.lastSelected.edge = null;
+        graph.updateSelects();
     },
     circleMouseUp: function(d3node, d){
     },
-    pathMouseDown: function(d3node, d){
+    pathMouseDown: function(d3edge, d){
         d3.event.stopPropagation();
         graph.state.lastSelected.node = null;
         graph.state.lastSelected.edge = d;
+        graph.updateSelects();
     },
-    pathMouseUp: function(d3node, d){
+    pathMouseUp: function(d3edge, d){
+    },
+    updateSelects: function(){
+        graph.paths.filter(function(cd){
+            return cd !== graph.state.lastSelected.edge;
+        }).classed(graph.consts.selectedClass, false);
+        if (graph.state.lastSelected.edge) {
+            graph.paths.filter(function(cd){
+                return cd === graph.state.lastSelected.edge;
+            }).classed(graph.consts.selectedClass, true);
+        }
+        graph.circles.filter(function(cd){
+            return cd !== graph.state.lastSelected.node;
+        }).classed(graph.consts.selectedClass, false);
+        if (graph.state.lastSelected.node) {
+            graph.circles.filter(function(cd){
+                return cd === graph.state.lastSelected.node;
+            }).classed(graph.consts.selectedClass, true);
+        }
     },
     info: function() {
         if(graph.state.lastSelected.node) {
