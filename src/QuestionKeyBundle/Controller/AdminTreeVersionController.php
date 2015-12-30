@@ -397,8 +397,9 @@ class AdminTreeVersionController extends Controller
         $return = $this->build($treeId, $versionId);
 
         //data
-        $data = $this->get('session')->get('graph-tree'.$this->tree->getId().'-version'.$this->treeVersion->getId() );
-        if (!$data) {
+        if ($this->treeVersion->getGraphLayout()) {
+            $data = json_decode($this->treeVersion->getGraphLayout());
+        } else {
             $data = array('nodes'=>array());
         }
 
@@ -415,15 +416,16 @@ class AdminTreeVersionController extends Controller
     public function graphSaveCurrentAction($treeId, $versionId, Request $request)
     {
 
-
         // build
         $return = $this->build($treeId, $versionId);
 
         //data
         $data = $request->request->get('data');
         if ($data) {
-            $this->get('session')->set('graph-tree'.$this->tree->getId().'-version'.$this->treeVersion->getId(), $data);
-
+            $this->treeVersion->setGraphLayout(json_encode($data));
+            $doctrine = $this->getDoctrine()->getManager();
+            $doctrine->persist($this->treeVersion);
+            $doctrine->flush();
             $response = new Response(json_encode(array('result'=>'ok')));
         } else {
             $response = new Response(json_encode(array('result'=>'no_data')));
@@ -432,9 +434,6 @@ class AdminTreeVersionController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
-
-
-
 
     }
 

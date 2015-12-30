@@ -204,7 +204,6 @@ var graph = {
         newGs.each(function(d){
             graph.insertTitleLinebreaks(d3.select(this), d.title);
         });
-        graph.saveCurrentAfterTimer();
     },
     updateWindow: function(){
         var docEl = document.documentElement,
@@ -266,13 +265,7 @@ var graph = {
             window.open(graph.state.lastSelected.edge.target.url);
         }
     },
-    saveCurrentAfterTimer: function () {
-        if (graph.saveCurrentAfterTimerTimer ) {
-            window.clearTimeout(graph.saveCurrentAfterTimerTimer );
-        }
-        graph.saveCurrentAfterTimerTimer = window.setTimeout(graph.saveCurrent, graph.consts.saveAfter );
-    },
-    saveCurrent: function() {
+    save: function() {
         $.post(graph.consts.saveCurrentURL,  { data: graph.getInfoToSave() });
     },
     getInfoToSave: function() {

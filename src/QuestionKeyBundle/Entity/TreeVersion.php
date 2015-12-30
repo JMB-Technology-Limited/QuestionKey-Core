@@ -58,6 +58,13 @@ class TreeVersion
     */
     private $createdAt;
 
+    /**
+    * @var string
+    *
+    * @ORM\Column(name="graph_layout", type="text", nullable=true)
+    */
+    private $graphLayout;
+
 
     public function getId()
     {
@@ -119,6 +126,29 @@ class TreeVersion
         $this->fromOldVersion = $fromOldVersion;
     }
 
+    /**
+     * Get the value of Graph Layout
+     *
+     * @return string
+     */
+    public function getGraphLayout()
+    {
+        return $this->graphLayout;
+    }
+
+    /**
+     * Set the value of Graph Layout
+     *
+     * @param string graphLayout
+     *
+     * @return self
+     */
+    public function setGraphLayout($graphLayout)
+    {
+        $this->graphLayout = $graphLayout;
+
+        return $this;
+    }
 
     /**
     * @ORM\PrePersist()
@@ -129,6 +159,7 @@ class TreeVersion
             $this->titleAdmin = '1';
         }
     }
+
 
 
 
