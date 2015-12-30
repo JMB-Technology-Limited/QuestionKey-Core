@@ -1,0 +1,38 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Node: {{ node.titleAdmin }}</a></li>
+    <li class="active">Preview</li>
+  </ol>
+
+
+    <div class="preview">
+
+        {% if node.title %}
+            <h3>Title</h3>
+            <div class="previewField">{{ node.title }}</div>
+        {% endif %}
+
+        <h3>Body</h3>
+        <iframe
+        class="previewField"
+        width="100%"
+        height="400px"
+        sandbox="allow-popups allow-popups-to-escape-sandbox"
+        scrolling="auto"
+        src="{{ path('questionkey_admin_tree_version_node_preview_body_html', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}"
+        ></iframe>
+
+    </div>
+
+{% endblock %}

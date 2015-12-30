@@ -68,3 +68,8 @@ form .cancel {
     border-bottom: 1px solid #ccc;
     padding: 2px 5px;
 }
+
+.preview .previewField {
+    border: 2px solid black;
+    padding: 10px;
+}

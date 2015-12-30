@@ -159,6 +159,16 @@ questionkey_admin_tree_version_node_stacktrace:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:stacktrace}
     methods:  [GET,POST]
 
+questionkey_admin_tree_version_node_preview:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/preview
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:preview}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_preview_body_html:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/preview/bodyHTML
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:previewBodyHTML}
+    methods:  [GET,POST]
+
 questionkey_admin_tree_version_node_option_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/new
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:newOption}

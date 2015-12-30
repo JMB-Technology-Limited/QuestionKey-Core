@@ -276,4 +276,40 @@ class AdminTreeVersionNodeController extends Controller
 
     }
 
+
+    public function previewAction($treeId, $versionId, $nodeId)
+    {
+
+
+        // build
+        $return = $this->build($treeId, $versionId, $nodeId);
+
+        //data
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersionNode:preview.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'node'=>$this->node,
+        ));
+
+
+    }
+
+    public function previewBodyHTMLAction($treeId, $versionId, $nodeId)
+    {
+
+
+        // build
+        $return = $this->build($treeId, $versionId, $nodeId);
+
+        //data
+        return $this->render('QuestionKeyBundle:AdminTreeVersionNode:previewBodyHTML.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'node'=>$this->node,
+        ));
+
+
+    }
+
 }
