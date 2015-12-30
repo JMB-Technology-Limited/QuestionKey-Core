@@ -35,6 +35,28 @@ class TreeVersionRepository extends EntityRepository
 
     }
 
+    public function findLatestVersionForTree(Tree $tree)
+    {
+
+        $tvResult =  $this->getEntityManager()
+            ->createQuery(
+                ' SELECT tv FROM QuestionKeyBundle:TreeVersion tv'.
+                ' WHERE    tv.tree = :tree '.
+                ' ORDER BY tv.createdAt DESC '.
+                '  '
+                )
+            ->setMaxResults(1)
+            ->setParameter('tree', $tree)
+            ->getResult();
+
+        if ($tvResult) {
+            return $tvResult[0];
+        } else {
+            return null;
+        }
+
+    }
+
     public function doesPublicIdExist($id, Tree $tree)
     {
         if ($tree->getId()) {

@@ -46,6 +46,7 @@ class AdminTreeController extends Controller
         return $this->render('QuestionKeyBundle:AdminTree:index.html.twig', array(
             'tree'=>$this->tree,
             'publishedTreeVersion'=>$treeVersionRepo->findPublishedVersionForTree($this->tree),
+            'latestTreeVersion'=>$treeVersionRepo->findLatestVersionForTree($this->tree),
         ));
 
 
