@@ -40,10 +40,10 @@ var graph = {
             graph.nodes.push({title:  graph.graphData.nodes[id].title ,  id:  id,  url: graph.graphData.nodes[id].url   ,  x:  position.x  ,  y: position.y });
         }
         if (graph.graphData.start_node && graph.graphData.start_node.id) {
-            graph.edges.push({source: null, target: graph.getNodeForId(graph.graphData.start_node.id), isStart: true});
+            graph.startAddEdge(null, graph.getNodeForId(graph.graphData.start_node.id), true);
         }
         for(id in graph.graphData.nodeOptions) {
-            graph.edges.push({source: graph.getNodeForId(graph.graphData.nodeOptions[id].node.id), target: graph.getNodeForId(graph.graphData.nodeOptions[id].destination_node.id), isStart: false});
+            graph.startAddEdge(graph.getNodeForId(graph.graphData.nodeOptions[id].node.id), graph.getNodeForId(graph.graphData.nodeOptions[id].destination_node.id), false);
         }
 
         graph.svg = d3.select("body").append("svg")
@@ -86,6 +86,20 @@ var graph = {
         graph.svg.on("mouseup", function(d){graph.svgMouseUp.call(graph, d);});
 
         graph.updateGraph();
+
+    },
+    startAddEdge: function(source, target, isStart) {
+        if (isStart) {
+            graph.edges.push({source: null, target: target, isStart: true, count: 1});
+            return;
+        }
+        for (var i = 0; i < graph.edges.length; i++) {
+            if (!graph.edges[i].isStart && graph.edges[i].source.id == source.id && graph.edges[i].target.id == target.id) {
+                graph.edges[i].count++;
+                return;
+            }
+        }
+        graph.edges.push({source: source, target: target, isStart: false, count: 1});
 
     },
     getPositionForNode: function(id, showInitialData) {
@@ -156,6 +170,7 @@ var graph = {
             .append("path")
             .style('marker-end','url(#end-arrow)')
             .classed("link", true)
+            .classed("link-multiple", function(d) { return d.count > 1; })
             .attr("d", function(d){
                 if (d.isStart) {
                     return "M20,20L" + d.target.x + "," + d.target.y;

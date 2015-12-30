@@ -69,6 +69,13 @@ path.link {
     cursor: default;
 }
 
+path.link.link-multiple {
+    fill: none;
+    stroke: #efae52;
+    stroke-width: 6px;
+    cursor: default;
+}
+
 path.link:hover{
     stroke: rgb(94, 196, 204);
 }
