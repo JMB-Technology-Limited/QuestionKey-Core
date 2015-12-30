@@ -37,7 +37,7 @@ class VisitorSessionOnNode
     private $nodeOption = null;
 
     /**
-    * @ORM\Column(name="gone_back_to", type="boolean", nullable=false)
+    * @ORM\Column(name="gone_back_to", type="boolean", nullable=false, options={"default":"0"})
     */
     private $goneBackTo = false;
 

@@ -39,7 +39,7 @@ class Node
     /**
     * @var string
     *
-    * @ORM\Column(name="title_admin", type="string", length=250, nullable=false)
+    * @ORM\Column(name="title_admin", type="string", length=250, nullable=false, options={"default":""})
     */
     private $titleAdmin = '';
 
