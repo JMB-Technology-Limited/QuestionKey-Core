@@ -16,6 +16,7 @@ use QuestionKeyBundle\CopyNewVersionOfTree;
 use QuestionKeyBundle\Form\Type\AdminTreeVersionEditType;
 use QuestionKeyBundle\Form\Type\AdminNodeNewType;
 use QuestionKeyBundle\Form\Type\AdminTreeVersionPublishType;
+use QuestionKeyBundle\GetTreeVersionDataObjects;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -309,70 +310,6 @@ class AdminTreeVersionController extends Controller
 
     }
 
-    protected function getObjects()
-    {
-
-        //data
-        $doctrine = $this->getDoctrine()->getManager();
-        $out = array(
-            'public_id' => $this->tree->getPublicId(),
-            'nodes'=>array(),
-            'nodeOptions'=>array(),
-            'version' => array(
-                'public_id' => $this->treeVersion->getPublicId(),
-            ),
-        );
-
-        $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
-        $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
-        if ($treeStartingNode) {
-            $out['start_node'] = array('id'=>$treeStartingNode->getNode()->getPublicId());
-        }
-
-        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
-        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
-        $nodes = $nodeRepo->findByTreeVersion($this->treeVersion);
-        foreach($nodes as $node) {
-            $outNode = array(
-                'id'=>$node->getPublicId(),
-                'body_html'=>$node->getBodyHTML(),
-                'body_text'=>$node->getBodyText(),
-                'title'=>$node->getTitle(),
-                'title_admin'=>$node->getTitleAdmin(),
-                'title_previous_answers'=>$node->getTitlePreviousAnswers(),
-                'options'=>array(),
-                'url' => $this->generateUrl("questionkey_admin_tree_version_node_show", array("treeId" => $this->tree->getId(), 'versionId' => $this->treeVersion->getId(), 'nodeId' => $node->getId())),
-            );
-            foreach($nodeOptionRepo->findActiveNodeOptionsForNode($node) as $nodeOption) {
-                $destNode = $nodeOption->getDestinationNode();
-                $outNode['options'][$nodeOption->getPublicId()] = array(
-                    'id'=>$nodeOption->getPublicId(),
-                );
-            }
-            $out['nodes'][$node->getPublicId()] =  $outNode;
-        }
-
-        foreach($nodeOptionRepo->findAllNodeOptionsForTreeVersion($this->treeVersion) as $nodeOption) {
-            $out['nodeOptions'][$nodeOption->getPublicId()] = array(
-                'id'=>$nodeOption->getPublicId(),
-                'title'=>$nodeOption->getTitle(),
-                'body_html'=>$nodeOption->getBodyHTML(),
-                'body_text'=>$nodeOption->getBodyText(),
-                'node' => array(
-                    'id' => $nodeOption->getNode()->getPublicId(),
-                ),
-                'destination_node' => array(
-                    'id' => $nodeOption->getDestinationNode()->getPublicId(),
-                ),
-            );
-        }
-
-        return $out;
-
-    }
-
-
-
 
     public function dataJSONAction($treeId, $versionId, Request $request)
     {
@@ -380,7 +317,10 @@ class AdminTreeVersionController extends Controller
         // build
         $return = $this->build($treeId, $versionId);
 
-        $data = $this->getObjects();
+        //data
+        $doctrine = $this->getDoctrine()->getManager();
+        $getTreeVersionDataObjects = new GetTreeVersionDataObjects($this->container, $this->treeVersion, true);
+        $data = $getTreeVersionDataObjects->go();
 
         $response = new Response(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
