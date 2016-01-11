@@ -33,10 +33,10 @@
                 <tbody>
                     {% for nodeOption in incomingNodeOptions %}
                         <tr>
-                            <td>{{ nodeOption.title }}</td>
+                            <td><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}">{{ nodeOption.title }}</a></td>
                             <td>{{ nodeOption.bodyText }}</td>
                             <td>{{ nodeOption.bodyHTML }}</td>
-                            <td>{{ nodeOption.node.titleAdmin }}
+                            <td><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}">{{ nodeOption.node.titleAdmin }}</a></td>
                             <td class="action-link">
                                 <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
                                 <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}" class="btn btn-default">View Source Node</a>
@@ -94,11 +94,11 @@
       <tbody>
         {% for nodeOption in nodeOptions %}
           <tr>
-            <td>{{ nodeOption.title }}</td>
+            <td><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId':nodeOption.id})}}">{{ nodeOption.title }}</a></td>
             <td>{{ nodeOption.bodyText }}</td>
             <td>{{ nodeOption.bodyHTML }}</td>
             <td>{{ nodeOption.sort }}</td>
-            <td>{{ nodeOption.destinationNode.titleAdmin }}
+            <td><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.destinationNode.id }) }}">{{ nodeOption.destinationNode.titleAdmin }}</a></td>
             <td class="action-link">
               <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
               <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.destinationNode.id }) }}" class="btn btn-default">View Destination Node</a>
