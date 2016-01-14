@@ -54,6 +54,11 @@
                 </div>
             {% endif %}
 
+            <div class="pull-right">
+                <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':data.node.id }) }}" class="btn btn-default">View Node</a>
+            </div>
+            <div class="clearfix"></div>
+
      </div>
 
 
