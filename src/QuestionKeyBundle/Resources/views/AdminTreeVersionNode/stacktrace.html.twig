@@ -20,7 +20,7 @@
 
     {% for data in stackTrace.data %}
 
-      <div class="well">
+      <div class="well node">
 
        <p>Public ID: {{ data.node.publicId }}</p>
 
@@ -34,25 +34,31 @@
         <p>Body HTML: {{ data.node.bodyHTML }}</p>
        {% endif %}
 
-            {% if data.nodeOption %}
-                <div class="panel panel-default">
-                    <div class="panel-body">
+            <div style="text-align: right; padding: 10px 0;" class="showAllNodeOptionsWrapper">
+                <a href="#" onclick="ShowAllOptionsForNode('{{  data.node.publicId }}', $(this).parents('.node'), {% if data.nodeOption %}'{{ data.nodeOption.publicId }}'{% else %}null{%  endif %}); return false;" class="btn-xs btn-default">Show all node options</a>
+            </div>
 
-                    <p>Public ID: {{ data.nodeOption.publicId }}</p>
+            <div class="nodeOptionsWrapper">
+                {% if data.nodeOption %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
 
-                    <p>Title: {{ data.nodeOption.title }}</p>
+                        <p>Public ID: {{ data.nodeOption.publicId }}</p>
 
-                    {% if  data.nodeOption.bodyText %}
-                        <p>Body Text: {{ data.nodeOption.bodyText }}</p>
-                    {% endif %}
+                        <p>Title: {{ data.nodeOption.title }}</p>
 
-                    {% if data.nodeOption.bodyHTML  %}
-                        <p>Body HTML: {{ data.nodeOption.bodyHTML }}</p>
-                    {% endif %}
+                        {% if  data.nodeOption.bodyText %}
+                            <p>Body Text: {{ data.nodeOption.bodyText }}</p>
+                        {% endif %}
 
+                        {% if data.nodeOption.bodyHTML  %}
+                            <p>Body HTML: {{ data.nodeOption.bodyHTML }}</p>
+                        {% endif %}
+
+                        </div>
                     </div>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
 
             <div class="pull-right">
                 <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':data.node.id }) }}" class="btn btn-default">View Node</a>
@@ -70,4 +76,14 @@
   {% endfor %}
 
 
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        var thisPage = { 'tree': { 'id': {{ tree.id }} }, 'treeVersion':{ 'id': {{  treeVersion.id }} }, 'node': { 'id':{{  node.id }} } };
+    </script>
+    {% javascripts '@QuestionKeyBundle/Resources/public/js/nodeStacktrace.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
