@@ -4,6 +4,7 @@ namespace QuestionKeyBundle\Controller;
 
 use Doctrine\ORM\Mapping\Entity;
 
+use QuestionKeyBundle\GetUnreachableBitsOfTree;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,6 +126,26 @@ class AdminTreeVersionController extends Controller
             'treeVersion'=>$this->treeVersion,
             'nodes'=>$nodes,
             'isTreeVersionEditable'=>$this->treeVersionEditable,
+        ));
+
+
+    }
+
+    public function nodeListUnreacheableNodesAction($treeId, $versionId)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId);
+
+        //data
+        $process = new GetUnreachableBitsOfTree($this->getDoctrine(), $this->treeVersion);
+        $process->go();
+        $nodes = $process->getUnreachableNodes();
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:nodeListUnreachableNodes.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'nodes'=>$nodes,
         ));
 
 

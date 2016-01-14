@@ -129,6 +129,11 @@ questionkey_admin_tree_version_node_list_end_nodes:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListEndNodes }
     methods:  [GET]
 
+questionkey_admin_tree_version_node_list_unreachable_nodes:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/nodeUnreachableNodes
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListUnreacheableNodes }
+    methods:  [GET]
+
 questionkey_admin_tree_version_node_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/new
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newNode}

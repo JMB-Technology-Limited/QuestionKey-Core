@@ -27,6 +27,17 @@ class NodeOptionRepository extends EntityRepository
     }
 
 
+    public function hasActiveIncomingNodeOptionsForNode(Node $node)
+    {
+        $r =  $this->getEntityManager()
+            ->createQuery(
+                'SELECT COUNT(p) FROM QuestionKeyBundle:NodeOption p WHERE p.destinationNode = :node '
+            )
+            ->setParameter('node', $node)
+            ->getResult();
+        return ($r[0][1]) > 0;
+    }
+
     public function findActiveIncomingNodeOptionsForNode(Node $node)
     {
         return $this->getEntityManager()
