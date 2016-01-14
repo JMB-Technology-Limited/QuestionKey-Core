@@ -33,27 +33,30 @@
        {% if data.node.bodyHTML %}
         <p>Body HTML: {{ data.node.bodyHTML }}</p>
        {% endif %}
+
+            {% if data.nodeOption %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                    <p>Public ID: {{ data.nodeOption.publicId }}</p>
+
+                    <p>Title: {{ data.nodeOption.title }}</p>
+
+                    {% if  data.nodeOption.bodyText %}
+                        <p>Body Text: {{ data.nodeOption.bodyText }}</p>
+                    {% endif %}
+
+                    {% if data.nodeOption.bodyHTML  %}
+                        <p>Body HTML: {{ data.nodeOption.bodyHTML }}</p>
+                    {% endif %}
+
+                    </div>
+                </div>
+            {% endif %}
+
      </div>
 
-      {% if data.nodeOption %}
-        <div class="panel panel-default">
-          <div class="panel-body">
 
-            <p>Public ID: {{ data.nodeOption.publicId }}</p>
-
-            <p>Title: {{ data.nodeOption.title }}</p>
-
-            {% if  data.nodeOption.bodyText %}
-              <p>Body Text: {{ data.nodeOption.bodyText }}</p>
-            {% endif %}
-
-            {% if data.nodeOption.bodyHTML  %}
-              <p>Body HTML: {{ data.nodeOption.bodyHTML }}</p>
-            {% endif %}
-
-          </div>
-        </div>
-      {% endif %}
 
     {% endfor %}
 
