@@ -29,9 +29,10 @@ class NodeOptionRepository extends EntityRepository
 
     public function hasActiveIncomingNodeOptionsForNode(Node $node)
     {
+        // There is no sensible thing to sort by here, but want to sort by something to get a consistent result.
         $r =  $this->getEntityManager()
             ->createQuery(
-                'SELECT COUNT(p) FROM QuestionKeyBundle:NodeOption p WHERE p.destinationNode = :node '
+                'SELECT COUNT(p) FROM QuestionKeyBundle:NodeOption p WHERE p.destinationNode = :node ORDER BY p.id ASC '
             )
             ->setParameter('node', $node)
             ->getResult();

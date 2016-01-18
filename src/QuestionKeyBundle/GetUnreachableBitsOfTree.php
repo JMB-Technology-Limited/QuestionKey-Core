@@ -2,7 +2,9 @@
 
 namespace QuestionKeyBundle;
 
+use QuestionKeyBundle\Entity\Node;
 use QuestionKeyBundle\Entity\TreeVersion;
+use QuestionKeyBundle\Entity\TreeVersionStartingNode;
 
 
 /**
@@ -33,26 +35,32 @@ class GetUnreachableBitsOfTree
         $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
 
         $nodeRepo = $this->doctrine->getRepository('QuestionKeyBundle:Node');
-        $nodeOptionRepo = $this->doctrine->getRepository('QuestionKeyBundle:NodeOption');
 
-        $nodes = $nodeRepo->findByTreeVersion($this->treeVersion);
+        // The sort is here so we get consistent results
+        $nodes = $nodeRepo->findByTreeVersion($this->treeVersion, array('id'=>'ASC'));
         foreach($nodes as $node) {
 
-            $foundIncoming = false;
-
-            if ($nodeOptionRepo->hasActiveIncomingNodeOptionsForNode($node)) {
-                $foundIncoming = true;
-            }
-
-            if ($treeStartingNode && $treeStartingNode->getNode()->getId() == $node->getId()) {
-                $foundIncoming = true;
-            }
-
-            if (!$foundIncoming) {
+            if ($treeStartingNode == null || !$this->isNodeReachable($node, $treeStartingNode)) {
                 $this->unreachableNodes[] = $node;
             }
         }
 
+    }
+
+    private function isNodeReachable(Node $node, TreeVersionStartingNode $treeVersionStartingNode) {
+
+        if ($treeVersionStartingNode && $treeVersionStartingNode->getNode()->getId() == $node->getId()) {
+            return true;
+        }
+
+        $nodeOptionRepo = $this->doctrine->getRepository('QuestionKeyBundle:NodeOption');
+        foreach($nodeOptionRepo->findActiveIncomingNodeOptionsForNode($node) as $nodeOption) {
+            if ($this->isNodeReachable($nodeOption->getNode(), $treeVersionStartingNode)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
