@@ -4,12 +4,14 @@
 #}
 {% extends 'QuestionKeyBundle::base.html.twig' %}
 
+{% block title %}Ran Tree {{ ranTreeVersion.treeVersion.tree.titleAdmin }} Version {{ ranTreeVersion.treeVersion.titleAdmin }} in Visitor Session {{ session.id }} | Admin{%  endblock %}
+
 {% block main %}
 
     <ol class="breadcrumb">
         <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
         <li><a href="{{ path('questionkey_admin_visitor_session_show', {'sessionId':session.id }) }}">Session: {{ session.id }}</a></li>
-        <li class="active">Ran Tree: {{ ranTreeVersion.id }}</li>
+        <li class="active">Ran Tree: {{ ranTreeVersion.treeVersion.tree.titleAdmin }} Version {{ ranTreeVersion.treeVersion.titleAdmin }}</li>
     </ol>
 
     <p>Ran Tree {{ ranTreeVersion.treeVersion.tree.titleAdmin }} Version {{ ranTreeVersion.treeVersion.titleAdmin }}</p>
