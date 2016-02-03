@@ -1,0 +1,74 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}New Tree | Admin{%  endblock %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li class="active">New Tree via Import</li>
+  </ol>
+
+    <section class="">
+
+        <form class="styled" action="" method="post" {{ form_enctype(form) }} id="NewTreeForm">
+            {{ form_errors(form) }}
+
+            <div id="NewTreeFormFieldTitleAdminWrapper">
+                {{ form_row(form.titleAdmin) }}
+            </div>
+
+            <div id="NewTreeFormFieldPublicIdWrapper">
+                {{ form_row(form.publicId) }}
+            </div>
+
+            <div id="NewTreeFormFieldPublicIdWrapper">
+                {{ form_row(form.data) }}
+            </div>
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="Create New Tree" />
+
+            <div class="cancel"><a href="{{ path('questionkey_admin') }}">Cancel</a></div>
+        </form>
+
+
+    </section>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        {#   Based on https://github.com/OpenACalendar/OpenACalendar-Web-Core/blob/master/core/theme/default/js/index/createSite.js from http://ican.openacalendar.org/  #}
+        var hasUserEditedPublicId = false;
+        var titleObj;
+        var keyObj;
+
+        var titleAdminFunc = function() {
+            if (!hasUserEditedPublicId) {
+                slug = titleObj.val().replace(/\W/g, '').toLowerCase();
+                keyObj.val( slug  );
+            }
+        };
+
+        var publicIdFunc = function() {
+            hasUserEditedPublicId = true;
+        };
+
+        $(document).ready(function() {
+
+        	titleObj = $('#NewTreeFormFieldTitleAdminWrapper input');
+        	titleObj.change(titleAdminFunc);
+        	titleObj.keyup(titleAdminFunc);
+
+        	keyObj = $('#NewTreeFormFieldPublicIdWrapper input')
+        	keyObj.keyup(publicIdFunc);
+        });
+    </script>
+{% endblock %}

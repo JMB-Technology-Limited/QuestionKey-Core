@@ -5,6 +5,7 @@ namespace QuestionKeyBundle\Controller;
 use Doctrine\ORM\Mapping\Entity;
 
 use QuestionKeyBundle\GetUnreachableBitsOfTree;
+use QuestionKeyBundle\ImportExport\ExportTreeVersionJSON;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -428,6 +429,24 @@ class AdminTreeVersionController extends Controller
             'treeVersion'=>$this->treeVersion,
             'isTreeVersionEditable'=>$this->treeVersionEditable,
             'link'=>$link,
+        ));
+
+    }
+
+    public function exportAction($treeId, $versionId, Request $request)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId);
+
+        $obj = new ExportTreeVersionJSON($this->getDoctrine(), $this->treeVersion);
+        $json = $obj->getAsText();
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:export.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
+            'json'=>$json,
         ));
 
     }

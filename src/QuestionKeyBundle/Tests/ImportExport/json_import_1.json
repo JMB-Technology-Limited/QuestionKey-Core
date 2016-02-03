@@ -1,0 +1,45 @@
+{
+    "nodes": {
+        "end": {
+            "id": "end",
+            "body_html": null,
+            "body_text": null,
+            "title_admin": "End Here",
+            "title": "End Here",
+            "title_previous_answers": "",
+            "options": []
+        },
+        "start": {
+            "id": "start",
+            "body_html": null,
+            "body_text": null,
+            "title_admin": "Start Here",
+            "title": "Start Here",
+            "title_previous_answers": "",
+            "options": {
+                "option": {
+                    "id": "option"
+                }
+            }
+        }
+    },
+    "nodeOptions": {
+        "option": {
+            "id": "option",
+            "title": "Click Here",
+            "body_html": null,
+            "body_text": null,
+            "sort": null,
+            "node": {
+                "id": "start"
+            },
+            "destination_node": {
+                "id": "end"
+            }
+        }
+    },
+    "start_node": {
+        "id": "start"
+    }
+}
+

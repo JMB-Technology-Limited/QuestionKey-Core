@@ -53,6 +53,11 @@ questionkey_admin_tree_new:
     defaults: { _controller: QuestionKeyBundle:AdminTreeNew:index }
     methods:  [GET,POST]
 
+questionkey_admin_tree_new_import:
+    pattern:  /admin/tree/new/import
+    defaults: { _controller: QuestionKeyBundle:AdminTreeNew:import }
+    methods:  [GET,POST]
+
 questionkey_admin_tree_show:
     pattern:  /admin/tree/{treeId}
     defaults: { _controller: QuestionKeyBundle:AdminTree:index }
@@ -108,6 +113,10 @@ questionkey_admin_tree_version_graph:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:graph }
     methods:  [GET]
 
+questionkey_admin_tree_version_export:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/export
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:export }
+    methods:  [GET]
 
 questionkey_admin_tree_version_graph_savecurrent:
     pattern:  /admin/tree/{treeId}/version/{versionId}/graph/save/current
