@@ -1,0 +1,41 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Edit Node {{ node.titleAdmin }} on Version {{ treeVersion.titleAdmin }} of {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Node: {{ node.titleAdmin }}</a></li>
+        <li class="active">Stats</li>
+    </ol>
+
+    <section class="">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                From {{  dateRange.from|date('c') }} to {{  dateRange.to|date('c') }}
+            </div>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>Times Ran (Including Node)</th><td>{{  countTimesRanIncludedNode }}</td>
+            </tr>
+            <tr>
+                <th>Times Ran (This Version) </th><td>{{  countTimesRanForTreeVersion }}</td>
+            </tr>
+            <tr>
+                <th>Times Ran (All Versions)</th><td>{{  countTimesRanForTree }}</td>
+            </tr>
+        </table>
+
+    </section>
+
+{% endblock %}

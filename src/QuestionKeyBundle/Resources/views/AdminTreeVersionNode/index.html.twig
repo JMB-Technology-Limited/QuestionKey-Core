@@ -120,6 +120,7 @@
         <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_preview', {'treeId':tree.id , 'versionId':treeVersion.id,'nodeId':node.id  }) }}" class="btn btn-default">Preview</a></li>
     {% endif %}
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_stacktrace', {'treeId':tree.id , 'versionId':treeVersion.id,'nodeId':node.id  }) }}" class="btn btn-default">Stacktrace</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_stats', {'treeId':tree.id , 'versionId':treeVersion.id,'nodeId':node.id  }) }}" class="btn btn-default">Stats</a></li>
     {% if node.fromOldVersion %}
       <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':node.fromOldVersion.treeVersion.id,'nodeId':node.fromOldVersion.id }) }}" class="btn btn-default">View old version this was created from</a></li>
     {% endif %}

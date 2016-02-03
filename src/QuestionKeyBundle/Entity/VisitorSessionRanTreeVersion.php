@@ -49,6 +49,11 @@ class VisitorSessionRanTreeVersion
     */
     private $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="VisitorSessionOnNode", mappedBy="sessionRanTreeVersion")
+     **/
+    private $onNodes;
+
 
     public function getId()
     {
@@ -99,6 +104,25 @@ class VisitorSessionRanTreeVersion
     {
         $this->createdAt = $createdAt;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOnNodes()
+    {
+        return $this->onNodes;
+    }
+
+    /**
+     * @param mixed $onNodes
+     */
+    public function setOnNodes($onNodes)
+    {
+        $this->onNodes = $onNodes;
+    }
+
+
+
 
     /**
     * @ORM\PrePersist()

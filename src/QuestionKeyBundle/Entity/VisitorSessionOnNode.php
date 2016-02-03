@@ -42,7 +42,7 @@ class VisitorSessionOnNode
     private $goneBackTo = false;
 
     /**
-    * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\VisitorSessionRanTreeVersion")
+    * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\VisitorSessionRanTreeVersion", inversedBy="onNodes")
     * @ORM\JoinColumn(name="session_ran_tree_version_id", referencedColumnName="id", nullable=false)
     */
     private $sessionRanTreeVersion;

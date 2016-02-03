@@ -4,6 +4,7 @@ namespace QuestionKeyBundle\Controller;
 
 use Doctrine\ORM\Mapping\Entity;
 
+use QuestionKeyBundle\StatsDateRange;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use QuestionKeyBundle\Form\Type\AdminTreeEditType;
@@ -83,5 +84,28 @@ class AdminTreeController extends Controller
 
     }
 
+    public function statsAction($treeId)
+    {
+
+
+        // build
+        $return = $this->build($treeId);
+
+        //data
+        $statsDateRange = new StatsDateRange();
+
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+        $tsrtvRepo = $doctrine->getRepository('QuestionKeyBundle:VisitorSessionRanTreeVersion');
+
+        return $this->render('QuestionKeyBundle:AdminTree:stats.html.twig', array(
+            'tree'=>$this->tree,
+            'dateRange'=>$statsDateRange,
+            'countTimesRan'=>$tsrtvRepo->getStatsCountTimesRanForTree($this->tree, $statsDateRange),
+        ));
+
+
+    }
 
 }

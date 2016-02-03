@@ -1,0 +1,34 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Edit {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li class="active">Stats</li>
+    </ol>
+
+
+    <section class="">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                From {{  dateRange.from|date('c') }} to {{  dateRange.to|date('c') }}
+            </div>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>Times Ran</th><td>{{  countTimesRan }}</td>
+            </tr>
+        </table>
+
+    </section>
+
+{% endblock %}

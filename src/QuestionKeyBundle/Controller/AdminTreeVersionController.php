@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Entity;
 
 use QuestionKeyBundle\GetUnreachableBitsOfTree;
 use QuestionKeyBundle\ImportExport\ExportTreeVersionJSON;
+use QuestionKeyBundle\StatsDateRange;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -447,6 +448,33 @@ class AdminTreeVersionController extends Controller
             'treeVersion'=>$this->treeVersion,
             'isTreeVersionEditable'=>$this->treeVersionEditable,
             'json'=>$json,
+        ));
+
+    }
+
+    public function statsAction($treeId, $versionId, Request $request)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId);
+
+        //data
+        $statsDateRange = new StatsDateRange();
+
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+        $tsrtvRepo = $doctrine->getRepository('QuestionKeyBundle:VisitorSessionRanTreeVersion');
+
+
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:stats.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'isTreeVersionEditable'=>$this->treeVersionEditable,
+            'dateRange'=>$statsDateRange,
+            'countTimesRanForTree'=>$tsrtvRepo->getStatsCountTimesRanForTree($this->tree, $statsDateRange),
+            'countTimesRanForTreeVersion'=>$tsrtvRepo->getStatsCountTimesRanForTreeVersion($this->treeVersion, $statsDateRange),
         ));
 
     }

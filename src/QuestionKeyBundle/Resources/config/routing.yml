@@ -68,6 +68,12 @@ questionkey_admin_tree_edit:
     defaults: { _controller: QuestionKeyBundle:AdminTree:edit }
     methods:  [GET,POST]
 
+
+questionkey_admin_tree_stats:
+    pattern:  /admin/tree/{treeId}/stats
+    defaults: { _controller: QuestionKeyBundle:AdminTree:stats }
+    methods:  [GET]
+
 questionkey_admin_tree_version_published_list:
     pattern:  /admin/tree/{treeId}/versionpublished
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionPublishedList:index }
@@ -116,6 +122,11 @@ questionkey_admin_tree_version_graph:
 questionkey_admin_tree_version_export:
     pattern:  /admin/tree/{treeId}/version/{versionId}/export
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:export }
+    methods:  [GET]
+
+questionkey_admin_tree_version_stats:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/stats
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:stats }
     methods:  [GET]
 
 questionkey_admin_tree_version_graph_savecurrent:
@@ -182,6 +193,11 @@ questionkey_admin_tree_version_node_preview_body_html:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/preview/bodyHTML
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:previewBodyHTML}
     methods:  [GET,POST]
+
+questionkey_admin_tree_version_node_stats:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/stats
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:stats}
+    methods:  [GET]
 
 questionkey_admin_tree_version_node_option_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/new

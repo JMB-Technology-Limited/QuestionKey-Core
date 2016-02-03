@@ -3,6 +3,7 @@
 namespace QuestionKeyBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use QuestionKeyBundle\StatsDateRange;
 
 /**
  *  @license 3-clause BSD
@@ -37,6 +38,47 @@ class VisitorSessionRanTreeVersionRepository extends EntityRepository
         } else {
             return false;
         }
+    }
+
+    public function getStatsCountTimesRanForTree(Tree $tree, StatsDateRange $statsDateRange) {
+        $data =  $this->getEntityManager()
+            ->createQuery(
+                ' SELECT COUNT(vsrtv) FROM QuestionKeyBundle:VisitorSessionRanTreeVersion vsrtv'.
+                ' JOIN vsrtv.treeVersion tv '.
+                ' WHERE tv.tree = :tree '
+            )
+            ->setParameter('tree', $tree)
+            ->getScalarResult();
+        return $data[0][1];
+
+    }
+
+
+    public function getStatsCountTimesRanForTreeVersion(TreeVersion $treeVersion, StatsDateRange $statsDateRange) {
+        $data =  $this->getEntityManager()
+            ->createQuery(
+                ' SELECT COUNT(vsrtv) FROM QuestionKeyBundle:VisitorSessionRanTreeVersion vsrtv'.
+                ' WHERE vsrtv.treeVersion = :treeVersion '
+            )
+            ->setParameter('treeVersion', $treeVersion)
+            ->getScalarResult();
+        return $data[0][1];
+
+    }
+
+    public function getStatsCountTimesRanIncludedNode(Node $node, StatsDateRange $statsDateRange) {
+
+        $data =  $this->getEntityManager()
+            ->createQuery(
+                'SELECT vsrtv.id AS x FROM QuestionKeyBundle:VisitorSessionRanTreeVersion vsrtv'.
+                ' JOIN  vsrtv.onNodes vson'.
+                ' WHERE vson.node = :node '.
+                ' GROUP BY vsrtv.id  '
+            )
+            ->setParameter('node', $node)
+            ->getResult();
+        return count($data);
+
     }
 
 }

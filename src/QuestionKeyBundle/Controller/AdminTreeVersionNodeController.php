@@ -4,6 +4,7 @@ namespace QuestionKeyBundle\Controller;
 
 use Doctrine\ORM\Mapping\Entity;
 
+use QuestionKeyBundle\StatsDateRange;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use QuestionKeyBundle\Form\Type\AdminNodeEditType;
@@ -311,5 +312,42 @@ class AdminTreeVersionNodeController extends Controller
 
 
     }
+
+
+    public function statsAction($treeId, $versionId, $nodeId)
+    {
+
+
+        // build
+        $return = $this->build($treeId, $versionId, $nodeId);
+
+
+        //data
+        $statsDateRange = new StatsDateRange();
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+        $tsrtvRepo = $doctrine->getRepository('QuestionKeyBundle:VisitorSessionRanTreeVersion');
+
+
+        $doctrine = $this->getDoctrine()->getManager();
+
+
+
+        //view
+        return $this->render('QuestionKeyBundle:AdminTreeVersionNode:stats.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'node'=>$this->node,
+            'dateRange'=>$statsDateRange,
+            'countTimesRanIncludedNode'=>$tsrtvRepo->getStatsCountTimesRanIncludedNode($this->node, $statsDateRange),
+            'countTimesRanForTree'=>$tsrtvRepo->getStatsCountTimesRanForTree($this->tree, $statsDateRange),
+            'countTimesRanForTreeVersion'=>$tsrtvRepo->getStatsCountTimesRanForTreeVersion($this->treeVersion, $statsDateRange),
+        ));
+
+
+    }
+
+
 
 }
