@@ -31,7 +31,7 @@
   {% endif %}
 
 
-  {%  if treeVersion.featureVariables %}
+  {%  if treeVersion.featureVariables or treeVersion.featureLibraryContent  %}
     <table class="table table-striped">
       <thead>
         <tr>
@@ -43,6 +43,10 @@
         <tr>
           <td>Variables</td>
           <td>{%  if treeVersion.featureVariables %}Yes{%  else %}No{%  endif %}</td>
+        </tr>
+        <tr>
+          <td>Library Content</td>
+          <td>{%  if treeVersion.featureLibraryContent %}Yes{%  else %}No{%  endif %}</td>
         </tr>
       </tbody>
     </table>
@@ -61,6 +65,9 @@
     {%  if treeVersion.featureVariables  %}
       <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_variable_list', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Variables</a></li>
     {%  endif %}
+    {%  if treeVersion.featureLibraryContent  %}
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_list', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Library Content</a></li>
+    {%  endif %}
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_run', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Run Tree</a></li>
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_graph', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">View Visulisation</a></li>
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_export', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Export</a></li>
@@ -70,6 +77,9 @@
         <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Node</a></li>
         {%  if treeVersion.featureVariables %}
           <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_variable_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Variable</a></li>
+        {%  endif %}
+        {%  if treeVersion.featureLibraryContent %}
+          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Library Content</a></li>
         {%  endif %}
     {% endif %}
     <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_new_version', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Version from this version</a></li>

@@ -1,0 +1,40 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Library Content on Version {{ treeVersion.titleAdmin }} of {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li class="active">Library Content</li>
+    </ol>
+
+    {% if libraryContents %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for libraryContent in libraryContents %}
+                <tr>
+                    <td>{{ libraryContent.titleAdmin }}</td>
+                    <td class="action-link"><a href="{{ path('questionkey_admin_tree_version_library_content_show', {'treeId':tree.id ,'versionId':treeVersion.id,'contentId':libraryContent.publicId }) }}" class="btn btn-default">View</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No content</p>
+    {% endif %}
+
+{% endblock %}

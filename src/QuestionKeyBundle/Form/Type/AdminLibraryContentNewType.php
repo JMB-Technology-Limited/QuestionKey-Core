@@ -11,27 +11,25 @@ use Symfony\Component\Form\FormBuilderInterface;
  *  @license 3-clause BSD
  *  @link https://github.com/QuestionKey/QuestionKey-Core
  */
-class AdminTreeVersionEditType extends AbstractType {
+class AdminLibraryContentNewType extends AbstractType {
 
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
 
-        $builder->add('title_admin', 'text', array(
+        $builder->add('titleAdmin', 'text', array(
             'required' => true,
-            'label'=>'Title (Admin)'
+            'label'=>'Title (For Admins)'
         ));
 
-
-        $builder->add('feature_variables', 'checkbox', array(
+        $builder->add('body_text', 'textarea', array(
             'required' => false,
-            'label'=>'Feature Variables'
+            'label'=>'Body (Text)'
         ));
 
-
-        $builder->add('feature_library_content', 'checkbox', array(
+        $builder->add('body_html', 'textarea', array(
             'required' => false,
-            'label'=>'Feature Library Content'
+            'label'=>'Body (HTML)'
         ));
 
 
@@ -43,7 +41,6 @@ class AdminTreeVersionEditType extends AbstractType {
 
     public function getDefaultOptions(array $options) {
         return array(
-            'data_class' => 'QuestionKeyBundle\Entity\TreeVersion',
         );
     }
 }

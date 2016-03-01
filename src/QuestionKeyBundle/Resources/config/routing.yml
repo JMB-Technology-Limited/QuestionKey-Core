@@ -169,6 +169,21 @@ questionkey_admin_tree_version_variable_show:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionVariable:index}
     methods:  [GET,POST]
 
+questionkey_admin_tree_version_library_content_new:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/newLibraryContent
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newLibraryContent}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_library_content_list:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/library/content
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:libraryContentList}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_library_content_show:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/library/content/{contentId}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionLibraryContent:index}
+    methods:  [GET,POST]
+
 questionkey_admin_tree_version_node_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/new
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newNode}
@@ -213,6 +228,11 @@ questionkey_admin_tree_version_node_stats:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/stats
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:stats}
     methods:  [GET]
+
+questionkey_admin_tree_version_node_library_content_new:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/addLibraryContent
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:addLibraryContent}
+    methods:  [GET, POST]
 
 questionkey_admin_tree_version_node_option_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/new

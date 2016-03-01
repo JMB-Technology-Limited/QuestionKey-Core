@@ -79,7 +79,18 @@
 
   </div>
 
+    {%  for libraryContent in libraryContents %}
 
+        <div class="well">
+
+            <p>Library Title: {{ libraryContent.titleAdmin }}</p>
+
+            <p>Body Text: {{ libraryContent.bodyText | nl2br }}</p>
+
+            <p>Body HTML: {{ libraryContent.bodyHTML | nl2br }}</p>
+
+        </div>
+    {%  endfor %}
 
   {% if nodeOptions %}
     <table class="table table-striped">
@@ -130,6 +141,9 @@
           <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_make_start_node', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Make Starting Node</a></li>
         {% endif %}
         <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_new', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">New Node Option</a></li>
+        {%  if treeVersion.featureLibraryContent %}
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_library_content_new', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Add Library Content</a></li>
+        {% endif %}
         <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_delete', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-danger">DELETE</a></li>
     {% else %}
         <li class="list-group-item"><em>This tree version can not be edited as it has been published.</em></li>

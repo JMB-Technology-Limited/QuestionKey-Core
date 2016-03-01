@@ -112,15 +112,30 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     this._windowPushState();
     this._showNode();
   }
+  this._hasFeatureContentLibrary = function () {
+      return this.treeData.features.library_content.status;
+  }
   this._showNode = function() {
     // Node
     var node = this.treeData.nodes[this.stack[this.stack.length - 1].nodeId];
     $(this.targetSelector).find(this.theme.bodySelectorTitle).html(node.title);
+    var bodyHTML = '';
     if (node.body_text) {
-      $(this.targetSelector).find(this.theme.bodySelectorBody).text(node.body_text);
+        bodyHTML += '<div>'+  $('<div/>').text(node.body_text).html()   +'</div>';
     } else if (node.body_html) {
-        $(this.targetSelector).find(this.theme.bodySelectorBody).html(node.body_html);
+        bodyHTML += '<div>'+  node.body_html  +'</div>';
     }
+    if (this._hasFeatureContentLibrary()) {
+        for(id in node.library_content) {
+            var libraryContent = this.treeData.library_content[id];
+            if (libraryContent.body_text) {
+                bodyHTML += '<div>'+  $('<div/>').text(libraryContent.body_text).html()   +'</div>';
+            } else if (libraryContent.body_html) {
+                bodyHTML += '<div>'+  libraryContent.body_html  +'</div>';
+            }
+        }
+    }
+    $(this.targetSelector).find(this.theme.bodySelectorBody).html(bodyHTML);
     // Node Options
     var optionsHTML = '';
     for(i in node.options) {

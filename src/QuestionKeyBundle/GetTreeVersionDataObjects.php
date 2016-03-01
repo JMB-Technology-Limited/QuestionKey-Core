@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class GetTreeVersionDataObjects {
 
     protected $container;
+    /** @var TreeVersion  */
     protected $treeVersion;
     protected $isAdmin;
 
@@ -36,7 +37,25 @@ class GetTreeVersionDataObjects {
             'version' => array(
                 'public_id' => $this->treeVersion->getPublicId(),
             ),
+            'features'=>array(
+              'library_content'=>array('status'=>false),
+            ),
         );
+
+
+        if ($this->treeVersion->isFeatureLibraryContent()) {
+            $out['features']['library_content'] = array('status'=>true);
+            $out['library_content'] = array();
+            $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+            $libraryContents = $libraryContentRepo->findByTreeVersion($this->treeVersion);
+            foreach ($libraryContents as $libraryContent) {
+                $out['library_content'][$libraryContent->getPublicId()] = array(
+                    'id'=>$libraryContent->getPublicId(),
+                    'body_html'=>$libraryContent->getBodyHTML(),
+                    'body_text'=>$libraryContent->getBodyText(),
+                );
+            }
+        }
 
         $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
         $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
@@ -60,8 +79,16 @@ class GetTreeVersionDataObjects {
                 $outNode['title_admin'] = $node->getTitleAdmin();
                 $outNode['url'] = $this->container->get('router')->generate("questionkey_admin_tree_version_node_show", array("treeId" => $this->treeVersion->getTree()->getId(), 'versionId' => $this->treeVersion->getId(), 'nodeId' => $node->getId()));
             }
+
+            if ($this->treeVersion->isFeatureLibraryContent()) {
+                $outNode['library_content'] = array();
+                foreach ($libraryContentRepo->findForNode($node) as $libraryContent) {
+                    $outNode['library_content'][$libraryContent->getPublicId()] = array(
+                        'id'=>$libraryContent->getPublicId(),
+                    );
+                }
+            }
             foreach($nodeOptionRepo->findActiveNodeOptionsForNode($node) as $nodeOption) {
-                $destNode = $nodeOption->getDestinationNode();
                 $outNode['options'][$nodeOption->getPublicId()] = array(
                     'id'=>$nodeOption->getPublicId(),
                 );

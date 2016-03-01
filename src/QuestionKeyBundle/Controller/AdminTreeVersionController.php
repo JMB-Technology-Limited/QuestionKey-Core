@@ -4,7 +4,9 @@ namespace QuestionKeyBundle\Controller;
 
 use Doctrine\ORM\Mapping\Entity;
 
+use QuestionKeyBundle\Entity\LibraryContent;
 use QuestionKeyBundle\Entity\Variable;
+use QuestionKeyBundle\Form\Type\AdminLibraryContentNewType;
 use QuestionKeyBundle\Form\Type\AdminVariableNewType;
 use QuestionKeyBundle\GetUnreachableBitsOfTree;
 use QuestionKeyBundle\ImportExport\ExportTreeVersionJSON;
@@ -130,6 +132,29 @@ class AdminTreeVersionController extends Controller
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'variables'=>$variables,
+        ));
+
+
+    }
+
+
+    public function libraryContentListAction($treeId, $versionId)
+    {
+
+
+        // build
+        $return = $this->build($treeId, $versionId);
+
+        //data
+        $doctrine = $this->getDoctrine()->getManager();
+        $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+
+        $contents = $libraryContentRepo->findByTreeVersion($this->treeVersion);
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:libraryContentList.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'libraryContents'=>$contents,
         ));
 
 
@@ -335,6 +360,47 @@ class AdminTreeVersionController extends Controller
 
     }
 
+
+
+    public function newLibraryContentAction($treeId, $versionId)
+    {
+
+        // build
+        $this->build($treeId, $versionId);
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
+
+        //data
+        $form = $this->createForm(new AdminLibraryContentNewType());
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $doctrine = $this->getDoctrine()->getManager();
+                $libraryContent = new LibraryContent();
+                $libraryContent->setTreeVersion($this->treeVersion);
+                $libraryContent->setTitleAdmin($form->get('titleAdmin')->getData());
+                $libraryContent->setBodyText($form->get('body_text')->getData());
+                $libraryContent->setBodyHTML($form->get('body_html')->getData());
+                $doctrine->persist($libraryContent);
+                $doctrine->flush();
+
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_library_content_show', array(
+                    'treeId'=>$this->tree->getId(),
+                    'versionId'=>$this->treeVersion->getId(),
+                    'contentId'=>$libraryContent->getPublicId(),
+                )));
+            }
+        }
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:newLibraryContent.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'form' => $form->createView(),
+        ));
+
+    }
 
 
     public function publishAction($treeId, $versionId)

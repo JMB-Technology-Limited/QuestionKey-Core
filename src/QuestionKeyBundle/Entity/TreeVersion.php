@@ -73,6 +73,13 @@ class TreeVersion
      */
     private $featureVariables = false;
 
+    /**
+     * @var boolean
+     * Should be nullable=false but there is old data. We can treat null as false.
+     * @ORM\Column(name="feature_library_content", type="boolean", nullable=true)
+     */
+    private $featureLibraryContent = false;
+
     public function getId()
     {
         return $this->id;
@@ -149,6 +156,24 @@ class TreeVersion
     {
         $this->featureVariables = $featureVariables;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isFeatureLibraryContent()
+    {
+        return $this->featureLibraryContent;
+    }
+
+    /**
+     * @param boolean $featureLibraryContent
+     */
+    public function setFeatureLibraryContent($featureLibraryContent)
+    {
+        $this->featureLibraryContent = $featureLibraryContent;
+    }
+
+
 
     /**
      * Get the value of Graph Layout

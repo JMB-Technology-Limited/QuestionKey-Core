@@ -4,8 +4,10 @@ namespace QuestionKeyBundle\Controller;
 
 use Doctrine\ORM\Mapping\Entity;
 
+use QuestionKeyBundle\Entity\NodeHasLibraryContent;
 use QuestionKeyBundle\StatsDateRange;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use QuestionKeyBundle\Form\Type\AdminNodeEditType;
 use QuestionKeyBundle\Form\Type\AdminNodeOptionNewType;
@@ -78,10 +80,15 @@ class AdminTreeVersionNodeController extends Controller
         $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
         $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
 
+
+        $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+        $contents = $libraryContentRepo->findForNode($this->node);
+
         return $this->render('QuestionKeyBundle:AdminTreeVersionNode:index.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'node'=>$this->node,
+            'libraryContents'=>$contents,
             'nodeOptions'=>$nodeOptions,
             'incomingNodeOptions'=>$incomingNodeOptions,
             'isStartNode'=>($treeStartingNode ? ($treeStartingNode->getNode() == $this->node) : false),
@@ -255,6 +262,51 @@ class AdminTreeVersionNodeController extends Controller
 
 
     }
+
+    public function addLibraryContentAction($treeId, $versionId, $nodeId, Request $request)
+    {
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+
+        // build
+        $return = $this->build($treeId, $versionId, $nodeId);
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
+
+        //data
+
+        if ($request->getMethod() == 'POST' && $request->request->get('action') == 'add') {
+            $content = $libraryContentRepo->findOneBy(array('treeVersion'=>$this->treeVersion, 'publicId'=>$request->request->get('contentId')));
+            if ($content) {
+
+                $nodeHasLibraryContent =  new NodeHasLibraryContent();
+                $nodeHasLibraryContent->setNode($this->node);
+                $nodeHasLibraryContent->setLibraryContent($content);
+                $nodeHasLibraryContent->setSort(0);
+                $doctrine->persist($nodeHasLibraryContent);
+                $doctrine->flush($nodeHasLibraryContent);
+
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
+
+            }
+        }
+
+
+        $contents = $libraryContentRepo->findByTreeVersion($this->treeVersion);
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersionNode:addLibraryContent.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'node'=>$this->node,
+            'libraryContents'=>$contents,
+        ));
+
+
+    }
+
+
     public function stacktraceAction($treeId, $versionId, $nodeId)
     {
 
