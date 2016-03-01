@@ -154,6 +154,21 @@ questionkey_admin_tree_version_node_list_unreachable_nodes:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListUnreacheableNodes }
     methods:  [GET]
 
+questionkey_admin_tree_version_variable_new:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/newVariable
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newVariable}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_variable_list:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/variable
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:variableList}
+    methods:  [GET,POST]
+
+questionkey_admin_tree_version_variable_show:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/variable/{variableId}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionVariable:index}
+    methods:  [GET,POST]
+
 questionkey_admin_tree_version_node_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/new
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newNode}

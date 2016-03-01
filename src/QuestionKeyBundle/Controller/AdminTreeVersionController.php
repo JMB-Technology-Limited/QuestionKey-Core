@@ -4,6 +4,8 @@ namespace QuestionKeyBundle\Controller;
 
 use Doctrine\ORM\Mapping\Entity;
 
+use QuestionKeyBundle\Entity\Variable;
+use QuestionKeyBundle\Form\Type\AdminVariableNewType;
 use QuestionKeyBundle\GetUnreachableBitsOfTree;
 use QuestionKeyBundle\ImportExport\ExportTreeVersionJSON;
 use QuestionKeyBundle\StatsDateRange;
@@ -106,6 +108,28 @@ class AdminTreeVersionController extends Controller
             'nodes'=>$nodes,
             'startNode'=>($treeStartingNode && $treeStartingNode->getNode() ? $treeStartingNode->getNode() : null),
             'isTreeVersionEditable'=>$this->treeVersionEditable,
+        ));
+
+
+    }
+
+    public function variableListAction($treeId, $versionId)
+    {
+
+
+        // build
+        $return = $this->build($treeId, $versionId);
+
+        //data
+        $doctrine = $this->getDoctrine()->getManager();
+        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Variable');
+
+        $variables = $nodeRepo->findByTreeVersion($this->treeVersion);
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:variableList.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'variables'=>$variables,
         ));
 
 
@@ -264,6 +288,46 @@ class AdminTreeVersionController extends Controller
         }
 
         return $this->render('QuestionKeyBundle:AdminTreeVersion:newNode.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'form' => $form->createView(),
+        ));
+
+    }
+
+
+    public function newVariableAction($treeId, $versionId)
+    {
+
+        // build
+        $this->build($treeId, $versionId);
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
+
+        //data
+        $form = $this->createForm(new AdminVariableNewType());
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $doctrine = $this->getDoctrine()->getManager();
+                $variable = new Variable();
+                $variable->setTreeVersion($this->treeVersion);
+                $variable->setName($form->get('name')->getData());
+                $variable->setType($form->get('type')->getData());
+                $doctrine->persist($variable);
+                $doctrine->flush();
+
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_variable_show', array(
+                    'treeId'=>$this->tree->getId(),
+                    'versionId'=>$this->treeVersion->getId(),
+                    'variableId'=>$variable->getName(),
+                )));
+            }
+        }
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:newVariable.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'form' => $form->createView(),

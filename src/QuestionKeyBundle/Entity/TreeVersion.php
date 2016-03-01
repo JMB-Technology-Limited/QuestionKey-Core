@@ -66,6 +66,13 @@ class TreeVersion
     private $graphLayout;
 
 
+    /**
+     * @var boolean
+     * Should be nullable=false but there is old data. We can treat null as false.
+     * @ORM\Column(name="feature_variables", type="boolean", nullable=true)
+     */
+    private $featureVariables = false;
+
     public function getId()
     {
         return $this->id;
@@ -121,9 +128,26 @@ class TreeVersion
         return $this->fromOldVersion;
     }
 
-    public function setFromOldVersion($fromOldVersion)
+    public function setFromOldVersion(TreeVersion $fromOldVersion)
     {
         $this->fromOldVersion = $fromOldVersion;
+        $this->featureVariables = $fromOldVersion->isFeatureVariables();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFeatureVariables()
+    {
+        return $this->featureVariables;
+    }
+
+    /**
+     * @param boolean $featureVariables
+     */
+    public function setFeatureVariables($featureVariables)
+    {
+        $this->featureVariables = $featureVariables;
     }
 
     /**

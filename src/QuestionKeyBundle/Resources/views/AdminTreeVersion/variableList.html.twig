@@ -1,0 +1,42 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Variables on Version {{ treeVersion.titleAdmin }} of {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li class="active">Variables</li>
+    </ol>
+
+    {% if variables %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for variable in variables %}
+                <tr>
+                    <td>{{ variable.name }}</td>
+                    <td>{{ variable.type }}</td>
+                    <td class="action-link"><a href="{{ path('questionkey_admin_tree_version_variable_show', {'treeId':tree.id ,'versionId':treeVersion.id,'variableId':variable.name }) }}" class="btn btn-default">View</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No variables</p>
+    {% endif %}
+
+{% endblock %}
