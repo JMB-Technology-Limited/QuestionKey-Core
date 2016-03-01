@@ -23,6 +23,7 @@
   			<thead>
   				<tr>
   					<th>Version Title</th>
+					<th>Published</th>
   					<th></th>
   				</tr>
   			</thead>
@@ -30,6 +31,11 @@
   				{% for treeVersion in treeVersions %}
   					<tr>
   						<td>{{ treeVersion.titleAdmin }}</td>
+						<td>
+							{%  if treeVersion.id == treeVersionPublished.id %}
+								Published!
+							{%  endif %}
+						</td>
   						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersion.id }) }}" class="btn btn-default">View</a></td>
   					</tr>
   				{% endfor %}
