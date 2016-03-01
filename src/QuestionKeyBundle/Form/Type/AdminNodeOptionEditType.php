@@ -2,6 +2,8 @@
 
 namespace QuestionKeyBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
+use QuestionKeyBundle\Entity\NodeOption;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackValidator;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,6 +14,10 @@ use Symfony\Component\Form\FormBuilderInterface;
  *  @link https://github.com/QuestionKey/QuestionKey-Core
  */
 class AdminNodeOptionEditType extends AbstractType {
+
+
+    /** @var  NodeOption */
+    protected $nodeOption;
 
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -39,6 +45,21 @@ class AdminNodeOptionEditType extends AbstractType {
             'label'=>'Sort'
         ));
 
+        $this->nodeOption = $builder->getData();
+
+        $builder->add('destination_node', 'entity', array(
+            'required' => true,
+            'label'=>'Destination Node',
+            'class' => 'QuestionKeyBundle:Node',
+            'expanded'=>true,
+            'multiple'=>false,
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                    ->where('u.treeVersion = :tree_version')
+                    ->setParameter('tree_version', $this->nodeOption->getNode()->getTreeVersion())
+                    ->orderBy('u.title', 'ASC');
+            },
+        ));
 
     }
 
