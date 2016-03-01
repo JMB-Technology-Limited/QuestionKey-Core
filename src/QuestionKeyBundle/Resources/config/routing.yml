@@ -75,7 +75,7 @@ questionkey_admin_tree_show:
 
 questionkey_admin_tree_edit:
     pattern:  /admin/tree/{treeId}/edit
-    defaults: { _controller: QuestionKeyBundle:AdminTree:edit }
+    defaults: { _controller: QuestionKeyBundle:AdminTreeEdit:edit }
     methods:  [GET,POST]
 
 

@@ -54,35 +54,6 @@ class AdminTreeController extends Controller
     }
 
 
-    public function editAction($treeId)
-    {
-
-
-        // build
-        $return = $this->build($treeId);
-
-        //data
-        $form = $this->createForm(new AdminTreeEditType(), $this->tree);
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $doctrine = $this->getDoctrine()->getManager();
-                $doctrine->persist($this->tree);
-                $doctrine->flush();
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_show', array(
-                    'treeId'=>$this->tree->getId()
-                )));
-            }
-        }
-
-        return $this->render('QuestionKeyBundle:AdminTree:edit.html.twig', array(
-            'form' => $form->createView(),
-            'tree'=>$this->tree,
-        ));
-
-
-    }
 
     public function statsAction($treeId)
     {
