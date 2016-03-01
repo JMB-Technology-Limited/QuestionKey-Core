@@ -1,7 +1,11 @@
+######################################################################## Home Page
+
 questionkey_home:
     pattern:  /
     defaults: { _controller: QuestionKeyBundle:Index:index }
     methods:  [GET]
+
+######################################################################## API 1
 
 questionkey_api_1_tree_data_json:
     pattern:  /api/v1/tree/{treeId}/data.json
@@ -23,6 +27,8 @@ questionkey_api_1_visitorsession_action_jsonp:
     defaults: { _controller: QuestionKeyBundle:API1VisitorSession:actionJSONP }
     methods:  [GET]
 
+######################################################################## Public Tree pages
+
 questionkey_tree_demo:
     pattern:  /tree/{treeId}/demo
     defaults: { _controller: QuestionKeyBundle:Tree:demo }
@@ -38,10 +44,14 @@ questionkey_tree_version_preview_data_json:
     defaults: { _controller: QuestionKeyBundle:TreeVersionCode:dataJSON }
     methods:  [GET]
 
+######################################################################## Start Admin!
+
 questionkey_admin:
     pattern:  /admin
     defaults: { _controller: QuestionKeyBundle:Admin:index }
     methods:  [GET]
+
+######################################################################## Admin Tree
 
 questionkey_admin_tree_list:
     pattern:  /admin/tree
@@ -83,6 +93,8 @@ questionkey_admin_tree_version_list:
     pattern:  /admin/tree/{treeId}/version
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionList:index }
     methods:  [GET]
+
+######################################################################## Admin Tree Version
 
 questionkey_admin_tree_version_show:
     pattern:  /admin/tree/{treeId}/version/{versionId}
@@ -139,20 +151,7 @@ questionkey_admin_tree_version_get_preview_link:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:getPreviewLink }
     methods:  [GET]
 
-questionkey_admin_tree_version_node_list:
-    pattern:  /admin/tree/{treeId}/version/{versionId}/node
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeList }
-    methods:  [GET]
-
-questionkey_admin_tree_version_node_list_end_nodes:
-    pattern:  /admin/tree/{treeId}/version/{versionId}/nodeEndNodes
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListEndNodes }
-    methods:  [GET]
-
-questionkey_admin_tree_version_node_list_unreachable_nodes:
-    pattern:  /admin/tree/{treeId}/version/{versionId}/nodeUnreachableNodes
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListUnreacheableNodes }
-    methods:  [GET]
+######################################################################## Admin Variables
 
 questionkey_admin_tree_version_variable_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/newVariable
@@ -169,6 +168,8 @@ questionkey_admin_tree_version_variable_show:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionVariable:index}
     methods:  [GET,POST]
 
+######################################################################## Admin Library Content
+
 questionkey_admin_tree_version_library_content_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/newLibraryContent
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newLibraryContent}
@@ -183,6 +184,24 @@ questionkey_admin_tree_version_library_content_show:
     pattern:  /admin/tree/{treeId}/version/{versionId}/library/content/{contentId}
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionLibraryContent:index}
     methods:  [GET,POST]
+
+######################################################################## Admin Nodes
+
+
+questionkey_admin_tree_version_node_list:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeList }
+    methods:  [GET]
+
+questionkey_admin_tree_version_node_list_end_nodes:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/nodeEndNodes
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListEndNodes }
+    methods:  [GET]
+
+questionkey_admin_tree_version_node_list_unreachable_nodes:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/nodeUnreachableNodes
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:nodeListUnreacheableNodes }
+    methods:  [GET]
 
 questionkey_admin_tree_version_node_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/new
@@ -234,6 +253,8 @@ questionkey_admin_tree_version_node_library_content_new:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:addLibraryContent}
     methods:  [GET, POST]
 
+######################################################################## Admin Node Options
+
 questionkey_admin_tree_version_node_option_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/new
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:newOption}
@@ -254,6 +275,8 @@ questionkey_admin_tree_version_node_option_delete:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOption:delete}
     methods:  [GET,POST]
 
+######################################################################## Admin Sessions
+
 questionkey_admin_visitor_session_list:
     pattern:  /admin/visitorsession
     defaults: { _controller: QuestionKeyBundle:AdminVisitorSessionList:index }
@@ -268,6 +291,8 @@ questionkey_admin_visitor_session_ran_tree_show:
     pattern:  /admin/visitorsession/{sessionId}/ranTreeVersion/{ranTreeVersionId}
     defaults: { _controller: QuestionKeyBundle:AdminVisitorSessionRanTreeVersion:index }
     methods:  [GET]
+
+######################################################################## Logged In users
 
 questionkey_you:
     pattern:  /you
