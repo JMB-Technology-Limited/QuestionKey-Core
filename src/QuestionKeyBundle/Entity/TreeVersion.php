@@ -139,6 +139,7 @@ class TreeVersion
     {
         $this->fromOldVersion = $fromOldVersion;
         $this->featureVariables = $fromOldVersion->isFeatureVariables();
+        $this->featureLibraryContent = $fromOldVersion->isFeatureLibraryContent();
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace QuestionKeyBundle;
 
 
+use QuestionKeyBundle\Entity\LibraryContent;
+use QuestionKeyBundle\Entity\NodeHasLibraryContent;
 use QuestionKeyBundle\Entity\TreeVersion;
 use QuestionKeyBundle\Entity\Node;
 use QuestionKeyBundle\Entity\NodeOption;
@@ -34,8 +36,26 @@ class CopyNewVersionOfTree
         // As we call flush in this function, make sure new version will definetly be part of that.
         $this->doctrine->persist($this->newVersion);
 
-        // Nodes
+        // repos
         $nodeRepo = $this->doctrine->getRepository('QuestionKeyBundle:Node');
+        $nodeOptionRepo = $this->doctrine->getRepository('QuestionKeyBundle:NodeOption');
+        $libraryContentRepo = $this->doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+        $nodeHasLibraryContentRepo = $this->doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContent');
+        $treeStartingNodeRepo = $this->doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+
+        // Library Content
+        $libraryContents = array();
+        foreach($libraryContentRepo->findByTreeVersion($this->oldVersion) as $libraryContent) {
+            $libraryContents[$libraryContent->getPublicId()] = new LibraryContent();
+            $libraryContents[$libraryContent->getPublicId()]->setTitleAdmin($libraryContent->getTitleAdmin());
+            $libraryContents[$libraryContent->getPublicId()]->setBodyHTML($libraryContent->getBodyHTML());
+            $libraryContents[$libraryContent->getPublicId()]->setBodyText($libraryContent->getBodyText());
+            $libraryContents[$libraryContent->getPublicId()]->setTreeVersion($this->newVersion);
+            $libraryContents[$libraryContent->getPublicId()]->setPublicId($libraryContent->getPublicId());
+            $this->doctrine->persist($libraryContents[$libraryContent->getPublicId()]);
+        }
+
+        // Nodes
         $nodes = $nodeRepo->findByTreeVersion($this->oldVersion);
         $newNodes = array();
         foreach ($nodes as $node) {
@@ -47,10 +67,13 @@ class CopyNewVersionOfTree
             $newNodes[$node->getId()]->setPublicId($node->getPublicId());
             $newNodes[$node->getId()]->setFromOldVersion($node);
             $this->doctrine->persist($newNodes[$node->getId()]);
+
+            foreach($libraryContentRepo->findForNode($node) as $oldLibraryContent) {
+                $nodeHasLibraryContentRepo->addLibraryContentToNode($libraryContents[$oldLibraryContent->getPublicId()],  $newNodes[$node->getId()]);
+            }
         }
 
         // Node Options
-        $nodeOptionRepo = $this->doctrine->getRepository('QuestionKeyBundle:NodeOption');
         $nodeOptions = $nodeOptionRepo->findAllNodeOptionsForTreeVersion($this->oldVersion);
         foreach($nodeOptions as $nodeOption) {
             $newNodeOption = new NodeOption();
@@ -66,9 +89,7 @@ class CopyNewVersionOfTree
             $this->doctrine->persist($newNodeOption);
         }
 
-
         // Tree Start
-        $treeStartingNodeRepo = $this->doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
         $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->oldVersion);
 
         if ($treeStartingNode) {
