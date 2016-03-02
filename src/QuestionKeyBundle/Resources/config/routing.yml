@@ -267,12 +267,12 @@ questionkey_admin_tree_version_node_option_show:
 
 questionkey_admin_tree_version_node_option_edit:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/{optionId}/edit
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOption:edit}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOptionEdit:edit}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_node_option_delete:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/{optionId}/delete
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOption:delete}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOptionEdit:delete}
     methods:  [GET,POST]
 
 ######################################################################## Admin Sessions
