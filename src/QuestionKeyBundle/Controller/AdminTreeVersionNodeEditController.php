@@ -217,12 +217,7 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
             $content = $libraryContentRepo->findOneBy(array('treeVersion'=>$this->treeVersion, 'publicId'=>$request->request->get('contentId')));
             if ($content) {
 
-                $nodeHasLibraryContent =  new NodeHasLibraryContent();
-                $nodeHasLibraryContent->setNode($this->node);
-                $nodeHasLibraryContent->setLibraryContent($content);
-                $nodeHasLibraryContent->setSort(0);
-                $doctrine->persist($nodeHasLibraryContent);
-                $doctrine->flush($nodeHasLibraryContent);
+                $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContent')->addLibraryContentToNode($content, $this->node);
 
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
 
@@ -233,6 +228,44 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
         $contents = $libraryContentRepo->findByTreeVersion($this->treeVersion);
 
         return $this->render('QuestionKeyBundle:AdminTreeVersionNodeEdit:addLibraryContent.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'node'=>$this->node,
+            'libraryContents'=>$contents,
+        ));
+
+
+    }
+
+
+    public function editLibraryContentAction($treeId, $versionId, $nodeId, Request $request)
+    {
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+
+        // build
+        $return = $this->build($treeId, $versionId, $nodeId);
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
+
+        //data
+
+
+
+        if ($request->getMethod() == 'POST' && $request->request->get('action') == 'remove') {
+            $content = $libraryContentRepo->findOneBy(array('treeVersion'=>$this->treeVersion, 'publicId'=>$request->request->get('contentId')));
+            if ($content) {
+                $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContent')->removeLibraryContentFromNode($content, $this->node);
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
+            }
+        }
+
+
+        $contents = $libraryContentRepo->findForNode($this->node);
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersionNodeEdit:editLibraryContent.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'node'=>$this->node,

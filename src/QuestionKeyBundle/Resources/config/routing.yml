@@ -253,6 +253,11 @@ questionkey_admin_tree_version_node_library_content_new:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeEdit:addLibraryContent}
     methods:  [GET, POST]
 
+questionkey_admin_tree_version_node_library_content_edit:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/editLibraryContent
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeEdit:editLibraryContent}
+    methods:  [GET, POST]
+
 ######################################################################## Admin Node Options
 
 questionkey_admin_tree_version_node_option_new:

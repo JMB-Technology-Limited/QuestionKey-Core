@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="node_has_library_content")})
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="QuestionKeyBundle\Entity\NodeHasLibraryContentRepository")
  * @ORM\HasLifecycleCallbacks
  *  @license 3-clause BSD
  *  @link https://github.com/QuestionKey/QuestionKey-Core

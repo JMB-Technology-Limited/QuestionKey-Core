@@ -1,0 +1,45 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Add Library Content to {{ node.titleAdmin }} on Version {{ treeVersion.titleAdmin }} of {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+  <ol class="breadcrumb">
+    <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Node: {{ node.titleAdmin }}</a></li>
+    <li class="active">Edit Library Content</li>
+  </ol>
+
+  {%  if libraryContents %}
+
+    {%  for libraryContent in libraryContents %}
+
+      <div class="well">
+
+        <p>Library Title: {{ libraryContent.titleAdmin }}</p>
+
+        <p>Body Text: {{ libraryContent.bodyText | nl2br }}</p>
+
+        <p>Body HTML: {{ libraryContent.bodyHTML | nl2br }}</p>
+
+
+        <form method="post" action="#">
+          <input type="hidden" name="action" value="remove">
+          <input type="hidden" name="contentId" value="{{  libraryContent.publicId }}">
+          <input type="submit" value="Remove">
+        </form>
+      </div>
+    {%  endfor %}
+
+  {%  else %}
+    <div>No content currently added to this node.</div>
+  {%  endif %}
+
+{% endblock %}
