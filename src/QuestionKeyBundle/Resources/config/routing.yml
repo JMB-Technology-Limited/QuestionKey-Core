@@ -215,17 +215,17 @@ questionkey_admin_tree_version_node_show:
 
 questionkey_admin_tree_version_node_edit:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/edit
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:edit}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeEdit:edit}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_node_delete:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/delete
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:delete}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeEdit:delete}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_node_make_start_node:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/makeStart
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:makeStart}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeEdit:makeStart}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_node_stacktrace:
@@ -250,14 +250,14 @@ questionkey_admin_tree_version_node_stats:
 
 questionkey_admin_tree_version_node_library_content_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/addLibraryContent
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:addLibraryContent}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeEdit:addLibraryContent}
     methods:  [GET, POST]
 
 ######################################################################## Admin Node Options
 
 questionkey_admin_tree_version_node_option_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/new
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNode:newOption}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeEdit:newOption}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_node_option_show:
