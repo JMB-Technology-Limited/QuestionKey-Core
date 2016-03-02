@@ -183,7 +183,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         $.ajax({
             context: this,
             dataType: "jsonp",
-            url: this.serverURL + '/api/v1/visitorsession/action.jsonp?callback=?',
+            url: this.serverURL + '/api/v1/visitorsession/action.jsonp?features=library_content&callback=?',
             data: data,
             method: 'GET',
             success: function(data) {
@@ -261,7 +261,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
       $.ajax({
           context: this,
           dataType: "jsonp",
-          url: this.serverURL + '/api/v1/tree/' + this.options.treeId + '/data.jsonp?callback=?',
+          url: this.serverURL + '/api/v1/tree/' + this.options.treeId + '/data.jsonp?features=library_content&callback=?',
           success: function(data) {
               console.log(data);
               this.treeData = data;
