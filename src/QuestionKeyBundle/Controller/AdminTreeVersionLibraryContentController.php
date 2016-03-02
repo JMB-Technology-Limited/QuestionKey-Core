@@ -83,7 +83,7 @@ class AdminTreeVersionLibraryContentController extends Controller
             'tree' => $this->tree,
             'treeVersion' => $this->treeVersion,
             'libraryContent' => $this->libraryContent,
-
+            'isTreeVersionEditable' => $this->treeVersionEditable,
         ));
 
 

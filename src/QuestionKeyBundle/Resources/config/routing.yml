@@ -185,6 +185,11 @@ questionkey_admin_tree_version_library_content_show:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionLibraryContent:index}
     methods:  [GET,POST]
 
+questionkey_admin_tree_version_library_content_edit:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/library/content/{contentId}/edit
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionLibraryContentEdit:edit}
+    methods:  [GET,POST]
+
 ######################################################################## Admin Nodes
 
 

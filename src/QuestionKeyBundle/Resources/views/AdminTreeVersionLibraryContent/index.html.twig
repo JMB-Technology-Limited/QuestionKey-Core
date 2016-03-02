@@ -20,4 +20,12 @@
 
     <p>Body HTML: {{ libraryContent.bodyHTML | nl2br }}</p>
 
+
+
+    <ul class="list-group">
+        {% if isTreeVersionEditable %}
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_edit', { 'treeId':tree.id,'versionId':treeVersion.id,'contentId':libraryContent.publicId }) }}" class="btn btn-warning">Edit</a></li>
+        {% endif %}
+    </ul>
+
 {% endblock %}
