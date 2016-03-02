@@ -89,5 +89,32 @@ class AdminTreeVersionLibraryContentController extends Controller
 
     }
 
+    
+    public function nodeListAction($treeId, $versionId, $contentId)
+    {
+
+
+        // build
+        $this->build($treeId, $versionId, $contentId);
+
+        //data
+
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+        $nodes = $nodeRepo->findByLibraryContent($this->libraryContent);
+
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersionLibraryContent:nodeList.html.twig', array(
+            'tree' => $this->tree,
+            'treeVersion' => $this->treeVersion,
+            'libraryContent' => $this->libraryContent,
+            'isTreeVersionEditable' => $this->treeVersionEditable,
+            'nodes' => $nodes,
+        ));
+
+
+    }
+
 }
 

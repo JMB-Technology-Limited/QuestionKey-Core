@@ -27,6 +27,19 @@ class NodeRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findByLibraryContent(LibraryContent $libraryContent)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+            'SELECT n FROM QuestionKeyBundle:Node n '.
+            'LEFT JOIN n.hasLibraryContents nhlc '.
+            'WHERE nhlc.libraryContent = :library_content '.
+            'ORDER BY n.title ASC'
+            )
+            ->setParameter('library_content', $libraryContent)
+            ->getResult();
+    }
+
     public function doesPublicIdExist($id, TreeVersion $treeVersion)
     {
         if ($treeVersion->getId()) {

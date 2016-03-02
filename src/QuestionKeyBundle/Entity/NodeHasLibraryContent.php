@@ -18,7 +18,7 @@ class NodeHasLibraryContent
     /**
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\Node")
+     * @ORM\ManyToOne(targetEntity="QuestionKeyBundle\Entity\Node", inversedBy="hasLibraryContents")
      * @ORM\JoinColumn(name="node_id", referencedColumnName="id", nullable=false)
      */
     private $node;

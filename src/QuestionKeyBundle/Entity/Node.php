@@ -95,6 +95,13 @@ class Node
     **/
     private $nodeOptionsSource;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="NodeHasLibraryContent", mappedBy="node")
+     **/
+    private $hasLibraryContents;
+
+
     public function getId()
     {
         return $this->id;
