@@ -18,10 +18,19 @@ class NodeHasLibraryContentRepository extends EntityRepository
 
         $nodeHasLibraryContent = $this->findOneBy(array('node' => $node, 'libraryContent' => $libraryContent));
         if (!$nodeHasLibraryContent) {
+
+            $currentMax =  $this->getEntityManager()
+                ->createQuery(
+                    ' SELECT MAX(nhlc.sort) FROM QuestionKeyBundle:NodeHasLibraryContent nhlc'.
+                    ' WHERE nhlc.node = :node'
+                )
+                ->setParameter('node', $node)
+                ->getScalarResult();
+
             $nodeHasLibraryContent = new NodeHasLibraryContent();
             $nodeHasLibraryContent->setNode($node);
             $nodeHasLibraryContent->setLibraryContent($libraryContent);
-            $nodeHasLibraryContent->setSort(0);
+            $nodeHasLibraryContent->setSort(is_null($currentMax[0][1]) ? 0 : $currentMax[0][1] + 1);
             $this->getEntityManager()->persist($nodeHasLibraryContent);
             $this->getEntityManager()->flush($nodeHasLibraryContent);
         }
