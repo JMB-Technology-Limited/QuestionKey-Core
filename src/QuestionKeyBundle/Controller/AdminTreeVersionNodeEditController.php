@@ -234,7 +234,10 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
 
                 $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContent')->addLibraryContentToNode($content, $this->node);
 
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId())));
 
             }
         }
@@ -273,7 +276,10 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
             $content = $libraryContentRepo->findOneBy(array('treeVersion'=>$this->treeVersion, 'publicId'=>$request->request->get('contentId')));
             if ($content) {
                 $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContent')->removeLibraryContentFromNode($content, $this->node);
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId())));
             }
         }
 
