@@ -78,6 +78,9 @@ class CopyNewVersionOfTreeTest extends BaseTestWithDataBase
     function testCopyLibraryContent()
     {
 
+        $nodeHasLibraryContentRepo = $this->em->getRepository('QuestionKeyBundle:NodeHasLibraryContent');
+
+
         $user = new User();
         $user->setEmail("test@example.com");
         $user->setUsername("test");
@@ -116,9 +119,16 @@ class CopyNewVersionOfTreeTest extends BaseTestWithDataBase
         $libraryContentOld1->setTreeVersion($treeVersionOld);
         $this->em->persist($libraryContentOld1);
 
+        $libraryContentOld2 = new LibraryContent();
+        $libraryContentOld2->setTitleAdmin('TEST');
+        $libraryContentOld2->setBodyText('test2');
+        $libraryContentOld2->setTreeVersion($treeVersionOld);
+        $this->em->persist($libraryContentOld2);
+
         $this->em->flush();
 
         $this->em->getRepository('QuestionKeyBundle:NodeHasLibraryContent')->addLibraryContentToNode($libraryContentOld1, $nodeOld1);
+        $this->em->getRepository('QuestionKeyBundle:NodeHasLibraryContent')->addLibraryContentToNode($libraryContentOld2, $nodeOld1);
 
 
 
@@ -142,19 +152,32 @@ class CopyNewVersionOfTreeTest extends BaseTestWithDataBase
         #####################  TEST LIBRARY CONTENT DIRECTLY
 
         $libraryContents = $this->em->getRepository('QuestionKeyBundle:LibraryContent')->findBy(array('treeVersion'=>$treeVersionNew),array('publicId'=>'ASC'));
-        $this->assertEquals(1, count($libraryContents));
+        $this->assertEquals(2, count($libraryContents));
 
         $libraryContent = $libraryContents[0];
         $this->assertEquals($libraryContentOld1->getTitleAdmin(), $libraryContent->getTitleAdmin());
 
-        #####################  TEST LIBRARY CONTENT LOADING OFF NODE
+        $libraryContent = $libraryContents[1];
+        $this->assertEquals($libraryContentOld2->getTitleAdmin(), $libraryContent->getTitleAdmin());
+
+        #####################  TEST LIBRARY CONTENT LOADING OFF NODE, INC SORT ORDER
 
         $libraryContents = $this->em->getRepository('QuestionKeyBundle:LibraryContent')->findForNode($node);
-        $this->assertEquals(1, count($libraryContents));
+        $this->assertEquals(2, count($libraryContents));
 
         $libraryContent = $libraryContents[0];
         $this->assertEquals($libraryContentOld1->getTitleAdmin(), $libraryContent->getTitleAdmin());
 
+        $nodeHasLibraryContent = $nodeHasLibraryContentRepo->findOneBy(array('libraryContent'=>$libraryContent));
+        $this->assertNotNull($nodeHasLibraryContent);
+        $this->assertEquals(0, $nodeHasLibraryContent->getSort());
+
+        $libraryContent = $libraryContents[1];
+        $this->assertEquals($libraryContentOld2->getTitleAdmin(), $libraryContent->getTitleAdmin());
+
+        $nodeHasLibraryContent = $nodeHasLibraryContentRepo->findOneBy(array('libraryContent'=>$libraryContent));
+        $this->assertNotNull($nodeHasLibraryContent);
+        $this->assertEquals(1, $nodeHasLibraryContent->getSort());
 
     }
 

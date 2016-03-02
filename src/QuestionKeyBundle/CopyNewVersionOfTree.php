@@ -68,8 +68,16 @@ class CopyNewVersionOfTree
             $newNodes[$node->getId()]->setFromOldVersion($node);
             $this->doctrine->persist($newNodes[$node->getId()]);
 
+            $sort = 0;
             foreach($libraryContentRepo->findForNode($node) as $oldLibraryContent) {
-                $nodeHasLibraryContentRepo->addLibraryContentToNode($libraryContents[$oldLibraryContent->getPublicId()],  $newNodes[$node->getId()]);
+                // We create a NodeHasLibraryContent record directly instead of using
+                //     $nodeHasLibraryContentRepo->addLibraryContentToNode($libraryContents[$oldLibraryContent->getPublicId()],  $newNodes[$node->getId()]);
+                // because it's much more efficient in DB queries. Also, given some records might not have saved I'm not sure addLibraryContentToNode() would find the correct sort values anyway.
+                $nodeHasLibraryContent = new NodeHasLibraryContent();
+                $nodeHasLibraryContent->setLibraryContent($libraryContents[$oldLibraryContent->getPublicId()]);
+                $nodeHasLibraryContent->setNode($newNodes[$node->getId()]);
+                $nodeHasLibraryContent->setSort($sort++);
+                $this->doctrine->persist($nodeHasLibraryContent);
             }
         }
 

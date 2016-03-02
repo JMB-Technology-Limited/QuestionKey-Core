@@ -41,7 +41,8 @@ class LibraryContentRepository extends EntityRepository
             ->createQuery(
                 'SELECT lc FROM QuestionKeyBundle:LibraryContent lc '.
                 ' JOIN lc.hasLibraryContents hlc '.
-                ' WHERE hlc.node = :node '
+                ' WHERE hlc.node = :node '.
+                ' ORDER BY hlc.sort ASC '
             )
             ->setParameter('node', $node)
             ->getResult();
