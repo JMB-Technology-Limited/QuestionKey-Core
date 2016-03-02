@@ -108,17 +108,17 @@ questionkey_admin_tree_version_run:
 
 questionkey_admin_tree_version_edit:
     pattern:  /admin/tree/{treeId}/version/{versionId}/edit
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:edit}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionEdit:edit}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_publish:
     pattern:  /admin/tree/{treeId}/version/{versionId}/publish
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:publish}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionEdit:publish}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_new_version:
     pattern:  /admin/tree/{treeId}/version/{versionId}/newVersion
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newVersion}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionEdit:newVersion}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_data_json:
@@ -155,7 +155,7 @@ questionkey_admin_tree_version_get_preview_link:
 
 questionkey_admin_tree_version_variable_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/newVariable
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newVariable}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionEdit:newVariable}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_variable_list:
@@ -172,7 +172,7 @@ questionkey_admin_tree_version_variable_show:
 
 questionkey_admin_tree_version_library_content_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/newLibraryContent
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newLibraryContent}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionEdit:newLibraryContent}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_library_content_list:
@@ -205,7 +205,7 @@ questionkey_admin_tree_version_node_list_unreachable_nodes:
 
 questionkey_admin_tree_version_node_new:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/new
-    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:newNode}
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionEdit:newNode}
     methods:  [GET,POST]
 
 questionkey_admin_tree_version_node_show:
