@@ -51,9 +51,22 @@ class PurgeTreeVersion {
 
         // Node
         $nRepo = $this->doctrine->getRepository('QuestionKeyBundle:Node');
+        $nhlcRepo = $this->doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContent');
         foreach($nRepo->findByTreeVersion($this->treeVersion) as $node) {
             $records[] = $node;
+            foreach($nhlcRepo->findByNode($node) as $nhlc) {
+                $records[] = $nhlc;
+            }
         }
+
+        // Library Content
+        $lcRepo = $this->doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+        foreach($lcRepo->findByTreeVersion($this->treeVersion) as $libraryContent) {
+            $records[] = $libraryContent;
+        }
+        
+        // Variables
+        // TODO
 
         $records[] = $this->treeVersion;
 
