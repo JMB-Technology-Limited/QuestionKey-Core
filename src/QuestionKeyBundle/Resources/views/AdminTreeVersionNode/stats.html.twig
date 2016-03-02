@@ -11,9 +11,9 @@
 
     <ol class="breadcrumb">
         <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Node: {{ node.titleAdmin }}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}">Node: {{ node.titleAdmin }}</a></li>
         <li class="active">Stats</li>
     </ol>
 

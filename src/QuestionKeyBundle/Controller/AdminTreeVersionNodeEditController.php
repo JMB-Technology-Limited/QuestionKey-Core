@@ -50,7 +50,11 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
                 $doctrine = $this->getDoctrine()->getManager();
                 $doctrine->persist($this->node);
                 $doctrine->flush();
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId()
+                )));
             }
         }
 
@@ -101,7 +105,10 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
                 // node and go
                 $doctrine->remove($this->node);
                 $doctrine->flush();
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_show', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId()
+                )));
             }
         }
 
@@ -138,7 +145,11 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
             if ($form->isValid()) {
 
                 $treeStartingNodeRepo->setAsStartingNode($this->node);
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId()
+                )));
             }
         }
 
@@ -184,7 +195,11 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
                 $nodeOption->setDestinationNode($form->get('destination_node')->getData());
                 $doctrine->persist($nodeOption);
                 $doctrine->flush();
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array('treeId'=>$this->tree->getId(),'versionId'=>$this->treeVersion->getId(),'nodeId'=>$this->node->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId()
+                )));
             }
         }
 

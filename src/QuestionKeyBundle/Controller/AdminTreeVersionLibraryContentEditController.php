@@ -33,8 +33,8 @@ class AdminTreeVersionLibraryContentEditController extends AdminTreeVersionLibra
                 $doctrine->persist($this->libraryContent);
                 $doctrine->flush();
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_version_library_content_show', array(
-                    'treeId'=>$this->tree->getId(),
-                    'versionId'=>$this->treeVersion->getId(),
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
                     'contentId'=>$this->libraryContent->getPublicId(),
                 )));
             }

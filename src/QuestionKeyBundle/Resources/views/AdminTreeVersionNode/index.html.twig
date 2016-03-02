@@ -11,8 +11,8 @@
 
   <ol class="breadcrumb">
     <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
     <li class="active">Node: {{ node.titleAdmin }}</li>
   </ol>
 
@@ -35,13 +35,13 @@
                 <tbody>
                     {% for nodeOption in incomingNodeOptions %}
                         <tr>
-                            <td><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}">{{ nodeOption.title }}</a></td>
+                            <td><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.node.publicId,'optionId':nodeOption.publicId})}}">{{ nodeOption.title }}</a></td>
                             <td>{{ nodeOption.bodyText }}</td>
                             <td>{{ nodeOption.bodyHTML }}</td>
-                            <td><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}">{{ nodeOption.node.titleAdmin }}</a></td>
+                            <td><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.node.publicId }) }}">{{ nodeOption.node.titleAdmin }}</a></td>
                             <td class="action-link">
-                                <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
-                                <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}" class="btn btn-default">View Source Node</a>
+                                <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.node.publicId,'optionId':nodeOption.publicId})}}" class="btn btn-default">View Node Option</a>
+                                <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.node.publicId }) }}" class="btn btn-default">View Source Node</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -73,7 +73,7 @@
     {% if node.fromOldVersion %}
       <p>
         Created from old version:
-        <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':node.fromOldVersion.treeVersion.id,'nodeId':node.fromOldVersion.id }) }}">{{ node.fromOldVersion.title }}</a>
+        <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':node.fromOldVersion.treeVersion.publicId,'nodeId':node.fromOldVersion.publicId }) }}">{{ node.fromOldVersion.title }}</a>
       </p>
     {% endif %}
 
@@ -107,14 +107,14 @@
       <tbody>
         {% for nodeOption in nodeOptions %}
           <tr>
-            <td><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId':nodeOption.id})}}">{{ nodeOption.title }}</a></td>
+            <td><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId':nodeOption.publicId})}}">{{ nodeOption.title }}</a></td>
             <td>{{ nodeOption.bodyText }}</td>
             <td>{{ nodeOption.bodyHTML }}</td>
             <td>{{ nodeOption.sort }}</td>
-            <td><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.destinationNode.id }) }}">{{ nodeOption.destinationNode.titleAdmin }}</a></td>
+            <td><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.destinationNode.publicId }) }}">{{ nodeOption.destinationNode.titleAdmin }}</a></td>
             <td class="action-link">
-              <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId':nodeOption.id})}}" class="btn btn-default">View Node Option</a>
-              <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.destinationNode.id }) }}" class="btn btn-default">View Destination Node</a>
+              <a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId':nodeOption.publicId})}}" class="btn btn-default">View Node Option</a>
+              <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.destinationNode.publicId }) }}" class="btn btn-default">View Destination Node</a>
             </td>
           </tr>
         {% endfor %}
@@ -128,24 +128,24 @@
 
   <ul class="list-group">
     {% if node.bodyHTML %}
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_preview', {'treeId':tree.id , 'versionId':treeVersion.id,'nodeId':node.id  }) }}" class="btn btn-default">Preview</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_preview', {'treeId':tree.publicId , 'versionId':treeVersion.publicId,'nodeId':node.publicId  }) }}" class="btn btn-default">Preview</a></li>
     {% endif %}
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_stacktrace', {'treeId':tree.id , 'versionId':treeVersion.id,'nodeId':node.id  }) }}" class="btn btn-default">Stacktrace</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_stats', {'treeId':tree.id , 'versionId':treeVersion.id,'nodeId':node.id  }) }}" class="btn btn-default">Stats</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_stacktrace', {'treeId':tree.publicId , 'versionId':treeVersion.publicId,'nodeId':node.publicId  }) }}" class="btn btn-default">Stacktrace</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_stats', {'treeId':tree.publicId , 'versionId':treeVersion.publicId,'nodeId':node.publicId  }) }}" class="btn btn-default">Stats</a></li>
     {% if node.fromOldVersion %}
-      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':node.fromOldVersion.treeVersion.id,'nodeId':node.fromOldVersion.id }) }}" class="btn btn-default">View old version this was created from</a></li>
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':node.fromOldVersion.treeVersion.publicId,'nodeId':node.fromOldVersion.publicId }) }}" class="btn btn-default">View old version this was created from</a></li>
     {% endif %}
     {% if isTreeVersionEditable %}
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_edit', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">EDIT</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_edit', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}" class="btn btn-warning">EDIT</a></li>
         {% if not isStartNode %}
-          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_make_start_node', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Make Starting Node</a></li>
+          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_make_start_node', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}" class="btn btn-warning">Make Starting Node</a></li>
         {% endif %}
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_new', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">New Node Option</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_new', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}" class="btn btn-warning">New Node Option</a></li>
         {%  if treeVersion.featureLibraryContent %}
-            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_library_content_new', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Add Library Content</a></li>
-            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_library_content_edit', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-warning">Edit Library Content</a></li>
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_library_content_new', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}" class="btn btn-warning">Add Library Content</a></li>
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_library_content_edit', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}" class="btn btn-warning">Edit Library Content</a></li>
         {% endif %}
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_delete', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id }) }}" class="btn btn-danger">DELETE</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_delete', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}" class="btn btn-danger">DELETE</a></li>
     {% else %}
         <li class="list-group-item"><em>This tree version can not be edited as it has been published.</em></li>
     {% endif %}

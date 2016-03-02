@@ -39,7 +39,7 @@ class AdminTreeNewController extends Controller
                 $treeVersion->setTree($tree);
                 $doctrine->persist($treeVersion);
                 $doctrine->flush();
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_show', array('treeId'=>$tree->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_show', array('treeId'=>$tree->getPublicId())));
             }
         }
 
@@ -74,7 +74,7 @@ class AdminTreeNewController extends Controller
                 $doctrine->persist($treeVersion);
                 $importJSON->process();
                 $doctrine->flush();
-                return $this->redirect($this->generateUrl('questionkey_admin_tree_show', array('treeId'=>$tree->getId())));
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_show', array('treeId'=>$tree->getPublicId())));
             }
         }
 

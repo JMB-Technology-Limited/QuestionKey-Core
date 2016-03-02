@@ -11,7 +11,7 @@
 
   <ol class="breadcrumb">
     <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
     <li class="active">Edit</li>
   </ol>
 
@@ -24,7 +24,7 @@
 
         <input type="submit" value="Save" />
 
-        <div class="cancel"><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Cancel</a></div>
+        <div class="cancel"><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Cancel</a></div>
       </form>
 
     </section>

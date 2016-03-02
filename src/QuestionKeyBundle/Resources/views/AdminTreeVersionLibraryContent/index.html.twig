@@ -11,8 +11,8 @@
 
     <ol class="breadcrumb">
         <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
         <li class="active">Content: {{ libraryContent.titleAdmin }}</li>
     </ol>
 
@@ -23,9 +23,9 @@
 
 
     <ul class="list-group">
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_nodes', { 'treeId':tree.id,'versionId':treeVersion.id,'contentId':libraryContent.publicId }) }}" class="btn btn-default">Used on Nodes</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_nodes', { 'treeId':tree.publicId,'versionId':treeVersion.publicId,'contentId':libraryContent.publicId }) }}" class="btn btn-default">Used on Nodes</a></li>
         {% if isTreeVersionEditable %}
-            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_edit', { 'treeId':tree.id,'versionId':treeVersion.id,'contentId':libraryContent.publicId }) }}" class="btn btn-warning">Edit</a></li>
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_edit', { 'treeId':tree.publicId,'versionId':treeVersion.publicId,'contentId':libraryContent.publicId }) }}" class="btn btn-warning">Edit</a></li>
         {% endif %}
     </ul>
 

@@ -13,7 +13,7 @@
     <div id="toolbox">
         <a id="upload-input" href="#" onclick="graph.info(); return false;">INFO</a>
         <a href="#" onclick="graph.save(); return false;">SAVE LAYOUT</a>
-        <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">EXIT</a>
+        <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">EXIT</a>
     </div>
 
 {% endblock %}
@@ -25,9 +25,9 @@
     {% endjavascripts %}
     <script>
         $( document ).ready(function() {
-            graph.consts.saveCurrentURL = '{{ path('questionkey_admin_tree_version_graph_savecurrent', {'treeId':tree.id,'versionId':treeVersion.id }) }}';
+            graph.consts.saveCurrentURL = '{{ path('questionkey_admin_tree_version_graph_savecurrent', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}';
             $.ajax({
-                url: "{{ path('questionkey_admin_tree_version_data_json', {'treeId':tree.id,'versionId':treeVersion.id }) }}",
+                url: "{{ path('questionkey_admin_tree_version_data_json', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}",
                 context: document.body,
                 success: function(data) {
                     graph.start(data, {{  data | json_encode()|raw }});

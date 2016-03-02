@@ -11,8 +11,8 @@
 
     <ol class="breadcrumb">
         <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
         <li class="active">Run Tree</li>
     </ol>
 
@@ -41,7 +41,7 @@
             };
 
             $.ajax({
-                url: "{{ path('questionkey_admin_tree_version_data_json', {'treeId':tree.id,'versionId':treeVersion.id }) }}",
+                url: "{{ path('questionkey_admin_tree_version_data_json', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}",
                 context: document.body,
                 success: function(data) {
                     tree = new QuestionKeyNormalTree("#DemoHere", {'treeData':data, 'logUserActions':false, 'browserHistoryRewrite':true, callBackAfterDrawNode: callBackAfterDrawNode });

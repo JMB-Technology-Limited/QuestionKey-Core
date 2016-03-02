@@ -11,9 +11,9 @@
 
   <ol class="breadcrumb">
     <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id,'versionId':treeVersion.id,'nodeId':node.id }) }}">Node: {{ node.titleAdmin }}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}">Node: {{ node.titleAdmin }}</a></li>
     <li class="active">Node Option: {{ nodeOption.title }}</li>
   </ol>
 
@@ -27,11 +27,11 @@
 
 
     <ul class="list-group">
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.node.id }) }}" class="btn btn-default">View Source Node</a></li>
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':nodeOption.destinationNode.id }) }}" class="btn btn-default">View Destination Node</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.node.publicId }) }}" class="btn btn-default">View Source Node</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.destinationNode.publicId }) }}" class="btn btn-default">View Destination Node</a></li>
         {% if isTreeVersionEditable %}
-            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_edit', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId': nodeOption.id }) }}" class="btn btn-warning">Edit</a></li>
-            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_delete', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':node.id,'optionId': nodeOption.id }) }}" class="btn btn-danger">DELETE</a></li>
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_edit', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId': nodeOption.publicId }) }}" class="btn btn-warning">Edit</a></li>
+            <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_delete', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId': nodeOption.publicId }) }}" class="btn btn-danger">DELETE</a></li>
         {% endif %}
     </ul>
 

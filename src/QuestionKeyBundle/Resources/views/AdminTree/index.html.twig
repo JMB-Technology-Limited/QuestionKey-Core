@@ -19,22 +19,22 @@
   <p>Public ID: {{ tree.publicId }}</p>
 
     <ul class="list-group">
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_list', { 'treeId':tree.id }) }}" class="btn btn-default">Versions</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_list', { 'treeId':tree.publicId }) }}" class="btn btn-default">Versions</a></li>
         {% if publishedTreeVersion %}
             <li class="list-group-item">
-                <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':publishedTreeVersion.id }) }}" class="btn btn-default">View Published Version</a>
+                <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId ,'versionId':publishedTreeVersion.publicId }) }}" class="btn btn-default">View Published Version</a>
                 This is version: {{  publishedTreeVersion.titleAdmin }}
             </li>
         {% endif %}
         {% if latestTreeVersion %}
             <li class="list-group-item">
-                <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':latestTreeVersion.id }) }}" class="btn btn-default">View Latest Version</a>
+                <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId ,'versionId':latestTreeVersion.publicId }) }}" class="btn btn-default">View Latest Version</a>
                 This is version: {{  latestTreeVersion.titleAdmin }}
             </li>
         {% endif %}
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_published_list', { 'treeId':tree.id }) }}" class="btn btn-default">Versions Published</a></li>
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_stats', { 'treeId':tree.id }) }}" class="btn btn-default">Stats</a></li>
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_edit', { 'treeId':tree.id }) }}" class="btn btn-warning">Edit</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_published_list', { 'treeId':tree.publicId }) }}" class="btn btn-default">Versions Published</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_stats', { 'treeId':tree.publicId }) }}" class="btn btn-default">Stats</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_edit', { 'treeId':tree.publicId }) }}" class="btn btn-warning">Edit</a></li>
     </ul>
 
 

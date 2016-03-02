@@ -11,7 +11,7 @@
 
   <ol class="breadcrumb">
     <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
     <li class="active">Version: {{ treeVersion.titleAdmin }}</li>
   </ol>
 
@@ -20,7 +20,7 @@
 
   {% if treeVersion.fromOldVersion %}
     <p>
-      Created from old version: <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersion.fromOldVersion.id }) }}">{{ treeVersion.fromOldVersion.titleAdmin }}</a>
+      Created from old version: <a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId ,'versionId':treeVersion.fromOldVersion.publicId }) }}">{{ treeVersion.fromOldVersion.titleAdmin }}</a>
     </p>
   {% endif %}
 
@@ -54,38 +54,38 @@
 
   <ul class="list-group">
     {% if startNode %}
-      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.id ,'versionId':treeVersion.id,'nodeId':startNode.id }) }}" class="btn btn-default">View Start Node</a></li>
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':startNode.publicId }) }}" class="btn btn-default">View Start Node</a></li>
     {% endif %}
     {% if treeVersion.fromOldVersion %}
-      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersion.fromOldVersion.id }) }}" class="btn btn-default">View old version this was created from</a></li>
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId ,'versionId':treeVersion.fromOldVersion.publicId }) }}" class="btn btn-default">View old version this was created from</a></li>
     {% endif %}
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list_end_nodes', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes (End Nodes)</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list_unreachable_nodes', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Nodes (Unreachable Nodes)</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Nodes</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list_end_nodes', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Nodes (End Nodes)</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_list_unreachable_nodes', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Nodes (Unreachable Nodes)</a></li>
     {%  if treeVersion.featureVariables  %}
-      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_variable_list', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Variables</a></li>
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_variable_list', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Variables</a></li>
     {%  endif %}
     {%  if treeVersion.featureLibraryContent  %}
-      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_list', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Library Content</a></li>
+      <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_list', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Library Content</a></li>
     {%  endif %}
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_run', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Run Tree</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_graph', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">View Visulisation</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_export', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Export</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_stats', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Stats</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_get_preview_link', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-default">Get Preview Link</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_run', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Run Tree</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_graph', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">View Visulisation</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_export', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Export</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_stats', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Stats</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_get_preview_link', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-default">Get Preview Link</a></li>
     {% if isTreeVersionEditable %}
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Node</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_new', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-warning">New Node</a></li>
         {%  if treeVersion.featureVariables %}
-          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_variable_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Variable</a></li>
+          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_variable_new', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-warning">New Variable</a></li>
         {%  endif %}
         {%  if treeVersion.featureLibraryContent %}
-          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_new', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Library Content</a></li>
+          <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_library_content_new', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-warning">New Library Content</a></li>
         {%  endif %}
     {% endif %}
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_new_version', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">New Version from this version</a></li>
-    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_publish', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">Publish this Version</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_new_version', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-warning">New Version from this version</a></li>
+    <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_publish', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-warning">Publish this Version</a></li>
     {% if isTreeVersionEditable %}
-        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_edit', { 'treeId':tree.id,'versionId':treeVersion.id }) }}" class="btn btn-warning">Edit</a></li>
+        <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_edit', { 'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}" class="btn btn-warning">Edit</a></li>
     {% else %}
         <li class="list-group-item"><em>This tree version can not be edited as it has been published.</em></li>
     {% endif %}

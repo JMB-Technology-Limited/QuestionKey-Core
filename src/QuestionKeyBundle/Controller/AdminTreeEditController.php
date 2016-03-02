@@ -36,7 +36,7 @@ class AdminTreeEditController extends AdminTreeController
                 $doctrine->persist($this->tree);
                 $doctrine->flush();
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_show', array(
-                    'treeId'=>$this->tree->getId()
+                    'treeId'=>$this->tree->getPublicId()
                 )));
             }
         }

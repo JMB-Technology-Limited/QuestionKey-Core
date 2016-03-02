@@ -12,7 +12,7 @@
 
   <ol class="breadcrumb">
     <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
     <li class="active">Versions</li>
   </ol>
 
@@ -36,7 +36,7 @@
 								Published!
 							{%  endif %}
 						</td>
-  						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersion.id }) }}" class="btn btn-default">View</a></td>
+  						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId }) }}" class="btn btn-default">View</a></td>
   					</tr>
   				{% endfor %}
   			</tbody>

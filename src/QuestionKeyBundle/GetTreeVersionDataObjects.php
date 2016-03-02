@@ -77,7 +77,11 @@ class GetTreeVersionDataObjects {
             );
             if ($this->isAdmin) {
                 $outNode['title_admin'] = $node->getTitleAdmin();
-                $outNode['url'] = $this->container->get('router')->generate("questionkey_admin_tree_version_node_show", array("treeId" => $this->treeVersion->getTree()->getId(), 'versionId' => $this->treeVersion->getId(), 'nodeId' => $node->getId()));
+                $outNode['url'] = $this->container->get('router')->generate("questionkey_admin_tree_version_node_show", array(
+                    "treeId" => $this->treeVersion->getTree()->getPublicId(),
+                    'versionId' => $this->treeVersion->getPublicId(),
+                    'nodeId' => $node->getPublicId()
+                ));
             }
 
             if ($this->treeVersion->isFeatureLibraryContent()) {

@@ -43,7 +43,7 @@
                     <td>{%  if onNode.nodeOption %}{{ onNode.nodeOption.title }}{% endif %}</td>
                     <td>{% if onNode.goneBackTo %}Yes{% else %}-{% endif %}</td>
                     <td class="action-link">
-                        <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':ranTreeVersion.treeVersion.tree.id ,'versionId':ranTreeVersion.treeVersion.id,'nodeId':onNode.node.id }) }}" class="btn btn-default">View Node</a>
+                        <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':ranTreeVersion.treeVersion.tree.publicId ,'versionId':ranTreeVersion.treeVersion.publicId,'nodeId':onNode.node.publicId }) }}" class="btn btn-default">View Node</a>
                     </td>
                 </tr>
                 {% endfor %}

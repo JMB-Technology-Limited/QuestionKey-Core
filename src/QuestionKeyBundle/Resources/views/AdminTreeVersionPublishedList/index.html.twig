@@ -12,7 +12,7 @@
 
   <ol class="breadcrumb">
     <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+    <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
     <li class="active">Versions Published</li>
   </ol>
 
@@ -36,7 +36,7 @@
               <td>{{ treeVersionPublished.publishedAt |date("F jS \\a\\t g:ia") }}</td>
               <td>{% if treeVersionPublished.publishedBy  %}{{ treeVersionPublished.publishedBy.email }}{% endif %}</td>
               <td>{{ treeVersionPublished.commentPublishedAdmin }}</td>
-  						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id ,'versionId':treeVersionPublished.treeVersion.id }) }}" class="btn btn-default">View Version</a></td>
+  						<td class="action-link"><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId ,'versionId':treeVersionPublished.treeVersion.publicId }) }}" class="btn btn-default">View Version</a></td>
   					</tr>
   				{% endfor %}
   			</tbody>

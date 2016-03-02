@@ -23,7 +23,7 @@ class AdminTreeVersionListController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         // load
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
-        $this->tree = $treeRepo->findOneById($treeId);
+        $this->tree = $treeRepo->findOneByPublicId($treeId);
         if (!$this->tree) {
             throw new  NotFoundHttpException('Not found');
         }

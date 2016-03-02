@@ -11,8 +11,8 @@
 
     <ol class="breadcrumb">
         <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.id }) }}">Tree: {{ tree.titleAdmin}}</a></li>
-        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.id,'versionId':treeVersion.id }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
         <li class="active">Variables</li>
     </ol>
 
@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ variable.name }}</td>
                     <td>{{ variable.type }}</td>
-                    <td class="action-link"><a href="{{ path('questionkey_admin_tree_version_variable_show', {'treeId':tree.id ,'versionId':treeVersion.id,'variableId':variable.name }) }}" class="btn btn-default">View</a></td>
+                    <td class="action-link"><a href="{{ path('questionkey_admin_tree_version_variable_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'variableId':variable.name }) }}" class="btn btn-default">View</a></td>
                 </tr>
             {% endfor %}
             </tbody>

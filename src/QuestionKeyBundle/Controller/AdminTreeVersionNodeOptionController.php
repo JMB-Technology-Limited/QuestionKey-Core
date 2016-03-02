@@ -30,7 +30,7 @@ class AdminTreeVersionNodeOptionController extends Controller
         $doctrine = $this->getDoctrine()->getManager();
         // load
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Tree');
-        $this->tree = $treeRepo->findOneById($treeId);
+        $this->tree = $treeRepo->findOneByPublicId($treeId);
         if (!$this->tree) {
             throw new  NotFoundHttpException('Not found');
         }
@@ -38,7 +38,7 @@ class AdminTreeVersionNodeOptionController extends Controller
         $treeVersionRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersion');
         $this->treeVersion = $treeVersionRepo->findOneBy(array(
             'tree'=>$this->tree,
-            'id'=>$versionId,
+            'publicId'=>$versionId,
         ));
         if (!$this->treeVersion) {
             throw new  NotFoundHttpException('Not found');
@@ -48,7 +48,7 @@ class AdminTreeVersionNodeOptionController extends Controller
         $treeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
         $this->node = $treeRepo->findOneBy(array(
             'treeVersion'=>$this->treeVersion,
-            'id'=>$nodeId,
+            'publicId'=>$nodeId,
         ));
         if (!$this->node) {
             throw new  NotFoundHttpException('Not found');
@@ -57,7 +57,7 @@ class AdminTreeVersionNodeOptionController extends Controller
         $optionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
         $this->nodeOption = $optionRepo->findOneBy(array(
             'node'=>$this->node,
-            'id'=>$optionId,
+            'publicId'=>$optionId,
         ));
         if (!$this->nodeOption) {
             throw new  NotFoundHttpException('Not found');

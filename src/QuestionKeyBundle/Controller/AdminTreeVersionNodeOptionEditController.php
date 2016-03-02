@@ -78,9 +78,9 @@ class AdminTreeVersionNodeOptionEditController extends AdminTreeVersionNodeOptio
                 $doctrine->remove($this->nodeOption);
                 $doctrine->flush();
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
-                    'treeId'=>$this->tree->getId(),
-                    'versionId'=>$this->treeVersion->getId(),
-                    'nodeId'=>$this->node->getId(),
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId(),
                 )));
             }
         }
