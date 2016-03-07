@@ -18,8 +18,8 @@
   </ol>
 
   <p>Node option title: {{ nodeOption.title }}</p>
-  <p>Body Text: {{ nodeOption.bodyText }}</p>
-  <p>Body HTML: {{ nodeOption.bodyHTML }}</p>
+  <p>Body Text: {{ nodeOption.bodyText | nl2br }}</p>
+  <p>Body HTML: {{ nodeOption.bodyHTML | nl2br }}</p>
   <p>Sort: {{ nodeOption.sort }}</p>
   <p>Source: {{ nodeOption.node.title }}</p>
   <p>Destination: {{ nodeOption.destinationNode.title }}</p>

@@ -60,7 +60,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
                 '<input name="option" class="option" type="radio" value="'+data.option.id+'">'+
                 '<span class="title">'+$("<div>").text(data.option.title).html()+'</span>'+
                 '</label>'+
-                (data.option.body_html ? '<span class="body">'+ data.option.body_html + '</span>' : (data.option.body_text ? '<span class="body">' + $("<div>").text(data.option.body_text).html() + '</span>' : ''))+
+                (data.option.body_html ? '<span class="body">'+ data.option.body_html + '</span>' : (data.option.body_text ? '<span class="body">' + $("<div>").text(data.option.body_text).html().trim().replace(/\n/g, "<br>") + '</span>' : ''))+
                 '</div>';
         }
     }, theme || {});
@@ -122,7 +122,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     $(this.targetSelector).find(this.theme.bodySelectorTitle).html(node.title);
     var bodyHTML = '';
     if (node.body_text) {
-        bodyHTML += '<div>'+  $('<div/>').text(node.body_text).html()   +'</div>';
+        bodyHTML += '<div>'+  $('<div/>').text(node.body_text).html().trim().replace(/\n/g, "<br>") +'</div>';
     } else if (node.body_html) {
         bodyHTML += '<div>'+  node.body_html  +'</div>';
     }
