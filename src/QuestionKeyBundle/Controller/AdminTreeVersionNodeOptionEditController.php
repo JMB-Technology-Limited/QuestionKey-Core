@@ -40,10 +40,10 @@ class AdminTreeVersionNodeOptionEditController extends AdminTreeVersionNodeOptio
                 $doctrine->persist($this->nodeOption);
                 $doctrine->flush();
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_option_show', array(
-                    'treeId'=>$this->tree->getId(),
-                    'versionId'=>$this->treeVersion->getId(),
-                    'nodeId'=>$this->node->getId(),
-                    'optionId'=>$this->nodeOption->getId(),
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId(),
+                    'optionId'=>$this->nodeOption->getPublicId(),
                 )));
             }
         }
