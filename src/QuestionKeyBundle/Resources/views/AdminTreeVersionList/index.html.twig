@@ -32,7 +32,7 @@
   					<tr>
   						<td>{{ treeVersion.titleAdmin }}</td>
 						<td>
-							{%  if treeVersion.id == treeVersionPublished.id %}
+							{%  if treeVersionPublished and treeVersion.id == treeVersionPublished.id %}
 								Published!
 							{%  endif %}
 						</td>
