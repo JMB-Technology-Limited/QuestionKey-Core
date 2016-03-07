@@ -38,6 +38,9 @@ form .cancel {
 .externalWidgetNormal .optionsWrapper .optionsList .option label input {
     margin-right: 10px;
 }
+.externalWidgetNormal .optionsWrapper .optionsList .option .body {
+    display: block;
+}
 .externalWidgetNormal .optionsWrapper input[type="submit"] {
     padding: 10px;
     background: #ccc;

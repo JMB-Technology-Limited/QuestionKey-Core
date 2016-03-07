@@ -60,6 +60,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
                 '<input name="option" class="option" type="radio" value="'+data.option.id+'">'+
                 '<span class="title">'+$("<div>").text(data.option.title).html()+'</span>'+
                 '</label>'+
+                (data.option.body_html ? '<span class="body">'+ data.option.body_html + '</span>' : (data.option.body_text ? '<span class="body">' + $("<div>").text(data.option.body_text).html() + '</span>' : ''))+
                 '</div>';
         }
     }, theme || {});
