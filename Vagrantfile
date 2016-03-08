@@ -2,10 +2,11 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
+  config.vm.synced_folder ".", "/vagrant",  :owner=> 'www-data', :group=>'users', :mount_options => ['dmode=777', 'fmode=777']
 
   config.vm.provider "virtualbox" do |vb|
      # Display the VirtualBox GUI when booting the machine

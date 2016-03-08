@@ -8,6 +8,8 @@ sudo apt-get install -y apache2 php5 mysql-server php5-mysql phpunit
 mysql -u root --password=password -e "CREATE DATABASE app"
 mysql -u root --password=password -e "CREATE DATABASE testing"
 
+echo "xdebug.max_nesting_level=1000" >> /etc/php5/apache2/conf.d/20-xdebug.ini
+
 mkdir /home/vagrant/bin
 cd /home/vagrant/bin
 wget https://getcomposer.org/composer.phar
