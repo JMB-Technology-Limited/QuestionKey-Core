@@ -270,14 +270,12 @@ var graph = {
                 return cd === graph.state.lastSelected.node;
             }).classed(graph.consts.selectedClass, true);
         }
-    },
-    info: function() {
         if(graph.state.lastSelected.node) {
-            window.open(graph.state.lastSelected.node.url);
+            $('#toolboxInfoLink').attr('href', graph.state.lastSelected.node.url);
         } else if (graph.state.lastSelected.edge && !graph.state.lastSelected.edge.isStart) {
-            window.open(graph.state.lastSelected.edge.source.url);
+            $('#toolboxInfoLink').attr('href', graph.state.lastSelected.edge.source.url);
         } else if (graph.state.lastSelected.edge && graph.state.lastSelected.edge.isStart) {
-            window.open(graph.state.lastSelected.edge.target.url);
+            $('#toolboxInfoLink').attr('href', graph.state.lastSelected.edge.target.url);
         }
     },
     save: function() {
