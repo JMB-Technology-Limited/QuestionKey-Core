@@ -17,7 +17,7 @@ wget https://getcomposer.org/composer.phar
 cd /vagrant
 php /home/vagrant/bin/composer.phar  install
 
-cp /vagrant/vagrant/parameters_test.yml /vagrant/app/config/parameters_test.yml
+cp /vagrant/vagrant/normal/parameters_test.yml /vagrant/app/config/parameters_test.yml
 cp /vagrant/vagrant/parameters.yml /vagrant/app/config/parameters.yml
 cp /vagrant/vagrant/apache.conf /etc/apache2/sites-enabled/000-default.conf
 cp /vagrant/vagrant/app_dev.php /vagrant/web/app_dev.php
@@ -33,6 +33,7 @@ chown -R www-data:www-data /vagrant/app/logs/dev.log
 rm -r /vagrant/app/cache/prod/*
 rm -r /vagrant/app/cache/dev/*
 
+sudo a2enmod rewrite
 /etc/init.d/apache2 restart
 
 php app/console doctrine:migrations:migrate --no-interaction

@@ -2,21 +2,35 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
-
-  config.vm.network "forwarded_port", guest: 80, host: 8080
 
   config.vm.synced_folder ".", "/vagrant",  :owner=> 'www-data', :group=>'users', :mount_options => ['dmode=777', 'fmode=777']
 
-  config.vm.provider "virtualbox" do |vb|
-     # Display the VirtualBox GUI when booting the machine
-     vb.gui = false
+  config.vm.define "normal" do |normal|
 
-    # Customize the amount of memory on the VM:
-    vb.memory = "1024"
+    normal.vm.network "forwarded_port", guest: 80, host: 8080
+
+    normal.vm.box = "ubuntu/trusty64"
+
+    normal.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = "1024"
+    end
+
+    normal.vm.provision :shell, path: "vagrant/normal/bootstrap.sh"
+
   end
 
+  config.vm.define "frontendtests" do |frontendtests|
 
-  config.vm.provision :shell, path: "vagrant/bootstrap.sh"
+    frontendtests.vm.box = "boxcutter/ubuntu1404-desktop"
+
+    frontendtests.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+      vb.memory = "1024"
+    end
+
+    frontendtests.vm.provision :shell, path: "vagrant/frontendtests/bootstrap.sh"
+
+  end
 
 end
