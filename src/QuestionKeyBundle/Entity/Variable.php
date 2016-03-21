@@ -138,9 +138,9 @@ class Variable
         $this->createdAt = new \DateTime("", new \DateTimeZone("UTC"));
     }
 
-
-
-
+    public function __toString () {
+        return $this->name;
+    }
 
 
 

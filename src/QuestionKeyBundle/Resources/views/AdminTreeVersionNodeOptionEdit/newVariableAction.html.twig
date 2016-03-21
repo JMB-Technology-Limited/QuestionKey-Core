@@ -1,0 +1,36 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}New Variable Action on Option {{  nodeOption.title }} on Node {{ node.titleAdmin }} on Version {{ treeVersion.titleAdmin }} of {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}">Node: {{ node.titleAdmin }}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId': nodeOption.publicId}) }}">Node Option: {{ nodeOption.title }}</a></li>
+        <li class="active">New Variable Action</li>
+    </ol>
+
+
+
+    <section class="">
+        <form class="styled" action="" method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="New Variable Action" />
+
+            <div class="cancel"><a href="{{ path('questionkey_admin_tree_version_node_option_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId': nodeOption.publicId}) }}">Cancel</a></div>
+        </form>
+
+    </section>
+
+
+{% endblock %}

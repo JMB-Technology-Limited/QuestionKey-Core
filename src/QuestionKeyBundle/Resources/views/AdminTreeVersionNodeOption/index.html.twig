@@ -25,6 +25,30 @@
   <p>Destination: {{ nodeOption.destinationNode.title }}</p>
 
 
+    {%  if variableActions %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Action</th>
+                <th>Value</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for variableAction in variableActions %}
+                <tr>
+                    <td>{{ variableAction.variable.name }}</td>
+                    <td>{{ variableAction.variable.type }}</td>
+                    <td>{{ variableAction.action }}</td>
+                    <td>{{ variableAction.value }}</td>
+                    <td class="action-link"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {%  endif %}
 
     <ul class="list-group">
         <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':nodeOption.node.publicId }) }}" class="btn btn-default">View Source Node</a></li>
@@ -32,6 +56,9 @@
         {% if isTreeVersionEditable %}
             <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_edit', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId': nodeOption.publicId }) }}" class="btn btn-warning">Edit</a></li>
             <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_delete', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId': nodeOption.publicId }) }}" class="btn btn-danger">DELETE</a></li>
+            {%  if treeVersion.featureVariables %}
+                <li class="list-group-item"><a href="{{ path('questionkey_admin_tree_version_node_option_variable_action_new', {'treeId':tree.publicId ,'versionId':treeVersion.publicId,'nodeId':node.publicId,'optionId': nodeOption.publicId }) }}" class="btn btn-warning">New Variable Action</a></li>
+            {%  endif %}
         {% endif %}
     </ul>
 

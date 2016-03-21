@@ -70,6 +70,10 @@ class AdminTreeVersionNodeOptionController extends Controller
         // build
         $return = $this->build($treeId, $versionId, $nodeId, $optionId);
 
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $variableActions = $doctrine->getRepository('QuestionKeyBundle:NodeOptionVariableAction')->findForNodeOption($this->nodeOption);
+
         //data
         return $this->render('QuestionKeyBundle:AdminTreeVersionNodeOption:index.html.twig', array(
             'tree'=>$this->tree,
@@ -77,6 +81,7 @@ class AdminTreeVersionNodeOptionController extends Controller
             'node'=>$this->node,
             'nodeOption'=>$this->nodeOption,
             'isTreeVersionEditable'=>$this->treeVersionEditable,
+            'variableActions' => $variableActions,
         ));
 
     }

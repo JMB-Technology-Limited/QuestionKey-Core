@@ -280,6 +280,11 @@ questionkey_admin_tree_version_node_option_show:
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOption:index}
     methods:  [GET]
 
+questionkey_admin_tree_version_node_option_variable_action_new:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/{optionId}/newVariableAction
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOptionEdit:newVariableAction}
+    methods:  [GET,POST]
+
 questionkey_admin_tree_version_node_option_edit:
     pattern:  /admin/tree/{treeId}/version/{versionId}/node/{nodeId}/option/{optionId}/edit
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionNodeOptionEdit:edit}
