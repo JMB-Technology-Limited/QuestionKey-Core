@@ -39,3 +39,5 @@ vagrant ssh frontendtests
 cd /vagrant; phpunit -c app/phpunit.frontend.xml
 ```
 
+Note these tests run in both Symfony's "dev" and "prod" environments so you will nead to clear your caches if you
+change the app.
