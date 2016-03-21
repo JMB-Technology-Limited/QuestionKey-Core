@@ -33,7 +33,7 @@ chown -R www-data:www-data /vagrant/app/logs/dev.log
 rm -r /vagrant/app/cache/prod/*
 rm -r /vagrant/app/cache/dev/*
 
-sudo a2enmod rewrite
+a2enmod rewrite
 /etc/init.d/apache2 restart
 
 php app/console doctrine:migrations:migrate --no-interaction
