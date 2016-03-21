@@ -22,16 +22,11 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
  *  @license 3-clause BSD
  *  @link https://github.com/QuestionKey/QuestionKey-Core
  */
-class BasicTreeTest extends BaseTestWithDataBase {
+class BasicTreeTest extends BaseSeleniumTest {
+
 
 
     function test1() {
-
-
-
-        $host = 'http://localhost:4444/wd/hub';
-        $driver = RemoteWebDriver::create($host, DesiredCapabilities::firefox());
-
 
 
 
@@ -93,9 +88,9 @@ class BasicTreeTest extends BaseTestWithDataBase {
 
 
         // ######################################################## LOAD PAGE
-        $driver->get('http://localhost/app_dev.php/tree/tree/demo');
+        $this->driver->get('http://localhost/app_dev.php/tree/tree/demo');
 
-        $startLink = $driver->findElement(WebDriverBy::id('StartTreeLink'));
+        $startLink = $this->driver->findElement(WebDriverBy::id('StartTreeLink'));
         $this->assertEquals('Start Tree!', $startLink->getText());
 
         // ######################################################## Start Tree
@@ -104,13 +99,13 @@ class BasicTreeTest extends BaseTestWithDataBase {
 
         sleep(2);
 
-        $nodeTitle = $driver
+        $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
             ->findElement(WebDriverBy::className('node'))
             ->findElement(WebDriverBy::className('title'));
         $this->assertEquals('START HERE', $nodeTitle->getText());
 
-
+        $this->driver->close();
     }
 
 }
