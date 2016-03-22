@@ -44,7 +44,9 @@ chown -R www-data:www-data /vagrant/app/cache/dev/
 mkdir /home/vagrant/selenium
 cd /home/vagrant/selenium
 wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+
 cp /vagrant/vagrant/frontendtests/run /home/vagrant/run
 chmod a+x /home/vagrant/run
 
-php app/console cache:warmup --env=prod
+cp /vagrant/vagrant/frontendtests/test /home/vagrant/test
+chmod a+x /home/vagrant/test

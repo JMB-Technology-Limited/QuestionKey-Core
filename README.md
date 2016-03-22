@@ -31,13 +31,11 @@ vagrant up frontendtests
 ```
 
 When ready, go the the Vagrant UI (Ubuntu). Open a terminal and type "./run". You only have to do this once.
+(This must be done in the VM so it is connected to the desktop environment.)
 
 Now to run the tests, go back to your dev machine and run:
 
 ```
 vagrant ssh frontendtests
-cd /vagrant; phpunit -c app/phpunit.frontend.xml
+./test
 ```
-
-Note these tests run in both Symfony's "dev" and "prod" environments so you will nead to clear your caches if you
-change the app.

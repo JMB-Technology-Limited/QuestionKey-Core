@@ -1,0 +1,7 @@
+#!/bin/bash
+rm -r /vagrant/app/cache/prod/*
+rm -r /vagrant/app/cache/dev/*
+cd /vagrant
+php app/console cache:warmup --env=prod
+php app/console cache:warmup --env=dev
+phpunit -c app/phpunit.frontend.xml
