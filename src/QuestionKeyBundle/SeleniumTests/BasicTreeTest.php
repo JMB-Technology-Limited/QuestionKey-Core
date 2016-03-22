@@ -105,6 +105,23 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElement(WebDriverBy::className('title'));
         $this->assertEquals('START HERE', $nodeTitle->getText());
 
+        // ######################################################## LOAD PAGE
+
+        $this->driver
+            ->findElement(WebDriverBy::id('DemoHere'))
+            ->findElements(WebDriverBy::className('option'))[0]
+            ->click();
+
+        $this->driver
+            ->findElement(WebDriverBy::id('DemoHere'))
+            ->findElement(WebDriverBy::cssSelector('input[type="submit"]'))
+            ->click();
+
+        $nodeTitle = $this->driver
+            ->findElement(WebDriverBy::id('DemoHere'))
+            ->findElement(WebDriverBy::className('node'))
+            ->findElement(WebDriverBy::className('title'));
+        $this->assertEquals('END HERE', $nodeTitle->getText());
 
     }
 
