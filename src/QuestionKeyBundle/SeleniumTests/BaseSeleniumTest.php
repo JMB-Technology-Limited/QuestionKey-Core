@@ -25,18 +25,17 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 abstract class BaseSeleniumTest extends BaseTestWithDataBase {
 
 
+    protected $sleepOnAction = 3;
+
     protected $driver;
 
     public function setUp()
     {
         parent::setUp();
 
-
         $host = 'http://localhost:4444/wd/hub';
         $this->driver = RemoteWebDriver::create($host, DesiredCapabilities::firefox());
-
-
-
+        $this->driver->manage()->window()->maximize();
 
     }
 
