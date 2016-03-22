@@ -105,7 +105,7 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElement(WebDriverBy::className('title'));
         $this->assertEquals('START HERE', $nodeTitle->getText());
 
-        $this->driver->close();
+
     }
 
 }
