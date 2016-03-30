@@ -3,7 +3,7 @@
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
 sudo apt-get update
-sudo apt-get install -y apache2 php5 mysql-server php5-mysql phpunit
+sudo apt-get install -y apache2 php5 mysql-server php5-mysql phpunit php5-curl
 
 mysql -u root --password=password -e "CREATE DATABASE app"
 mysql -u root --password=password -e "CREATE DATABASE testing"
@@ -40,4 +40,3 @@ php app/console doctrine:migrations:migrate --no-interaction
 
 chown -R www-data:www-data /vagrant/app/cache/prod/
 chown -R www-data:www-data /vagrant/app/cache/dev/
-

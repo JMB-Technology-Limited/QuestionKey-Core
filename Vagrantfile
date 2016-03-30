@@ -9,11 +9,11 @@ Vagrant.configure(2) do |config|
 
     normal.vm.network "forwarded_port", guest: 80, host: 8080
 
-    normal.vm.box = "ubuntu/trusty64"
+    normal.vm.box = "boxcutter/debian82"
 
     normal.vm.provider "virtualbox" do |vb|
       vb.gui = false
-      vb.memory = "1024"
+      vb.memory = "512"
     end
 
     normal.vm.provision :shell, path: "vagrant/normal/bootstrap.sh"
