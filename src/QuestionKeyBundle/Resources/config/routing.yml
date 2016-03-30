@@ -59,12 +59,12 @@ questionkey_admin_tree_list:
     methods:  [GET]
 
 questionkey_admin_tree_new:
-    pattern:  /admin/tree/new
+    pattern:  /admin/newtree
     defaults: { _controller: QuestionKeyBundle:AdminTreeNew:index }
     methods:  [GET,POST]
 
 questionkey_admin_tree_new_import:
-    pattern:  /admin/tree/new/import
+    pattern:  /admin/newtreeimport
     defaults: { _controller: QuestionKeyBundle:AdminTreeNew:import }
     methods:  [GET,POST]
 
@@ -214,7 +214,7 @@ questionkey_admin_tree_version_node_list_unreachable_nodes:
     methods:  [GET]
 
 questionkey_admin_tree_version_node_new:
-    pattern:  /admin/tree/{treeId}/version/{versionId}/node/new
+    pattern:  /admin/tree/{treeId}/version/{versionId}/newnode
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionEdit:newNode}
     methods:  [GET,POST]
 
