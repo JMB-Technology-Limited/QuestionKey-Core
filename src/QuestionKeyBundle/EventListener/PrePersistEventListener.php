@@ -6,6 +6,7 @@ namespace QuestionKeyBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use QuestionKeyBundle\Entity\LibraryContent;
 use QuestionKeyBundle\Entity\Node;
+use QuestionKeyBundle\Entity\NodeHasLibraryContentIfVariable;
 use QuestionKeyBundle\Entity\NodeOption;
 use QuestionKeyBundle\Entity\NodeOptionVariableAction;
 use QuestionKeyBundle\Entity\TreeVersion;
@@ -121,6 +122,19 @@ class PrePersistEventListener  {
                 $idLen = self::MIN_LENGTH;
                 $id =  \QuestionKeyBundle\QuestionKeyBundle::createKey(1,$idLen);
                 while($manager->doesPublicIdExist($id, $entity->getTreeVersion())) {
+                    if ($idLen < self::MAX_LENGTH) {
+                        $idLen = $idLen + self::LENGTH_STEP;
+                    }
+                    $id =  \QuestionKeyBundle\QuestionKeyBundle::createKey(1,$idLen);
+                }
+                $entity->setPublicId($id);
+            }
+        } elseif ($entity instanceof NodeHasLibraryContentIfVariable) {
+            if (!$entity->getPublicId()) {
+                $manager = $args->getEntityManager()->getRepository('QuestionKeyBundle\Entity\NodeHasLibraryContentIfVariable');
+                $idLen = self::MIN_LENGTH;
+                $id =  \QuestionKeyBundle\QuestionKeyBundle::createKey(1,$idLen);
+                while($manager->doesPublicIdExist($id, $entity->getNode())) {
                     if ($idLen < self::MAX_LENGTH) {
                         $idLen = $idLen + self::LENGTH_STEP;
                     }
