@@ -45,7 +45,9 @@ class AdminNodeOptionVariableAction extends AbstractType {
         $builder->add('action', 'choice', array(
             'choices'  => array(
                 'Assign' => 'ASSIGN',
+                'Increase' => 'INCREASE',
             ),
+            'choices_as_values'=>true,
             'required' => true,
         ));
 

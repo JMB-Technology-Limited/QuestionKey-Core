@@ -109,12 +109,21 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersWrapper).hide();
         $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswerItem).remove();
     }
-    this.stack = [ { 'nodeId': this.treeData.start_node.id, 'nodeOptionId':null, 'goneBackTo': false  } ];
+    var variables = {};
+    if (this._hasFeaturesVariables) {
+        for(idx in this.treeData.variables) {
+            variables[this.treeData.variables[idx].name] = {  'type': this.treeData.variables[idx].type, 'value': 0 };
+        }
+    }
+    this.stack = [ { 'nodeId': this.treeData.start_node.id, 'nodeOptionId':null, 'goneBackTo': false, 'variables': variables } ];
     this._windowPushState();
     this._showNode();
   }
   this._hasFeatureContentLibrary = function () {
       return this.treeData.features.library_content.status;
+  }
+  this._hasFeaturesVariables = function () {
+      return this.treeData.features.variables != null && this.treeData.features.variables.status;
   }
   this._showNode = function() {
     // Node
@@ -202,7 +211,21 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         node.title_previous_answers = node.title;
     }
     var option = this.treeData.nodeOptions[optionId];
-    this.stack.push({ 'nodeId':option.destination_node.id, 'nodeOptionId':option.id, 'goneBackTo': false });
+    var variables = $.extend({}, this.stack[this.stack.length - 1].variables)
+    if (this._hasFeaturesVariables()) {
+        for(idx in option.variableActions) {
+            var value = option.variableActions[idx].value;
+            if (this.treeData.variables[option.variableActions[idx].variable].type.toLowerCase() == 'integer') {
+                value = parseInt(value);
+            }
+            if (option.variableActions[idx].action.toLowerCase() == 'assign') {
+                variables[option.variableActions[idx].variable].value = value;
+            } else if (option.variableActions[idx].action.toLowerCase() == 'increase') {
+                variables[option.variableActions[idx].variable].value += value;
+            }
+        }
+    }
+    this.stack.push({ 'nodeId':option.destination_node.id, 'nodeOptionId':option.id, 'goneBackTo': false,'variables': variables });
     this._windowPushState();
     this._showNode();
   };

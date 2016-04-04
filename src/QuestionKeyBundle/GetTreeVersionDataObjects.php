@@ -28,6 +28,10 @@ class GetTreeVersionDataObjects {
     public function go() {
 
         $doctrine = $this->container->get('doctrine');
+        $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
+        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
+        $nodeOptionVariableActionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOptionVariableAction');
 
         //data
         $out = array(
@@ -39,6 +43,7 @@ class GetTreeVersionDataObjects {
             ),
             'features'=>array(
               'library_content'=>array('status'=>false),
+              'variables'=>array('status'=>false),
             ),
         );
 
@@ -57,14 +62,27 @@ class GetTreeVersionDataObjects {
             }
         }
 
-        $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+        if ($this->treeVersion->isFeatureVariables()) {
+            $out['features']['variables'] = array('status'=>true);
+            $out['variables'] = array();
+            $variableRepo = $doctrine->getRepository('QuestionKeyBundle:Variable');
+            $variableContents = $variableRepo->findByTreeVersion($this->treeVersion);
+            foreach ($variableContents as $variableContent) {
+                $out['variables'][$variableContent->getName()] = array(
+                    'name'=>$variableContent->getName(),
+                    'type'=>$variableContent->getType(),
+                );
+            }
+        }
+
+
+
         $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
         if ($treeStartingNode) {
             $out['start_node'] = array('id'=>$treeStartingNode->getNode()->getPublicId());
         }
 
-        $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
-        $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
+
         $nodes = $nodeRepo->findByTreeVersion($this->treeVersion);
         foreach($nodes as $node) {
             $outNode = array(
@@ -101,7 +119,7 @@ class GetTreeVersionDataObjects {
         }
 
         foreach($nodeOptionRepo->findAllNodeOptionsForTreeVersion($this->treeVersion) as $nodeOption) {
-            $out['nodeOptions'][$nodeOption->getPublicId()] = array(
+            $outNodeOption =  array(
                 'id'=>$nodeOption->getPublicId(),
                 'title'=>$nodeOption->getTitle(),
                 'body_html'=>$nodeOption->getBodyHTML(),
@@ -112,7 +130,19 @@ class GetTreeVersionDataObjects {
                 'destination_node' => array(
                     'id' => $nodeOption->getDestinationNode()->getPublicId(),
                 ),
+                'variableActions'=>array(),
             );
+            if ($this->treeVersion->isFeatureVariables()) {
+                foreach($nodeOptionVariableActionRepo->findByNodeOption($nodeOption) as $nodeOptionVariableAction) {
+                    $outNodeOption['variableActions'][$nodeOptionVariableAction->getPublicId()] = array(
+                        'id' => $nodeOptionVariableAction->getPublicId(),
+                        'variable' => $nodeOptionVariableAction->getVariable()->getname(),
+                        'action' => strtolower($nodeOptionVariableAction->getAction()),
+                        'value' => $nodeOptionVariableAction->getValue(),
+                    );
+                }
+            }
+            $out['nodeOptions'][$nodeOption->getPublicId()] = $outNodeOption;
         }
 
         return $out;
