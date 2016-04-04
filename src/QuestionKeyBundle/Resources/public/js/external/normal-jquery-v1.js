@@ -128,6 +128,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
   this._showNode = function() {
     // Node
     var node = this.treeData.nodes[this.stack[this.stack.length - 1].nodeId];
+    var variables = this.stack[this.stack.length - 1].variables;
     $(this.targetSelector).find(this.theme.bodySelectorTitle).html(node.title);
     var bodyHTML = '';
     if (node.body_text) {
@@ -138,10 +139,26 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     if (this._hasFeatureContentLibrary()) {
         for(id in node.library_content) {
             var libraryContent = this.treeData.library_content[id];
-            if (libraryContent.body_text) {
-                bodyHTML += '<div>'+  $('<div/>').text(libraryContent.body_text).html()   +'</div>';
-            } else if (libraryContent.body_html) {
-                bodyHTML += '<div>'+  libraryContent.body_html  +'</div>';
+            var show = true;
+            if (this._hasFeaturesVariables()) {
+                for(conditionIdx in node.library_content[id].conditions) {
+                    var condition = node.library_content[id].conditions[conditionIdx];
+                    if (condition.action == "==") {
+                        show = (variables[condition.variable].value == parseInt(condition.value));
+                    } else if (condition.action == ">") {
+                        show = (variables[condition.variable].value > parseInt(condition.value));
+                    // TODO >=  =<  <
+                    } else {
+                        show = false;
+                    }
+                }
+            }
+            if (show) {
+                if (libraryContent.body_text) {
+                    bodyHTML += '<div>' + $('<div/>').text(libraryContent.body_text).html() + '</div>';
+                } else if (libraryContent.body_html) {
+                    bodyHTML += '<div>' + libraryContent.body_html + '</div>';
+                }
             }
         }
     }

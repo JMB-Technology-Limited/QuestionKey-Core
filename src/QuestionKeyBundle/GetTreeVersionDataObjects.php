@@ -32,6 +32,8 @@ class GetTreeVersionDataObjects {
         $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
         $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
         $nodeOptionVariableActionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOptionVariableAction');
+        $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+        $nodeHaslibraryContentIfVariableRepo = $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContentIfVariable');
 
         //data
         $out = array(
@@ -51,7 +53,6 @@ class GetTreeVersionDataObjects {
         if ($this->treeVersion->isFeatureLibraryContent()) {
             $out['features']['library_content'] = array('status'=>true);
             $out['library_content'] = array();
-            $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
             $libraryContents = $libraryContentRepo->findByTreeVersion($this->treeVersion);
             foreach ($libraryContents as $libraryContent) {
                 $out['library_content'][$libraryContent->getPublicId()] = array(
@@ -105,9 +106,21 @@ class GetTreeVersionDataObjects {
             if ($this->treeVersion->isFeatureLibraryContent()) {
                 $outNode['library_content'] = array();
                 foreach ($libraryContentRepo->findForNode($node) as $libraryContent) {
-                    $outNode['library_content'][$libraryContent->getPublicId()] = array(
+                    $outNodeHasLibraryContent = array(
                         'id'=>$libraryContent->getPublicId(),
+                        'conditions'=>array(),
                     );
+                    if ($this->treeVersion->isFeatureVariables()) {
+                        foreach($nodeHaslibraryContentIfVariableRepo->findBy(array('node'=>$node, 'libraryContent'=>$libraryContent)) as $nodeHasLibraryContentIfVariable) {
+                            $outNodeHasLibraryContent['conditions'][$nodeHasLibraryContentIfVariable->getPublicId()] = array(
+                                'id'=>$nodeHasLibraryContentIfVariable->getPublicId(),
+                                'variable' => $nodeHasLibraryContentIfVariable->getVariable()->getname(),
+                                'action' => strtolower($nodeHasLibraryContentIfVariable->getAction()),
+                                'value' => $nodeHasLibraryContentIfVariable->getValue(),
+                            );
+                        }
+                    }
+                    $outNode['library_content'][$libraryContent->getPublicId()] = $outNodeHasLibraryContent;
                 }
             }
             foreach($nodeOptionRepo->findActiveNodeOptionsForNode($node) as $nodeOption) {
