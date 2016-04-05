@@ -47,6 +47,10 @@
           <input type="hidden" name="contentId" value="{{  libraryContent.publicId }}">
           <input type="submit" value="Remove Library Content" class="btn btn-warning">
         </form>
+
+        {%  if treeVersion.featureVariables %}
+          <p><a href="{{ path('questionkey_admin_tree_version_node_library_content_add_if_variable', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'nodeId':node.publicId, 'libraryContentId': libraryContent.publicId }) }}" class="btn btn-warning">Add If Variable Condition</a></p>
+        {%  endif %}
       </div>
     {%  endfor %}
 

@@ -5,6 +5,8 @@ namespace QuestionKeyBundle\Controller;
 use Doctrine\ORM\Mapping\Entity;
 
 use QuestionKeyBundle\Entity\NodeHasLibraryContent;
+use QuestionKeyBundle\Entity\NodeHasLibraryContentIfVariable;
+use QuestionKeyBundle\Form\Type\AdminNodeEditAddLibraryContentIfVariable;
 use QuestionKeyBundle\StatsDateRange;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -301,6 +303,55 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
             'libraryContents'=>$contents,
         ));
 
+
+    }
+
+    public function libraryContentAddIfVariableAction($treeId, $versionId, $nodeId, $libraryContentId, Request $request) {
+
+        $this->build($treeId, $versionId, $nodeId);
+        if (!$this->treeVersionEditable) {
+            throw new AccessDeniedException();
+        }
+
+        $doctrine = $this->getDoctrine()->getManager();
+        $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+        $libraryContent = $libraryContentRepo->findOneBy(array('publicId'=>$libraryContentId, 'treeVersion'=>$this->treeVersion));
+
+        if (!$libraryContent) {
+            throw new  NotFoundHttpException('Not found');
+        }
+
+        //data
+        $doctrine = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new AdminNodeEditAddLibraryContentIfVariable($this->node));
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $nodeHasLibraryContentIfVariable = new NodeHasLibraryContentIfVariable();
+                $nodeHasLibraryContentIfVariable->setNode($this->node);
+                $nodeHasLibraryContentIfVariable->setLibraryContent($libraryContent);
+                $nodeHasLibraryContentIfVariable->setVariable($form->get('variable')->getData());
+                $nodeHasLibraryContentIfVariable->setAction($form->get('action')->getData());
+                $nodeHasLibraryContentIfVariable->setValue($form->get('value')->getData());
+                $doctrine->persist($nodeHasLibraryContentIfVariable);
+                $doctrine->flush();
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_library_content_edit', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId()
+                )));
+            }
+        }
+
+
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersionNodeEdit:libraryContentAddIfVariable.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+            'node'=>$this->node,
+            'libraryContent'=>$libraryContent,
+            'form' => $form->createView(),
+        ));
 
     }
 

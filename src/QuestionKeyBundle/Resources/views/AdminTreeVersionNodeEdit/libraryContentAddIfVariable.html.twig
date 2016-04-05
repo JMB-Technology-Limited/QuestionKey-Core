@@ -1,0 +1,38 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Add Library Content If Variable to {{ node.titleAdmin }} on Version {{ treeVersion.titleAdmin }} of {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId }) }}">Version: {{ treeVersion.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'nodeId':node.publicId }) }}">Node: {{ node.titleAdmin }}</a></li>
+        <li class="active">Add Library Content If Variable</li>
+    </ol>
+
+    <section class="">
+        <form class="styled" action="" method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+
+            <div class="form-group">
+                <label class="control-label required" for="library_content">Library Content</label>
+                <div class="form-control">{{  libraryContent.titleAdmin }}</div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="Save" />
+
+        </form>
+
+    </section>
+
+{%  endblock %}
+
