@@ -40,3 +40,6 @@ php app/console doctrine:migrations:migrate --no-interaction
 
 chown -R www-data:www-data /vagrant/app/cache/prod/
 chown -R www-data:www-data /vagrant/app/cache/dev/
+
+cp /vagrant/vagrant/normal/test /home/vagrant/test
+chmod a+x /home/vagrant/test

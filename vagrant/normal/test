@@ -1,0 +1,4 @@
+#!/bin/bash
+cp /vagrant/vagrant/normal/parameters_test.yml /vagrant/app/config/parameters_test.yml
+cd /vagrant
+phpunit -c app/phpunit.xml.dist

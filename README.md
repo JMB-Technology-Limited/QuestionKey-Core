@@ -21,7 +21,7 @@ The app will be available on http://localhost:8080/app_dev.php
 ```
 vagrant up normal
 vagrant ssh normal
-cd /vagrant; phpunit -c app/phpunit.xml.dist
+./test
 ```
 
 ### Running front end tests

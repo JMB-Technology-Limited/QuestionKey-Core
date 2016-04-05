@@ -1,4 +1,5 @@
 #!/bin/bash
+cp /vagrant/vagrant/parameters.yml /vagrant/app/config/parameters_test.yml
 rm -r /vagrant/app/cache/prod/*
 rm -r /vagrant/app/cache/dev/*
 cd /vagrant
