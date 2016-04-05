@@ -79,18 +79,36 @@
 
   </div>
 
-    {%  for libraryContent in libraryContents %}
+    {% if treeVersion.featureLibraryContent %}
 
-        <div class="well">
+        {%  for libraryContent in libraryContents %}
 
-            <p>Library Title: {{ libraryContent.titleAdmin }}</p>
+            <div class="well">
 
-            <p>Body Text: {{ libraryContent.bodyText | nl2br }}</p>
+                <p>Library Title: {{ libraryContent.titleAdmin }}</p>
 
-            <p>Body HTML: {{ libraryContent.bodyHTML | nl2br }}</p>
+                <p>Body Text: {{ libraryContent.bodyText | nl2br }}</p>
 
-        </div>
-    {%  endfor %}
+                <p>Body HTML: {{ libraryContent.bodyHTML | nl2br }}</p>
+
+
+                {% if treeVersion.featureVariables %}
+                    <ul class="list-group">
+                        {% for nodeHasLibraryContentIfVariable in nodeHasLibraryContentIfVariables %}
+                            {%  if nodeHasLibraryContentIfVariable.libraryContent == libraryContent %}
+                               <li class="list-group-item">
+                                   Only show if {{ nodeHasLibraryContentIfVariable.variable.name  }} {{ nodeHasLibraryContentIfVariable.action }} {{ nodeHasLibraryContentIfVariable.value }}
+                               </li>
+                            {%  endif %}
+                        {%  endfor %}
+                    </ul>
+                {%  endif %}
+
+            </div>
+
+        {%  endfor %}
+
+    {% endif %}
 
   {% if nodeOptions %}
     <table class="table table-striped">

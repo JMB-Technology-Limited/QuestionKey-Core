@@ -81,14 +81,24 @@ class AdminTreeVersionNodeController extends Controller
         $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
 
 
-        $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
-        $contents = $libraryContentRepo->findForNode($this->node);
+        $contents = null;
+        $nodeHasLibraryContentIfVariables = null;
 
+        if ($this->treeVersion->isFeatureLibraryContent()) {
+            $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+            $contents = $libraryContentRepo->findForNode($this->node);
+
+            if ($this->treeVersion->isFeatureVariables()) {
+                $nodeHasLibraryContentIfVariableRepo = $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContentIfVariable');
+                $nodeHasLibraryContentIfVariables = $nodeHasLibraryContentIfVariableRepo->findBy(array('node' => $this->node));
+            }
+        }
         return $this->render('QuestionKeyBundle:AdminTreeVersionNode:index.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'node'=>$this->node,
             'libraryContents'=>$contents,
+            'nodeHasLibraryContentIfVariables' => $nodeHasLibraryContentIfVariables,
             'nodeOptions'=>$nodeOptions,
             'incomingNodeOptions'=>$incomingNodeOptions,
             'isStartNode'=>($treeStartingNode ? ($treeStartingNode->getNode() == $this->node) : false),

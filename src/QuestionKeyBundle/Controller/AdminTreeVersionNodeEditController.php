@@ -286,10 +286,18 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
 
         $contents = $libraryContentRepo->findForNode($this->node);
 
+        $nodeHasLibraryContentIfVariables = null;
+        if ($this->treeVersion->isFeatureVariables()) {
+            $nodeHasLibraryContentIfVariableRepo = $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContentIfVariable');
+            $nodeHasLibraryContentIfVariables = $nodeHasLibraryContentIfVariableRepo->findBy(array('node' => $this->node));
+
+        }
+
         return $this->render('QuestionKeyBundle:AdminTreeVersionNodeEdit:editLibraryContent.html.twig', array(
             'tree'=>$this->tree,
             'treeVersion'=>$this->treeVersion,
             'node'=>$this->node,
+            'nodeHasLibraryContentIfVariables' => $nodeHasLibraryContentIfVariables,
             'libraryContents'=>$contents,
         ));
 

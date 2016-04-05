@@ -30,10 +30,22 @@
         <p>Body HTML: {{ libraryContent.bodyHTML | nl2br }}</p>
 
 
+        {% if treeVersion.featureVariables %}
+          <ul class="list-group">
+            {% for nodeHasLibraryContentIfVariable in nodeHasLibraryContentIfVariables %}
+              {%  if nodeHasLibraryContentIfVariable.libraryContent == libraryContent %}
+                <li class="list-group-item">
+                  Only show if {{ nodeHasLibraryContentIfVariable.variable.name  }} {{ nodeHasLibraryContentIfVariable.action }} {{ nodeHasLibraryContentIfVariable.value }}
+                </li>
+              {%  endif %}
+            {%  endfor %}
+          </ul>
+        {%  endif %}
+
         <form method="post" action="#">
           <input type="hidden" name="action" value="remove">
           <input type="hidden" name="contentId" value="{{  libraryContent.publicId }}">
-          <input type="submit" value="Remove">
+          <input type="submit" value="Remove Library Content" class="btn btn-warning">
         </form>
       </div>
     {%  endfor %}
