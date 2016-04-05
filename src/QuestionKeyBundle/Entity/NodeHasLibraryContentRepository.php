@@ -40,12 +40,23 @@ class NodeHasLibraryContentRepository extends EntityRepository
 
     public function removeLibraryContentFromNode(LibraryContent $libraryContent, Node $node) {
 
+        $flush = array();
+
         $nodeHasLibraryContent = $this->findOneBy(array('node' => $node, 'libraryContent' => $libraryContent));
         if ($nodeHasLibraryContent) {
             $this->getEntityManager()->remove($nodeHasLibraryContent);
-            $this->getEntityManager()->flush($nodeHasLibraryContent);
+            $flush[] = $nodeHasLibraryContent;
         }
+
+        $nhlcivRepo = $this->getEntityManager()->getRepository('QuestionKeyBundle:NodeHasLibraryContentIfVariable');
+        foreach($nhlcivRepo->findBy(array('node'=>$node, 'libraryContent'=>$libraryContent)) as $nhlciv) {
+            $this->getEntityManager()->remove($nhlciv);
+            $flush[] = $nhlciv;
+        }
+
+        $this->getEntityManager()->flush($flush);
 
     }
 
 }
+
