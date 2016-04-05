@@ -42,10 +42,10 @@
           </ul>
         {%  endif %}
 
-        <form method="post" action="#">
+        <form method="post" action="#" onsubmit="return confirm('Are you sure you want to delete this?');">
           <input type="hidden" name="action" value="remove">
           <input type="hidden" name="contentId" value="{{  libraryContent.publicId }}">
-          <input type="submit" value="Remove Library Content" class="btn btn-warning">
+          <input type="submit" value="Remove Library Content" class="btn btn-danger">
         </form>
 
         {%  if treeVersion.featureVariables %}
