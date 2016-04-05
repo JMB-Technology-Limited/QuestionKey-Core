@@ -263,6 +263,7 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
 
         $doctrine = $this->getDoctrine()->getManager();
         $libraryContentRepo = $doctrine->getRepository('QuestionKeyBundle:LibraryContent');
+        $nodeHasLibraryContentIfVariableRepo = $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContentIfVariable');
 
         // build
         $return = $this->build($treeId, $versionId, $nodeId);
@@ -279,6 +280,19 @@ class AdminTreeVersionNodeEditController extends AdminTreeVersionNodeController
             if ($content) {
                 $doctrine->getRepository('QuestionKeyBundle:NodeHasLibraryContent')->removeLibraryContentFromNode($content, $this->node);
                 return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_show', array(
+                    'treeId'=>$this->tree->getPublicId(),
+                    'versionId'=>$this->treeVersion->getPublicId(),
+                    'nodeId'=>$this->node->getPublicId())));
+            }
+        }
+
+
+        if ($request->getMethod() == 'POST' && $request->request->get('action') == 'removeIfVariables') {
+            $nodeHasLibraryContentIfVariable = $nodeHasLibraryContentIfVariableRepo->findOneBy(array('node'=>$this->node, 'publicId'=>$request->request->get('ifVariableId')));
+            if ($nodeHasLibraryContentIfVariable) {
+                $doctrine->remove($nodeHasLibraryContentIfVariable);
+                $doctrine->flush($nodeHasLibraryContentIfVariable);
+                return $this->redirect($this->generateUrl('questionkey_admin_tree_version_node_library_content_edit', array(
                     'treeId'=>$this->tree->getPublicId(),
                     'versionId'=>$this->treeVersion->getPublicId(),
                     'nodeId'=>$this->node->getPublicId())));
