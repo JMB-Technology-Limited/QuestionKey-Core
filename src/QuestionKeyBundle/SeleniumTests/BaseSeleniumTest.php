@@ -25,7 +25,15 @@ use Facebook\WebDriver\Remote\DesiredCapabilities;
 abstract class BaseSeleniumTest extends BaseTestWithDataBase {
 
 
-    protected $sleepOnAction = 3;
+    /**
+     * When we do an action that does NOT require loading something over the network before continuing, how long to wait?
+     * */
+    protected $sleepOnActionNoNetwork = 2;
+
+    /**
+     * When we do an action that requires loading something over the network before continuing, how long to wait?
+     * */
+    protected $sleepOnActionWithNetwork = 10;
 
     protected $driver;
 

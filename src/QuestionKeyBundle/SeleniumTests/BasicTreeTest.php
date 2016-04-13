@@ -97,7 +97,7 @@ class BasicTreeTest extends BaseSeleniumTest {
 
         $startLink->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionWithNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -117,7 +117,7 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElement(WebDriverBy::cssSelector('input[type="submit"]'))
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -200,7 +200,7 @@ class BasicTreeTest extends BaseSeleniumTest {
 
         $startLink->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionWithNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -220,7 +220,7 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElement(WebDriverBy::cssSelector('input[type="submit"]'))
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -235,7 +235,7 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElements(WebDriverBy::cssSelector('tr.answer a'))[0]
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -315,7 +315,7 @@ class BasicTreeTest extends BaseSeleniumTest {
 
         $startLink->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionWithNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -335,7 +335,7 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElement(WebDriverBy::cssSelector('input[type="submit"]'))
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -348,7 +348,7 @@ class BasicTreeTest extends BaseSeleniumTest {
 
         $this->driver->navigate()->back();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -428,7 +428,7 @@ class BasicTreeTest extends BaseSeleniumTest {
 
         $startLink->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionWithNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -448,7 +448,7 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElement(WebDriverBy::cssSelector('input[type="submit"]'))
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -463,7 +463,7 @@ class BasicTreeTest extends BaseSeleniumTest {
             ->findElement(WebDriverBy::tagName('a'))
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))

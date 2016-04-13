@@ -197,7 +197,7 @@ class LibraryContentAndVariableTest extends BaseSeleniumTest
 
         $startLink->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionWithNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -216,7 +216,7 @@ class LibraryContentAndVariableTest extends BaseSeleniumTest
             ->findElement(WebDriverBy::cssSelector('input[type="submit"]'))
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -244,7 +244,7 @@ class LibraryContentAndVariableTest extends BaseSeleniumTest
 
         $startLink->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionWithNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
@@ -265,7 +265,7 @@ class LibraryContentAndVariableTest extends BaseSeleniumTest
             ->findElement(WebDriverBy::cssSelector('input[type="submit"]'))
             ->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionNoNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))

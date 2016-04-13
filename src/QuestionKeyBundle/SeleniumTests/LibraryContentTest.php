@@ -95,7 +95,7 @@ class LibraryContentTest extends BaseSeleniumTest
 
         $startLink->click();
 
-        sleep($this->sleepOnAction);
+        sleep($this->sleepOnActionWithNetwork);
 
         $nodeTitle = $this->driver
             ->findElement(WebDriverBy::id('DemoHere'))
