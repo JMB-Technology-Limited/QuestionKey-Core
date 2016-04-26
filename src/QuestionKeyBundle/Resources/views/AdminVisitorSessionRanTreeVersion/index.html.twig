@@ -16,6 +16,8 @@
 
     <p>Ran Tree {{ ranTreeVersion.treeVersion.tree.titleAdmin }} Version {{ ranTreeVersion.treeVersion.titleAdmin }}</p>
 
+    <p>Created: {{ ranTreeVersion.createdAt|date('c') }}</p>
+
     {% if onNodes %}
         <table class="table table-striped">
             <thead>
@@ -25,6 +27,7 @@
                     <th>Node Body</th>
                     <th>Node Option Title</th>
                     <th>Went Back To</th>
+                    <th>At</th>
                     <th></th>
                 </tr>
             </thead>
@@ -42,6 +45,7 @@
                     </td>
                     <td>{%  if onNode.nodeOption %}{{ onNode.nodeOption.title }}{% endif %}</td>
                     <td>{% if onNode.goneBackTo %}Yes{% else %}-{% endif %}</td>
+                    <td>{{ onNode.createdAt|date('c') }}</td>
                     <td class="action-link">
                         <a href="{{ path('questionkey_admin_tree_version_node_show', {'treeId':ranTreeVersion.treeVersion.tree.publicId ,'versionId':ranTreeVersion.treeVersion.publicId,'nodeId':onNode.node.publicId }) }}" class="btn btn-default">View Node</a>
                     </td>
