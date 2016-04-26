@@ -3,6 +3,7 @@
 namespace QuestionKeyBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use QuestionKeyBundle\Entity\Repository\Builder\VisitorSessionRanTreeVersionRepositoryBuilder;
 use QuestionKeyBundle\StatsDateRange;
 
 /**
@@ -84,6 +85,30 @@ class VisitorSessionRanTreeVersionRepository extends EntityRepository
             ->setParameter('to', $statsDateRange->getTo())
             ->getResult();
         return count($data);
+
+    }
+
+
+    public function findByBuilder(VisitorSessionRanTreeVersionRepositoryBuilder $visitorSessionRanTreeVersionRepositoryBuilder) {
+
+        $where = array();
+        $params = array();
+
+        if ($visitorSessionRanTreeVersionRepositoryBuilder->getDateRange()) {
+            $where[] = ' vsrtv.createdAt > :from AND vsrtv.createdAt < :to';
+            $params['from'] = $visitorSessionRanTreeVersionRepositoryBuilder->getDateRange()->getFrom();
+            $params['to'] = $visitorSessionRanTreeVersionRepositoryBuilder->getDateRange()->getTo();
+        }
+
+        $s =  $this->getEntityManager()
+            ->createQuery(
+                ' SELECT vsrtv FROM QuestionKeyBundle:VisitorSessionRanTreeVersion vsrtv'.
+                ' WHERE '. implode(" AND ", $where)
+            )
+            ->setParameters($params)
+            ->getResult();
+
+        return $s;
 
     }
 

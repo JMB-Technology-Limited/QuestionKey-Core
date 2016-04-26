@@ -317,6 +317,11 @@ questionkey_admin_visitor_session_show:
     defaults: { _controller: QuestionKeyBundle:AdminVisitorSession:index }
     methods:  [GET]
 
+questionkey_admin_visitor_session_ran_tree_list:
+    pattern:  /admin/visitorSessionRanTreeVersion
+    defaults: { _controller: QuestionKeyBundle:AdminVisitorSessionRanTreeVersionList:index }
+    methods:  [GET]
+
 questionkey_admin_visitor_session_ran_tree_show:
     pattern:  /admin/visitorsession/{sessionId}/ranTreeVersion/{ranTreeVersionId}
     defaults: { _controller: QuestionKeyBundle:AdminVisitorSessionRanTreeVersion:index }

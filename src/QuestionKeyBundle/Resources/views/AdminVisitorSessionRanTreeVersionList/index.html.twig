@@ -1,0 +1,50 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Visitor Sessions Running Tree Versions | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li class="active">Visitor Sessions Ran Tree Version</li>
+    </ol>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form>
+                From <input type="text" name="from" value="{{  dateRange.from|date('c') }}">
+                To <input type="text" name="to" value="{{  dateRange.to|date('c') }}">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+    </div>
+
+
+    {% if sessionRanTreeVersions %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Session ID</th>
+                <th>Session Ran Tree Version ID</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sessionRanTreeVersion in sessionRanTreeVersions %}
+                <tr>
+                    <td>{{ sessionRanTreeVersion.visitorSession.id }}</td>
+                    <td>{{ sessionRanTreeVersion.id }}</td>
+                    <td class="action-link"><a href="{{ path('questionkey_admin_visitor_session_ran_tree_show', {'sessionId':sessionRanTreeVersion.visitorSession.id, 'ranTreeVersionId':sessionRanTreeVersion.id }) }}" class="btn btn-default">View</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No Data</p>
+    {% endif %}
+
+{% endblock %}
