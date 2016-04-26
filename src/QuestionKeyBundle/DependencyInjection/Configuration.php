@@ -27,6 +27,12 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('server_host')->defaultValue('')->end()
             ->end();
+
+        $rootNode
+            ->children()
+            ->scalarNode('internal_ips')->defaultValue('')->end()
+            ->end();
+
         $rootNode
             ->children()
             ->booleanNode('has_ssl')->defaultValue(false)->end()

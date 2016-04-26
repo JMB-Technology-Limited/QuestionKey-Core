@@ -4,6 +4,7 @@ namespace QuestionKeyBundle\Controller;
 
 use Doctrine\ORM\Mapping\Entity;
 
+use QuestionKeyBundle\IsIPInIPConfig;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +38,8 @@ class API1VisitorSessionController extends Controller
         $nodeRepo = $doctrine->getRepository('QuestionKeyBundle:Node');
         $nodeOptionRepo = $doctrine->getRepository('QuestionKeyBundle:NodeOption');
 
+        $isIPInIPConfig = new IsIPInIPConfig($this->container->hasParameter('internal_ips') ? $this->container->getParameter('internal_ips') : '');
+
         // Session!
         if ($request->query->get("session_id")) {
             $this->session = $sessionRepo->findOneByPublicId($request->query->get("session_id"));
@@ -44,6 +47,7 @@ class API1VisitorSessionController extends Controller
 
         if (!$this->session) {
             $this->session = new VisitorSession();
+            $this->session->setIsInternalIP($isIPInIPConfig->checkIP($request->getClientIp()));
             $doctrine->persist($this->session);
             $doctrine->flush();
             // TODO check for collisions of public ID
@@ -72,6 +76,7 @@ class API1VisitorSessionController extends Controller
             $this->sessionRanTreeVersion = new VisitorSessionRanTreeVersion();
             $this->sessionRanTreeVersion->setTreeVersion($this->treeVersion);
             $this->sessionRanTreeVersion->setVisitorSession($this->session);
+            $this->sessionRanTreeVersion->setIsInternalIP($isIPInIPConfig->checkIP($request->getClientIp()));
             $doctrine->persist($this->sessionRanTreeVersion);
             $doctrine->flush();
             // TODO check for collisions of public ID

@@ -38,6 +38,12 @@ class VisitorSession
     */
     private $createdAt;
 
+    /**
+     * @var boolean
+     * Should be nullable=false but there is old data. We can treat null as false.
+     * @ORM\Column(name="is_internal_ip", type="boolean", nullable=true)
+     */
+    private $isInternalIP = false;
 
     public function getId()
     {
@@ -68,6 +74,24 @@ class VisitorSession
     {
         $this->createdAt = $createdAt;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isInternalIP()
+    {
+        return $this->isInternalIP;
+    }
+
+    /**
+     * @param boolean $isInternalIP
+     */
+    public function setIsInternalIP($isInternalIP)
+    {
+        $this->isInternalIP = $isInternalIP;
+    }
+
+
 
     /**
     * @ORM\PrePersist()
