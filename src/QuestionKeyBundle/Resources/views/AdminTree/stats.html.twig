@@ -33,6 +33,23 @@
             </tr>
         </table>
 
+        <div class="panel-body">
+            <form action="{{ path('questionkey_admin_tree_stats_series', {'treeId':tree.publicId }) }}">
+                <input type="hidden" name="from" value="{{  dateRange.from|date('c') }}">
+                <input type="hidden" name="to" value="{{  dateRange.to|date('c') }}">
+                View over <select name="interval">
+                    <option value="PT1H">1 Hour</option>
+                    <option value="PT4H">4 hours</option>
+                    <option value="PT12H">12 hours</option>
+                    <option value="P1D" selected="selected">1 day</option>
+                    <option value="P7D">1 week</option>
+                    <option value="P1M">1 month</option>
+                    <option value="P3M">3 months</option>
+                </select>
+                <input type="submit" value="Show">
+            </form>
+        </div>
+
     </section>
 
 {% endblock %}

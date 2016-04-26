@@ -84,6 +84,11 @@ questionkey_admin_tree_stats:
     defaults: { _controller: QuestionKeyBundle:AdminTree:stats }
     methods:  [GET]
 
+questionkey_admin_tree_stats_series:
+    pattern:  /admin/tree/{treeId}/stats/series
+    defaults: { _controller: QuestionKeyBundle:AdminTree:statsSeries }
+    methods:  [GET]
+
 questionkey_admin_tree_version_published_list:
     pattern:  /admin/tree/{treeId}/versionpublished
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersionPublishedList:index }

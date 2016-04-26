@@ -1,0 +1,41 @@
+{#
+# @license 3-clause BSD
+# @link https://github.com/QuestionKey/QuestionKey-Core
+#}
+
+{% extends 'QuestionKeyBundle::base.html.twig' %}
+
+{% block title %}Stats for {{  tree.titleAdmin }} | Admin{%  endblock %}
+
+{% block main %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('questionkey_admin') }}">Admin</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_show', {'treeId':tree.publicId }) }}">Tree: {{ tree.titleAdmin}}</a></li>
+        <li><a href="{{ path('questionkey_admin_tree_stats', {'treeId':tree.publicId }) }}">Stats</a></li>
+        <li class="active">Stats Series</li>
+    </ol>
+
+
+    <section class="">
+
+        <table class="table  table-striped">
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Data</th>
+            </tr>
+            {%  for segment in data %}
+                <tr>
+                    <td>{{ segment.range.from|date('c') }}</td>
+                    <td>{{ segment.range.to|date('c') }}</td>
+                    <td>{{ segment.value }}</td>
+                </tr>
+            {%  endfor %}
+
+        </table>
+
+
+    </section>
+
+{% endblock %}
