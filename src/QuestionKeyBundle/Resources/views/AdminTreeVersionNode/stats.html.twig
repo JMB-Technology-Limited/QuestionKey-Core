@@ -20,7 +20,11 @@
     <section class="">
         <div class="panel panel-default">
             <div class="panel-body">
-                From {{  dateRange.from|date('c') }} to {{  dateRange.to|date('c') }}
+                <form>
+                    From <input type="text" name="from" value="{{  dateRange.from|date('c') }}">
+                    To <input type="text" name="to" value="{{  dateRange.to|date('c') }}">
+                    <input type="submit" value="Search">
+                </form>
             </div>
         </div>
 

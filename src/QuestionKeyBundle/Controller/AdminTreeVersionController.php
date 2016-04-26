@@ -358,6 +358,7 @@ class AdminTreeVersionController extends Controller
 
         //data
         $statsDateRange = new StatsDateRange();
+        $statsDateRange->setFromRequest($request);
 
 
         $doctrine = $this->getDoctrine()->getManager();

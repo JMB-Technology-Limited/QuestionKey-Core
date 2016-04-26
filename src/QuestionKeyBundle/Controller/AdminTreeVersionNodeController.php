@@ -169,7 +169,7 @@ class AdminTreeVersionNodeController extends Controller
     }
 
 
-    public function statsAction($treeId, $versionId, $nodeId)
+    public function statsAction($treeId, $versionId, $nodeId, Request $request)
     {
 
 
@@ -179,14 +179,11 @@ class AdminTreeVersionNodeController extends Controller
 
         //data
         $statsDateRange = new StatsDateRange();
+        $statsDateRange->setFromRequest($request);
 
         $doctrine = $this->getDoctrine()->getManager();
 
         $tsrtvRepo = $doctrine->getRepository('QuestionKeyBundle:VisitorSessionRanTreeVersion');
-
-
-        $doctrine = $this->getDoctrine()->getManager();
-
 
 
         //view

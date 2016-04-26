@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping\Entity;
 
 use QuestionKeyBundle\StatsDateRange;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use QuestionKeyBundle\Form\Type\AdminTreeEditType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -55,7 +56,7 @@ class AdminTreeController extends Controller
 
 
 
-    public function statsAction($treeId)
+    public function statsAction($treeId, Request $request)
     {
 
 
@@ -64,7 +65,7 @@ class AdminTreeController extends Controller
 
         //data
         $statsDateRange = new StatsDateRange();
-
+        $statsDateRange->setFromRequest($request);
 
         $doctrine = $this->getDoctrine()->getManager();
 

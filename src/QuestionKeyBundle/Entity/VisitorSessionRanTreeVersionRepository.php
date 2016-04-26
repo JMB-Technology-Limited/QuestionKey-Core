@@ -45,9 +45,11 @@ class VisitorSessionRanTreeVersionRepository extends EntityRepository
             ->createQuery(
                 ' SELECT COUNT(vsrtv) FROM QuestionKeyBundle:VisitorSessionRanTreeVersion vsrtv'.
                 ' JOIN vsrtv.treeVersion tv '.
-                ' WHERE tv.tree = :tree '
+                ' WHERE tv.tree = :tree AND vsrtv.createdAt > :from AND vsrtv.createdAt < :to'
             )
             ->setParameter('tree', $tree)
+            ->setParameter('from', $statsDateRange->getFrom())
+            ->setParameter('to', $statsDateRange->getTo())
             ->getScalarResult();
         return $data[0][1];
 
@@ -58,9 +60,11 @@ class VisitorSessionRanTreeVersionRepository extends EntityRepository
         $data =  $this->getEntityManager()
             ->createQuery(
                 ' SELECT COUNT(vsrtv) FROM QuestionKeyBundle:VisitorSessionRanTreeVersion vsrtv'.
-                ' WHERE vsrtv.treeVersion = :treeVersion '
+                ' WHERE vsrtv.treeVersion = :treeVersion AND vsrtv.createdAt > :from AND vsrtv.createdAt < :to '
             )
             ->setParameter('treeVersion', $treeVersion)
+            ->setParameter('from', $statsDateRange->getFrom())
+            ->setParameter('to', $statsDateRange->getTo())
             ->getScalarResult();
         return $data[0][1];
 
@@ -72,10 +76,12 @@ class VisitorSessionRanTreeVersionRepository extends EntityRepository
             ->createQuery(
                 'SELECT vsrtv.id AS x FROM QuestionKeyBundle:VisitorSessionRanTreeVersion vsrtv'.
                 ' JOIN  vsrtv.onNodes vson'.
-                ' WHERE vson.node = :node '.
+                ' WHERE vson.node = :node  AND vsrtv.createdAt > :from AND vsrtv.createdAt < :to  '.
                 ' GROUP BY vsrtv.id  '
             )
             ->setParameter('node', $node)
+            ->setParameter('from', $statsDateRange->getFrom())
+            ->setParameter('to', $statsDateRange->getTo())
             ->getResult();
         return count($data);
 
