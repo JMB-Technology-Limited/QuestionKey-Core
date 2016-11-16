@@ -12,7 +12,7 @@ echo "xdebug.max_nesting_level=1000" >> /etc/php5/apache2/conf.d/20-xdebug.ini
 
 mkdir /home/vagrant/bin
 cd /home/vagrant/bin
-wget https://getcomposer.org/composer.phar
+wget -q https://getcomposer.org/composer.phar
 
 cd /vagrant
 php /home/vagrant/bin/composer.phar  install
@@ -43,7 +43,7 @@ chown -R www-data:www-data /vagrant/app/cache/dev/
 
 mkdir /home/vagrant/selenium
 cd /home/vagrant/selenium
-wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+wget -q http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
 
 cp /vagrant/vagrant/frontendtests/run /home/vagrant/run
 chmod a+x /home/vagrant/run
