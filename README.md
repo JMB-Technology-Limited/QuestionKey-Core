@@ -26,16 +26,16 @@ vagrant ssh normal
 
 ### Running front end tests
 
+To setup, run once:
+
 ```
 vagrant up frontendtests
-```
-
-When ready, go the the Vagrant UI (Ubuntu). Open a terminal and type "./run". You only have to do this once.
-(This must be done in the VM so it is connected to the desktop environment.)
-
-Now to run the tests, go back to your dev machine and run:
-
-```
 vagrant ssh frontendtests
+./run
+```
+
+Now to run tests repeatedly, simply run:
+
+```
 ./test
 ```
