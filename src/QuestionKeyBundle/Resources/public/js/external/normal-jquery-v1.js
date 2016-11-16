@@ -95,7 +95,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     } else {
         this._showStartNode();
     }
-  }
+  };
   this.restart = function() {
     if (!this.started) {
       return;
@@ -103,7 +103,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     // remove this, as we are starting a new instance of running this tree
     this.sessionRanTreeVersionId = null;
     this._showStartNode();
-  }
+  };
   this._showStartNode = function() {
     if (this.options.showPreviousAnswers) {
         $(this.targetSelector).find(this.theme.bodyselectorPreviousAnswersWrapper).hide();
@@ -118,13 +118,13 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     this.stack = [ { 'nodeId': this.treeData.start_node.id, 'nodeOptionId':null, 'goneBackTo': false, 'variables': variables } ];
     this._windowPushState();
     this._showNode();
-  }
+  };
   this._hasFeatureContentLibrary = function () {
       return this.treeData.features.library_content.status;
-  }
+  };
   this._hasFeaturesVariables = function () {
       return this.treeData.features.variables != null && this.treeData.features.variables.status;
-  }
+  };
   this._showNode = function() {
     // Node
     var node = this.treeData.nodes[this.stack[this.stack.length - 1].nodeId];
@@ -218,7 +218,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
                 if (data.session_ran_tree_version) {
                     this.sessionRanTreeVersionId = data.session_ran_tree_version.id;
                 }
-            },
+            }
         });
     }
   };
@@ -260,7 +260,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
   };
     this._doBrowserHistoryRewrite = function() {
         return this.options.browserHistoryRewrite && (typeof history != 'undefined') && (typeof history.pushState != 'undefined');
-    }
+    };
     this._windowPushState = function() {
         if (this._doBrowserHistoryRewrite()) {
             history.pushState({
@@ -276,7 +276,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     this.onWindownPopState = function(event) {
         console.log(event.state.questionkey);
         this._processHistoryState(event.state)
-    }
+    };
     this._processHistoryState = function(state) {
         if (this.options.browserHistoryRewrite
             && state
@@ -309,7 +309,7 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
               if (this.started) {
                   this._start();
               }
-          },
+          }
       });
   }
 }
