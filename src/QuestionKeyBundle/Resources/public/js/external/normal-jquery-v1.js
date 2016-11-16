@@ -304,7 +304,6 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
           dataType: "jsonp",
           url: this.serverURL + '/api/v1/tree/' + this.options.treeId + '/data.jsonp?features=library_content&callback=?',
           success: function(data) {
-              console.log(data);
               this.treeData = data;
               if (this.started) {
                   this._start();
