@@ -20,3 +20,4 @@ parameters:
 
     server_host: 
     has_ssl: false
+    internal_ips:
