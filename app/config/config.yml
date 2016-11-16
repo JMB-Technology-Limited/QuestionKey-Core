@@ -88,6 +88,11 @@ assetic:
                 - '@QuestionKeyBundle/Resources/public/css/main.css'
             filters: [cssrewrite]
 
+        normal_jquery_1_vjs:
+            inputs:
+                - '@QuestionKeyBundle/Resources/public/js/external/normal-jquery-v1.js'
+            output: "js/external/normal-jquery-v1.js"
+
 # Doctrine Configuration
 doctrine:
     dbal:
