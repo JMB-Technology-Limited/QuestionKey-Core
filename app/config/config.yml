@@ -93,6 +93,11 @@ assetic:
                 - '@QuestionKeyBundle/Resources/public/js/external/normal-jquery-v1.js'
             output: "js/external/normal-jquery-v1.js"
 
+        cascade_jquery_1_vjs:
+            inputs:
+                - '@QuestionKeyBundle/Resources/public/js/external/cascade-jquery-v1.js'
+            output: "js/external/cascade-jquery-v1.js"
+
 # Doctrine Configuration
 doctrine:
     dbal:
