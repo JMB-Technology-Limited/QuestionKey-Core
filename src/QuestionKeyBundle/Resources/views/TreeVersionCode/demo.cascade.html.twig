@@ -34,7 +34,7 @@
             url: "{{ path('questionkey_tree_version_preview_data_json', {'treeId':tree.publicId,'versionId':treeVersion.publicId,'code':code }) }}",
             context: document.body,
             success: function(data) {
-                tree = new QuestionKeyNormalTree("#DemoHere", {'treeData':data, 'logUserActions':false  });
+                tree = new QuestionKeyCascadeTree("#DemoHere", {'treeData':data, 'logUserActions':false  });
                 window.onpopstate = function(event) {
                     tree.onWindownPopState(event);
                 };

@@ -30,7 +30,7 @@
   <script>
     var tree;
     $( document ).ready(function() {
-      tree = new QuestionKeyNormalTree("#DemoHere", {'treeId':'{{ tree.publicId|e('js') }}', 'logUserActions':false, 'browserHistoryRewrite':true });
+      tree = new QuestionKeyCascadeTree("#DemoHere", {'treeId':'{{ tree.publicId|e('js') }}', 'logUserActions':false, 'browserHistoryRewrite':true });
       window.onpopstate = function(event) {
           tree.onWindownPopState(event);
       };

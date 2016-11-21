@@ -3,7 +3,7 @@
  *  @link https://github.com/QuestionKey/QuestionKey-Core
  */
 
-function QuestionKeyNormalTree(targetSelector, options, theme) {
+function QuestionKeyCascadeTree(targetSelector, options, theme) {
     this.options = $.extend({
         // required
         'treeServer':null,
@@ -227,11 +227,11 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
         this._addNode();
     };
     var globalRefNum = Math.floor(Math.random() * 999999999) + 1;
-    while("QuestionKeyNormalTree"+globalRefNum in window) {
+    while("QuestionKeyCascadeTree"+globalRefNum in window) {
         globalRefNum = Math.floor(Math.random() * 999999999) + 1;
     }
-    window["QuestionKeyNormalTree"+globalRefNum] = this;
-    this.globalVariableName = "QuestionKeyNormalTree"+globalRefNum;
+    window["QuestionKeyCascadeTree"+globalRefNum] = this;
+    this.globalVariableName = "QuestionKeyCascadeTree"+globalRefNum;
     if (this.options.treeData) {
         this.treeData = this.options.treeData;
     } else {
