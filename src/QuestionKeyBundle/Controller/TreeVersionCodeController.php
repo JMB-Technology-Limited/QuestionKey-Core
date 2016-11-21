@@ -68,6 +68,21 @@ class TreeVersionCodeController extends Controller
 
     }
 
+    public function demoCascadeAction($treeId, $versionId, $code)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId, $code);
+
+        // out
+        return $this->render('QuestionKeyBundle:TreeVersionCode:demo.cascade.html.twig', array(
+            'tree'	=> $this->tree,
+            'treeVersion' => $this->treeVersion,
+            'code' => $this->treeVersionPreviewCode->getCode(),
+        ));
+
+    }
+
     public function dataJSONAction($treeId, $versionId, $code)
     {
 

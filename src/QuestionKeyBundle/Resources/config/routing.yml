@@ -34,9 +34,19 @@ questionkey_tree_demo:
     defaults: { _controller: QuestionKeyBundle:Tree:demo }
     methods:  [GET]
 
+questionkey_tree_demo_cascade:
+    pattern:  /tree/{treeId}/demo/cascade
+    defaults: { _controller: QuestionKeyBundle:Tree:demoCascade }
+    methods:  [GET]
+
 questionkey_tree_version_preview_demo:
     pattern:  /tree/{treeId}/version/{versionId}/code/{code}/demo
     defaults: { _controller: QuestionKeyBundle:TreeVersionCode:demo }
+    methods:  [GET]
+
+questionkey_tree_version_preview_demo_cascade:
+    pattern:  /tree/{treeId}/version/{versionId}/code/{code}/demo/cascade
+    defaults: { _controller: QuestionKeyBundle:TreeVersionCode:demoCascade }
     methods:  [GET]
 
 questionkey_tree_version_preview_data_json:
@@ -109,6 +119,11 @@ questionkey_admin_tree_version_show:
 questionkey_admin_tree_version_run:
     pattern:  /admin/tree/{treeId}/version/{versionId}/run
     defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:run}
+    methods:  [GET]
+
+questionkey_admin_tree_version_run_cascade:
+    pattern:  /admin/tree/{treeId}/version/{versionId}/run/cascade
+    defaults: { _controller: QuestionKeyBundle:AdminTreeVersion:runCascade}
     methods:  [GET]
 
 questionkey_admin_tree_version_edit:

@@ -18,15 +18,13 @@
       <p>This is a link to  <a href="http://www.google.com">google</a>. This is so you can jump to a different web page half way through running the tree, then press back and make sure the tree still works!</p>
   </div>
 
-
-
   {%  include 'QuestionKeyBundle:Tree:demo.selector.html.twig' %}
 
 {% endblock %}
 
 {% block javascript %}
   {% javascripts
-      '@QuestionKeyBundle/Resources/public/js/external/normal-jquery-v1.js'  output='/js/external/normal-jquery-v1.js' %}
+      '@QuestionKeyBundle/Resources/public/js/external/cascade-jquery-v1.js'  output='/js/external/cascade-jquery-v1.js' %}
       <script src="{{ asset_url }}"></script>
   {% endjavascripts %}
   <script>

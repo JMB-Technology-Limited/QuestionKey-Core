@@ -231,6 +231,32 @@ class AdminTreeVersionController extends Controller
 
     }
 
+    public function runCascadeAction($treeId, $versionId, Request $request)
+    {
+
+        // build
+        $return = $this->build($treeId, $versionId);
+
+        // setup
+        $doctrine = $this->getDoctrine()->getManager();
+        $treeStartingNodeRepo = $doctrine->getRepository('QuestionKeyBundle:TreeVersionStartingNode');
+
+        // data
+        $treeStartingNode = $treeStartingNodeRepo->findOneByTreeVersion($this->treeVersion);
+        if (!$treeStartingNode) {
+            return $this->render('QuestionKeyBundle:AdminTreeVersion:run.noStartNode.html.twig', array(
+                'tree'=>$this->tree,
+                'treeVersion'=>$this->treeVersion,
+            ));
+        }
+
+        return $this->render('QuestionKeyBundle:AdminTreeVersion:run.cascade.html.twig', array(
+            'tree'=>$this->tree,
+            'treeVersion'=>$this->treeVersion,
+        ));
+
+    }
+
 
     public function dataJSONAction($treeId, $versionId, Request $request)
     {

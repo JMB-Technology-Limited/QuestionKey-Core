@@ -46,4 +46,19 @@ class TreeController extends Controller
 
     }
 
+    public function demoCascadeAction($treeId)
+    {
+
+
+        // build
+        $return = $this->build($treeId);
+
+
+        // out
+        return $this->render('QuestionKeyBundle:Tree:demo.cascade.html.twig', array(
+            'tree'	=> $this->tree,
+        ));
+
+    }
+
 }
