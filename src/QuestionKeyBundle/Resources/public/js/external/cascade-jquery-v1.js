@@ -122,7 +122,34 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
             themeOptions.nodeBodyHTML = '<div>'+  node.body_html  +'</div>';
         }
 
-        // TODO : Add Library Content Here
+        if (this._hasFeatureContentLibrary()) {
+            for(id in node.library_content) {
+                var libraryContent = this.treeData.library_content[id];
+                var show = true;
+                if (this._hasFeaturesVariables()) {
+                    for(conditionIdx in node.library_content[id].conditions) {
+                        var condition = node.library_content[id].conditions[conditionIdx];
+                        if (condition.action == "==") {
+                            show = (variables[condition.variable].value == parseInt(condition.value));
+                        } else if (condition.action == ">") {
+                            show = (variables[condition.variable].value > parseInt(condition.value));
+                            // TODO >=  =<  <
+                        } else {
+                            show = false;
+                        }
+                    }
+                }
+                if (show) {
+                    if (libraryContent.body_text) {
+                        themeOptions.nodeBodyHTML += '<div>' + $('<div/>').text(libraryContent.body_text).html() + '</div>';
+                    } else if (libraryContent.body_html) {
+                        themeOptions.nodeBodyHTML += '<div>' + libraryContent.body_html + '</div>';
+                    }
+                }
+            }
+        }
+
+
 
         for(i in node.options) {
             themeOptions.options.push(this.treeData.nodeOptions[node.options[i].id]);
