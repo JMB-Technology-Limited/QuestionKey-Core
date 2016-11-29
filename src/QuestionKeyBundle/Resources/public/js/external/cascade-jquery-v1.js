@@ -116,10 +116,10 @@ function QuestionKeyCascadeTree(targetSelector, options, theme) {
             'cascadeIndex': this.stack.length - 1,
         };
 
-        if (node.body_text) {
-            themeOptions.nodeBodyHTML = '<div>'+  $('<div/>').text(node.body_text).html().trim().replace(/\n/g, "<br>") +'</div>';
-        } else if (node.body_html) {
-            themeOptions.nodeBodyHTML = '<div>'+  node.body_html  +'</div>';
+        if (node.body_html) {
+            themeOptions.nodeBodyHTML += '<div>' + node.body_html + '</div>';
+        } else if (node.body_text) {
+            themeOptions.nodeBodyHTML += '<div>'+  $('<div/>').text(node.body_text).html().trim().replace(/\n/g, "<br>") +'</div>';
         }
 
         if (this._hasFeatureContentLibrary()) {
@@ -140,10 +140,10 @@ function QuestionKeyCascadeTree(targetSelector, options, theme) {
                     }
                 }
                 if (show) {
-                    if (libraryContent.body_text) {
-                        themeOptions.nodeBodyHTML += '<div>' + $('<div/>').text(libraryContent.body_text).html() + '</div>';
-                    } else if (libraryContent.body_html) {
+                    if (libraryContent.body_html) {
                         themeOptions.nodeBodyHTML += '<div>' + libraryContent.body_html + '</div>';
+                    } else if (libraryContent.body_text) {
+                        themeOptions.nodeBodyHTML += '<div>' + $('<div/>').text(libraryContent.body_text).html() + '</div>';
                     }
                 }
             }

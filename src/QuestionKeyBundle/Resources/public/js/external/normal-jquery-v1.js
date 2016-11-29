@@ -131,10 +131,10 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
     var variables = this.stack[this.stack.length - 1].variables;
     $(this.targetSelector).find(this.theme.bodySelectorTitle).html(node.title);
     var bodyHTML = '';
-    if (node.body_text) {
+    if (node.body_html) {
+        bodyHTML += '<div>' + node.body_html + '</div>';
+    } else if (node.body_text) {
         bodyHTML += '<div>'+  $('<div/>').text(node.body_text).html().trim().replace(/\n/g, "<br>") +'</div>';
-    } else if (node.body_html) {
-        bodyHTML += '<div>'+  node.body_html  +'</div>';
     }
     if (this._hasFeatureContentLibrary()) {
         for(id in node.library_content) {
@@ -154,10 +154,10 @@ function QuestionKeyNormalTree(targetSelector, options, theme) {
                 }
             }
             if (show) {
-                if (libraryContent.body_text) {
-                    bodyHTML += '<div>' + $('<div/>').text(libraryContent.body_text).html() + '</div>';
-                } else if (libraryContent.body_html) {
+                if (libraryContent.body_html) {
                     bodyHTML += '<div>' + libraryContent.body_html + '</div>';
+                } else if (libraryContent.body_text) {
+                    bodyHTML += '<div>' + $('<div/>').text(libraryContent.body_text).html() + '</div>';
                 }
             }
         }
