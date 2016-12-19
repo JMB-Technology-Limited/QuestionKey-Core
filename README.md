@@ -44,15 +44,19 @@ There is nothing to enforce that the user can reach all nodes from the starting 
 
 When editing a Tree Version, you can turn "features" on and off. Features make a tree more complicated, so they are off by default.
 
-## Feature - Variables
-
-TODO
-
 ## Feature - Library Content
 
 Normally each Node has a body, and each body is separate. This is a pain if you have the same bit of content that should be on many nodes. Now, when it changes you have to edit the content many times in different places.
 
 Library Content solves this problem. You can create a new bit of content in the Library. The Library is shared across the whole Tree Version. You can then use the library content on as many nodes as you want. Now, when you want to edit the content there is now only one place you need to make the edit.
+
+
+## Feature - Variables
+
+Variables are a feature where a store of values (variables) are kept during the run. When moving around Node Options variables can be changed. When showing library content, conditions can be placed based on the current values of variables as to whether they are shown or not.
+
+This could be used for designing a quiz where points where awarded for correct answers, and at the end different library content (results) could be shown based on what score the player got.
+
 
 ## Showing trees on your website using the Normal Widget
 
