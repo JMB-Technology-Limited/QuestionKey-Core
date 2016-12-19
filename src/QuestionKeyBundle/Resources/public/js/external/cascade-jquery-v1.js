@@ -165,7 +165,7 @@ function QuestionKeyCascadeTree(targetSelector, options, theme) {
             $(this.targetSelector).get(0).scrollIntoView();
         }
         if (this.options.callBackAfterDrawNode) {
-            this.options.callBackAfterDrawNode({ 'node':node });
+            this.options.callBackAfterDrawNode({ 'node':node, 'stackSize':this.stack.length });
         }
         // Stats
         if (this.options.logUserActions) {
