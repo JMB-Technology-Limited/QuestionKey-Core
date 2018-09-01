@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
 
     normal.vm.network "forwarded_port", guest: 80, host: 8080
 
-    normal.vm.box = "boxcutter/debian82"
+    normal.vm.box = "ubuntu/xenial64"
 
     normal.vm.provider "virtualbox" do |vb|
       vb.gui = false
